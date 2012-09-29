@@ -84,54 +84,21 @@ if( !$_SESSION['username'] ) {
         <div class="span9">
           <div class="row-fluid">
             <div class="span6">
-              <h2>View</h2>
-              <p>Select this option if you'd like to generate a phone bank list, look at a shop profile, or view any other information.</p>
+              <h2>Remove Contact</h2>
+              <p>Select this option if you'd like to remove a contact.</p>
             </div>
             <div class="span6">
-              <h2>Add</h2>
-              <p>Select this option if you'd like to add a contact (from a petition for example) or add a shop profile.</p>
+              <h2>Remove Shop Profile</h2>
+              <p>Select this option if you'd like to remove a shop profile.</p>
             </div>
           </div><!--/.row-fluid-->
 
           <div class="row-fluid">
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="view">View Database &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="remove-contact">Remove Contact &raquo;</button>
             </div>
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button">Add to Database &raquo;</button>
-            </div>
-          </div><!--./row-fluid-->
-          
-          <div class="row-fluid">
-            <div class="span6">
-              <h2>Modify</h2>
-              <p>Select this option if you'd like to modify a contact or shop profile.</p>
-            </div>
-            <div class="span6">
-              <h2>Remove</h2>
-              <p>Select this option if you'd like to remove a contact or shop profile.</p>
-            </div>
-          </div><!--/.row-fluid-->
-          
-          <div class="row-fluid">
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button">Modify Database &raquo;</button>
-            </div>
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button">Remove from Database &raquo;</button>
-            </div>
-          </div><!--./row-fluid-->
-          
-          <div class="row-fluid">
-            <div class="span6">
-              <h2>Manage Users</h2>
-              <p>Select this option if you'd like to manage user accounts or privileges.</p>
-            </div>
-          </div><!--/.row-fluid-->
-          
-          <div class="row-fluid">
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button">Manage Users &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="remove-shop-profile">Remove Shop Profile &raquo;</button>
             </div>
           </div><!--./row-fluid-->
         </div><!--/.span9-->

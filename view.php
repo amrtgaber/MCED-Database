@@ -95,10 +95,10 @@ if( !$_SESSION['username'] ) {
 
           <div class="row-fluid">
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button">Generate Phone Bank &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="generate-phone-bank">Generate Phone Bank &raquo;</button>
             </div>
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button">View Shop Profile &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="view-shop-profile">View Shop Profile &raquo;</button>
             </div>
           </div><!--./row-fluid-->
         </div><!--/.span9-->
