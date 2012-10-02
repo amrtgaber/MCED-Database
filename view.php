@@ -26,6 +26,7 @@ if( !$_SESSION['username'] ) {
 
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
     <link href="css/view.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -84,8 +85,8 @@ if( !$_SESSION['username'] ) {
         <div class="span9">
           <div class="row-fluid">
             <div class="span6">
-              <h2>Generate Phone Bank</h2>
-              <p>Select this option if you'd like to generate a phone bank list.</p>
+              <h2>Generate List</h2>
+              <p>Select this option if you'd like to generate a list of contacts, a phone bank, or any other kind of list.</p>
             </div>
             <div class="span6">
               <h2>View Shop Profile</h2>
@@ -95,7 +96,7 @@ if( !$_SESSION['username'] ) {
 
           <div class="row-fluid">
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="generate-phone-bank">Generate Phone Bank &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="generate-list">Generate List &raquo;</button>
             </div>
             <div class="span6">
               <button class="btn btn-large btn-primary" type="button" id="view-shop-profile">View Shop Profile &raquo;</button>
@@ -114,6 +115,7 @@ if( !$_SESSION['username'] ) {
     <!-- JavaScript -->
     <script src="js/jquery-latest.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/view.js"></script>
   </body>
 

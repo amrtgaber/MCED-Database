@@ -1,10 +1,9 @@
 $(document).ready(function() {
-  $("#logout").click(function() {
-    $.post(
-      'logout.php', 
-      function() { 
-        window.location = "login.php";  
-      }
-    );
+  $("#generate-list").click(function() {
+    window.location = "generate_list.php";
+  });
+
+  $("#view-shop-profile").click(function() {
+    window.location = "view_shop_profile.php";
   });
 });

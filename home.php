@@ -26,6 +26,7 @@ if( !$_SESSION['username'] ) {
 
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
     <link href="css/home.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
@@ -147,6 +148,7 @@ if( !$_SESSION['username'] ) {
     <!-- JavaScript -->
     <script src="js/jquery-latest.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/common.js"></script>
     <script src="js/home.js"></script>
   </body>
 
