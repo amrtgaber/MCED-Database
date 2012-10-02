@@ -13,8 +13,6 @@
   <head>
     <meta charset="utf-8">
     <title>KC99 - Database Login</title>
-    <meta name="description" content="KC99 Organizing Database">
-    <meta name="author" content="Amr Gaber">
 
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">

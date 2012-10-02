@@ -21,8 +21,6 @@ if( !$_SESSION['username'] ) {
   <head>
     <meta charset="utf-8">
     <title>KC99 - Database Add</title>
-    <meta name="description" content="KC99 Organizing Database">
-    <meta name="author" content="Amr Gaber">
 
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -67,20 +65,6 @@ if( !$_SESSION['username'] ) {
 
     <div class="container-fluid">
       <div class="row-fluid">
-        <!-- Sidebar -->
-        <div class="span3 pull-right">
-          <div class="well sidebar-nav">
-            <img src="img/kc99-logo-9-27.png">
-            <ul class="nav nav-list">
-              <li class="nav-header">Common Tasks</li>
-              <li class="active"><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-            </ul>
-          </div><!--/.well -->
-        </div><!--/span-->
-        
         <!-- Body -->
         <div class="span9">
           <div class="row-fluid">
@@ -103,6 +87,20 @@ if( !$_SESSION['username'] ) {
             </div>
           </div><!--./row-fluid-->
         </div><!--/.span9-->
+
+        <!-- Sidebar -->
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <img src="img/kc99-logo-9-27.png">
+            <ul class="nav nav-list">
+              <li class="nav-header">Common Tasks</li>
+              <li class="active"><a href="#">Task</a></li>
+              <li><a href="#">Task</a></li>
+              <li><a href="#">Task</a></li>
+              <li><a href="#">Task</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
       </div><!--/.row-fluid-->
 
       <!-- Footer -->

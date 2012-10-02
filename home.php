@@ -21,8 +21,6 @@ if( !$_SESSION['username'] ) {
   <head>
     <meta charset="utf-8">
     <title>KC99 - Database Home</title>
-    <meta name="description" content="KC99 Organizing Database">
-    <meta name="author" content="Amr Gaber">
 
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
