@@ -1,18 +1,12 @@
 <?php
 /* File: login_action.php
  * Author: Amr Gaber
- * Created: 9/28/2012
+ * Created: 28/09/2012
  * Description: Handles logging in users for KC99 database.
  */
 
 /* Start a new session or continue an existing one */
 session_start();
-
-/* If user is already logged in redirect to home page */
-/*if( $_SESSION['username']) {
-  header("Location: home.php");
-  exit;
-}*/
 
 $username = mysql_real_escape_string($_POST['username']);
 $password = hash("sha256", $_POST['password']);

@@ -4,6 +4,14 @@
  * Created: 9/27/2012
  * Description: Handles login page for KC99 database.
  */
+
+/* If user is already logged in redirect to home page */
+session_start();
+
+if( $_SESSION['username']) {
+  header("Location: home.php");
+  exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +83,7 @@
     </div><!--/.fluid-container-->
 
     <!-- JavaScript -->
-    <script src="js/jquery-latest.js"></script>
+		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/login.js"></script>
   </body>

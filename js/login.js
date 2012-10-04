@@ -1,15 +1,15 @@
-$(document).ready(function() {
-  $("input").keydown(function() { $("#error").html(""); });
+$( document ).ready(function() {
+  $( "input" ).keydown(function() { $( "#error" ).html( "" ); });
 
-  $("form").submit(function() {
+  $( "form" ).submit(function() {
     $.post(
-      'login_action.php', 
-      $("form").serialize(),
+      "login_action.php", 
+      $( "form" ).serialize(),
       function() { 
         window.location = "home.php";  
       }
     ).fail(function() {
-      $("#error").html("Incorrect username or password");
+      $( "#error" ).html( "Incorrect username or password" );
     });
     return false;
   });

@@ -67,92 +67,136 @@ if( !$_SESSION['username'] ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-          <form class="well">
+          <form>
             <legend>Add Contact</legend>
+            <div class="well"> 
+              <div class="row-fluid">
+                <div class="span1">First Name</div>
+                <div class="span5">
+                  <input type="text" class="span12" placeholder="Type first name here" name="firstName" required>
+                </div>
+                
+                <div class="span1">Last Name</div>
+                <div class="span5">
+                  <input type="text" class="span12" placeholder="Type last name here" name="lastName" required>
+                </div>
+              </div>
+
+              <div class="row-fluid">
+                <div class="span3">
+                  <input type="checkbox" name="wagebelow10" value="true">
+                  I make less than $10 an hour.
+                </div>
+                
+                <div class="span1">Employer</div>
+                <div class="span8">
+                  <input type="text" class="span12" placeholder="Type employer here" name="workplace">
+                </div>
+              </div>
+
+              <div class="row-fluid">
+                <div class="span1">Address</div>
+                <div class="span8">
+                  <input type="text" class="span12" placeholder="Type address here">
+                </div>
+
+                <div class="span1">Apt. no.</div>
+                <div class="span2">
+                  <input type="text" class="span12" placeholder="Type Apt. no. here">
+                </div>
+              </div>
+                
+              <div class="row-fluid">
+                <div class="span1">City</div>
+                <div class="span6">
+                  <input type="text" class="span12" placeholder="Type city here">
+                </div>
+
+                <div class="span1">State</div>
+                <div class="span1">
+                  <input type="text" class="span12" placeholder="State">
+                </div>
+                <div class="span1">Zipcode</div>
+                <div class="span2">
+                  <input type="text" name="zipcode" class="span12" placeholder="Type zipcode here">
+                </div>
+              </div>
+                
+              <div class="row-fluid">
+                <div class="span1">Phone</div>
+                <div class="span5">
+                  <input type="text" name="phone" class="span12" placeholder="Type phone number here">
+                </div>
+                
+                <div class="span1">Cell</div>
+                <div class="span5">
+                  <input type="text" name="phone" class="span12" placeholder="Type cell phone number here">
+                </div>
+              </div>
+                
+              <div class="row-fluid">
+                <div class="span12">
+                  <input type="checkbox" name="text-updates" value="true">
+                  Send me text message updates.
+                </div>
+              </div>
+
+              <div class="row-fluid">
+                <div class="span1">Email</div>
+                <div class="span11">
+                  <input type="text" name="email" class="span12" placeholder="Type email here">
+                </div>
+              </div>
+
+              <div class="row-fluid">
+                <div class="span12" id="error-contact"></div>
+              </div>
+            </div>
+
+            <div class="well">
+              <h5>Worker Information (Optional)</h5>
+
+              <div class="row-fluid">
+                <div class="span1">Workplace</div>
+                <div class="span8">
+                  <input type="text" name="workplace" class="span12" placeholder="Type workplace here">
+                </div>
+
+                <div class="span1">Wage</div>
+                <div class="span2">
+                  <input type="text" name="wage" class="span12" placeholder="$">
+                </div>
+              </div>
+              
+              <div class="row-fluid">
+                <div class="span12" id="error-worker"></div>
+              </div>
+            </div>
+              
+            <div class="well">
+              <h5>Student Information (Optional)</h5>
+
+              <div class="row-fluid">
+                <div class="span1">School</div>
+                <div class="span8">
+                  <input type="text" class="span12" placeholder="Type school here">
+                </div>
+
+                <div class="span1">Year</div>
+                <div class="span2">
+                  <input type="text" name="year" class="span12" placeholder="Type year here">
+                </div>
+              </div>
+              
+              <div class="row-fluid">
+                <div class="span12" id="error-student"></div>
+              </div>
+            </div>
             
             <div class="row-fluid">
-              <div class="span1">First Name</div>
-              <div class="span5">
-                <input type="text" class="span12" placeholder="Type first name here" name="firstName" required>
-              </div>
-              
-              <div class="span1">Last Name</div>
-              <div class="span5">
-                <input type="text" class="span12" placeholder="Type last name here" name="lastName" required>
-              </div>
-            </div>
-
-            <div class="row-fluid">
               <div class="span3">
-                <input type="checkbox" name="wagebelow10" value="true">
-                I make less than $10 an hour.
-              </div>
-              
-              <div class="span1">Employer</div>
-              <div class="span8">
-                <input type="text" class="span12" placeholder="Type employer here" name="workplace">
-              </div>
-            </div>
-
-            <div class="row-fluid">
-              <div class="span1">Address</div>
-              <div class="span8">
-                <input type="text" class="span12" placeholder="Type address here">
-              </div>
-
-              <div class="span1">Apt. no.</div>
-              <div class="span2">
-                <input type="text" class="span12" placeholder="Type Apt. no. here">
-              </div>
-            </div>
-              
-            <div class="row-fluid">
-              <div class="span1">City</div>
-              <div class="span6">
-                <input type="text" class="span12" placeholder="Type city here">
-              </div>
-
-              <div class="span1">State</div>
-              <div class="span1">
-                <input type="text" class="span12">
-              </div>
-              <div class="span1">Zipcode</div>
-              <div class="span2">
-                <input type="text" class="span12" placeholder="Type zipcode here">
-              </div>
-            </div>
-              
-            <div class="row-fluid">
-              <div class="span1">Phone Number</div>
-              <div class="span5">
-                <input type="text" class="span12" placeholder="Type phone number here">
-              </div>
-              
-              <div class="span1">Cell Phone</div>
-              <div class="span5">
-                <input type="text" class="span12" placeholder="Type cell phone number here">
-              </div>
-            </div>
-              
-            <div class="row-fluid">
-              <div class="span12">
-                <input type="checkbox" name="text-updates" value="true">
-                Send me text message updates.
-              </div>
-            </div>
-
-            <div class="row-fluid">
-              <div class="span1">Email</div>
-              <div class="span11">
-                <input type="text" class="span12" placeholder="Type email here">
-              </div>
-            </div>
-
-            <div class="row-fluid">
-              <div class="span9" id="error"></div>
-              <div class="span3">
-              <button type="submit" class="btn btn-primary btn-large">Add Contact</button>
-              <button type="reset" class="btn btn-large">Clear</button>
+                <button type="submit" class="btn btn-primary btn-large">Add Contact</button>
+                <button type="reset" class="btn btn-large">Clear</button>
               </div>
             </div>
           </form>
@@ -181,8 +225,9 @@ if( !$_SESSION['username'] ) {
     </div><!--/.fluid-container-->
     
     <!-- JavaScript -->
-    <script src="js/jquery-latest.js"></script>
+		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/add_contact.js"></script>
   </body>
