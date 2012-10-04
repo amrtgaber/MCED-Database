@@ -130,7 +130,7 @@ if( !$_SESSION['username'] ) {
                 
                 <div class="span1">Cell</div>
                 <div class="span5">
-                  <input type="text" name="phone" class="span12" placeholder="Type cell phone number here">
+                  <input type="text" name="cell" class="span12" placeholder="Type cell phone number here">
                 </div>
               </div>
                 
@@ -158,13 +158,16 @@ if( !$_SESSION['username'] ) {
 
               <div class="row-fluid">
                 <div class="span1">Workplace</div>
-                <div class="span8">
+                <div class="span7">
                   <input type="text" name="workplace" class="span12" placeholder="Type workplace here">
                 </div>
 
                 <div class="span1">Wage</div>
-                <div class="span2">
-                  <input type="text" name="wage" class="span12" placeholder="$">
+                <div class="span1 input-prepend">
+                  <span class="add-on">$</span><input type="text" name="dollars" class="span12" placeholder="Dollars">
+                </div>
+                <div class="span1 input-prepend">
+                  <span class="add-on">.</span><input type="text" name="cents" class="span12" placeholder="Cents">
                 </div>
               </div>
               

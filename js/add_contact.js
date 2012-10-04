@@ -19,6 +19,9 @@ $( document ).ready(function() {
       phone: {
         phoneUS: true
       },
+      cell: {
+        phoneUS: true
+      },
       state: {
         minlength: 2,
         maxlength: 2
@@ -26,6 +29,14 @@ $( document ).ready(function() {
       zipcode: {
         minlength: 5,
         maxlength: 5,
+        digits: true
+      },
+      dollars: {
+        digits: true
+      },
+      cents: {
+        minlength: 2,
+        maxlength: 2,
         digits: true
       },
       year: {
@@ -41,18 +52,29 @@ $( document ).ready(function() {
       phone: {
         phoneUS: "Please enter a valid phone number."
       },
+      cell: {
+        phoneUS: "Please enter a valid cell phone number."
+      },
       state: {
         minlength: "State must be 2 letter abbreviation.",
         maxlength: "State must be 2 letter abbreviation."
       },
       zipcode: {
-        minlength: "Zipcode must be 5 digits.",
-        maxlength: "Zipcode must be 5 digits.",
+        minlength: "Zipcode must be exactly 5 digits long.",
+        maxlength: "Zipcode must be exactly 5 digits long.",
         digits: "Zipcode can only contain digits."
       },
+      dollars: {
+        digits: "Dollars can only contain digits."
+      },
+      cents: {
+        minlength: "Cents must be exactly 2 digits long.",
+        maxlength: "Cents must be exactly 2 digits long.",
+        digits: "Cents can only contain digits."
+      },
       year: {
-        minlength: "Year must be 4 digits.",
-        maxlength: "Year must be 4 digits.",
+        minlength: "Year must be exactly 4 digits long.",
+        maxlength: "Year must be exactly 4 digits long.",
         digits: "Year can only contain digits."
       }
     },
@@ -62,7 +84,8 @@ $( document ).ready(function() {
           || element.attr( "name" ) == "state"
           || element.attr( "name" ) == "zipcode" ) {
         error.appendTo( $( "#error-contact" ) );
-      } else if( element.attr( "name" ) == "wage" ) {
+      } else if( element.attr( "name" ) == "dollars"
+                 || element.attr ("name" ) == "cents" ) {
         error.appendTo( $( "#error-worker" ) );
       } else {
         error.appendTo( $( "#error-student" ) );
