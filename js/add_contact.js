@@ -28,9 +28,6 @@ $( document ).ready(function() {
         maxlength: 5,
         digits: true
       },
-      wage: {
-        digits: true
-      },
       year: {
         minlength: 4,
         maxlength: 4,
@@ -52,9 +49,6 @@ $( document ).ready(function() {
         minlength: "Zipcode must be 5 digits.",
         maxlength: "Zipcode must be 5 digits.",
         digits: "Zipcode can only contain digits."
-      },
-      wage: {
-        digits: "Please enter a valid wage."
       },
       year: {
         minlength: "Year must be 4 digits.",
