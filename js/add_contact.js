@@ -1,26 +1,34 @@
 $( document ).ready(function() {
+  /* Clear button */
   $( 'button[type="reset"]' ).click(function() {
-    $( "#error-contact" ).html( "" );
-    $( "#error-worker" ).html( "" );
-    $( "#error-student" ).html( "" );
+    $( "#error" ).html( "" );
+    $( "#error-optional" ).html( "" );
   });
 
-  jQuery.validator.addMethod("phoneUS", function(phone_number, element) {
+  jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
         phone_number = phone_number.replace(/\s+/g, ""); 
-          return this.optional(element) || phone_number.length > 9 &&
-              phone_number.match(/^(1-?)?(\([2-9]\d{2}\)|[2-9]\d{2})-?[2-9]\d{2}-?\d{4}$/);
-  }, "Please specify a valid phone number");
+        return this.optional( element ) || phone_number.length == 7 || phone_number.length == 10;
+  }, "Phone number must either be 7 digits long or 10 digits long." );
 
-  $( "form" ).validate({
+  /* Validate form */
+  var v = $( "form" ).validate({
     rules: {
+      firstName: {
+        required: true
+      },
+      lastName: {
+        required: true
+      },
       email: {
         email: true
       },
       phone: {
-        phoneUS: true
+        phoneLength: true,
+        digits: true
       },
       cell: {
-        phoneUS: true
+        phoneLength: true,
+        digits: true
       },
       state: {
         minlength: 2,
@@ -40,20 +48,28 @@ $( document ).ready(function() {
         digits: true
       },
       year: {
-        minlength: 4,
-        maxlength: 4,
+        minlength: 2,
+        maxlength: 2,
         digits: true
       }
     },
     messages: {
+      firstName: {
+        required: "First Name is a required field."
+      },
+      lastName: {
+        required: "Last Name is a required field."
+      },
       email: {
         email: "Please enter a valid email."
       },
       phone: {
-        phoneUS: "Please enter a valid phone number."
+        phoneLength: "Phone number must be 7 or 10 digits long.",
+        digits: "Phone number can only contain digits."
       },
       cell: {
-        phoneUS: "Please enter a valid cell phone number."
+        phoneLength: "Cell phone number must be 7 or 10 digits long.",
+        digits: "Cell phone number can only contain digits."
       },
       state: {
         minlength: "State must be 2 letter abbreviation.",
@@ -73,34 +89,82 @@ $( document ).ready(function() {
         digits: "Cents can only contain digits."
       },
       year: {
-        minlength: "Year must be exactly 4 digits long.",
-        maxlength: "Year must be exactly 4 digits long.",
+        minlength: "Year must be exactly 2 digits long.",
+        maxlength: "Year must be exactly 2 digits long.",
         digits: "Year can only contain digits."
       }
     },
     errorPlacement: function( error, element ) {
-      if( element.attr( "name" ) == "email"
+      if( element.attr( "name" ) == "firstName"
+          || element.attr( "name" ) == "lastName"
+          || element.attr( "name" ) == "email"
           || element.attr( "name" ) == "phone"
           || element.attr( "name" ) == "state"
           || element.attr( "name" ) == "zipcode" ) {
-        error.appendTo( $( "#error-contact" ) );
-      } else if( element.attr( "name" ) == "dollars"
-                 || element.attr ("name" ) == "cents" ) {
-        error.appendTo( $( "#error-worker" ) );
+        error.appendTo( $( "#error" ) );
       } else {
-        error.appendTo( $( "#error-student" ) );
+        error.appendTo( $( "#error-optional" ) );
       }
-    },
-    submitHandler: function( form ) {
-      $( "form" ).submit(function() {
-        $.post(
-          "add_contact_action.php",
-          $( "form" ).serialize(),
-          function() {
-            console.log("success");
-          }
-        )
-      });
     }
+  });
+  
+  /* Submit form if valid */
+  $( "form" ).submit(function() {
+    if( !v.form() ) {
+      return false;
+    }
+
+    $.post(
+      "add_contact_action.php",
+      $( "form" ).serialize(),
+      function( data, status, jqXHR ) {
+        if( jqXHR.responseText == "Success" ) {
+          alert( "Success! "
+            + $( "input[name=firstName]" ).val()
+            + " "
+            + $( "input[name=lastName]" ).val()
+            + " was added to the database." );
+        } else if( jqXHR.responseText == "Invalid Name" ) {
+          alert( "First Name and Last Name are required fields.");
+        } else if( jqXHR.responseText == "Invalid State" ) {
+          alert( "State field is invalid." );
+        } else if( jqXHR.responseText == "Invalid Zipcode" ) {
+          alert( "Zipcode field is invalid." );
+        } else if( jqXHR.responseText == "Invalid Phone" ) {
+          alert( "Phone field is invalid." );
+        } else if( jqXHR.responseText == "Invalid Cell" ) {
+          alert( "Cell field is invalid." );
+        } else if( jqXHR.responseText == "Invalid Email" ) {
+          alert( "Email field is invalid." );
+        } else if( jqXHR.responseText == "Invalid Dollars" ) {
+          alert( "Dollars field is invalid." );
+        } else if( jqXHR.responseText == "Invalid Cents" ) {
+          alert( "Cents field is invalid." );
+        } else if( jqXHR.responseText == "Invalid Year" ) {
+          alert( "Year field is invalid." );
+        } else if( jqXHR.responseText == "Duplicate Entry" ) {
+          alert( "This contact already exists in the database." );
+        } else if( jqXHR.responseText == "SQL Error" ) {
+          alert( "There was an error with the database. If you get this response more than once, "
+            + "please try again later or contact admin@debrijja.com" );
+        } else if( jqXHR.responseText == "Unauthorized" ) {
+          alert( "You must be logged in to add a contact." );
+          window.location = "login.php";
+        } else {
+          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
+            + "please try again later or contact admin@debrijja.com." );
+        }
+      }
+    ).fail(function( data, status, jqXHR ) {
+      alert( "There was an unknown error in the server. If you get this error more than once, "
+        + "please try again later or contact admin@debrijja.com." );
+    }
+    ).always(function( data, status, jqXHR ) {
+      /* Debug */
+      console.log( "Sent     --> " + $( "form" ).serialize() );
+      console.log( "Received --> " + jqXHR.responseText );
+    });
+    
+    return false;
   });
 });

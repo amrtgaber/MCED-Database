@@ -73,48 +73,48 @@ if( !$_SESSION['username'] ) {
               <div class="row-fluid">
                 <div class="span1">First Name</div>
                 <div class="span5">
-                  <input type="text" class="span12" placeholder="Type first name here" name="firstName" required>
+                  <input type="text" name="firstName" class="span12" placeholder="Type first name here" name="firstName">
                 </div>
                 
                 <div class="span1">Last Name</div>
                 <div class="span5">
-                  <input type="text" class="span12" placeholder="Type last name here" name="lastName" required>
+                  <input type="text" name="lastName" class="span12" placeholder="Type last name here" name="lastName">
                 </div>
               </div>
 
               <div class="row-fluid">
                 <div class="span3">
-                  <input type="checkbox" name="wagebelow10" value="true">
+                  <input type="checkbox" name="wageBelow10" value="true">
                   I make less than $10 an hour.
                 </div>
                 
                 <div class="span1">Employer</div>
                 <div class="span8">
-                  <input type="text" class="span12" placeholder="Type employer here" name="workplace">
+                  <input type="text" name="employer" class="span12" placeholder="Type employer here" name="workplace">
                 </div>
               </div>
 
               <div class="row-fluid">
                 <div class="span1">Address</div>
                 <div class="span8">
-                  <input type="text" class="span12" placeholder="Type address here">
+                  <input type="text" name="address" class="span12" placeholder="Type address here">
                 </div>
 
                 <div class="span1">Apt. no.</div>
                 <div class="span2">
-                  <input type="text" class="span12" placeholder="Type Apt. no. here">
+                  <input type="text" name="aptNo" class="span12" placeholder="Type Apt. no. here">
                 </div>
               </div>
                 
               <div class="row-fluid">
                 <div class="span1">City</div>
                 <div class="span6">
-                  <input type="text" class="span12" placeholder="Type city here">
+                  <input type="text" name="city" class="span12" placeholder="Type city here">
                 </div>
 
                 <div class="span1">State</div>
                 <div class="span1">
-                  <input type="text" class="span12" placeholder="State">
+                  <input type="text" name="state" class="span12" placeholder="State">
                 </div>
                 <div class="span1">Zipcode</div>
                 <div class="span2">
@@ -136,7 +136,7 @@ if( !$_SESSION['username'] ) {
                 
               <div class="row-fluid">
                 <div class="span12">
-                  <input type="checkbox" name="text-updates" value="true">
+                  <input type="checkbox" name="textUpdates" value="true">
                   Send me text message updates.
                 </div>
               </div>
@@ -149,53 +149,43 @@ if( !$_SESSION['username'] ) {
               </div>
 
               <div class="row-fluid">
-                <div class="span12" id="error-contact"></div>
+                <div class="span12" id="error"></div>
               </div>
             </div>
 
             <div class="well">
-              <h5>Worker Information (Optional)</h5>
+              <div class="row-fluid">
+                <div class="span4"><h5>Worker Information (Optional)</h5></div>
+                <div class="span8"><h5>Student Information (Optional)</h5></div>
+              </div>
 
               <div class="row-fluid">
-                <div class="span1">Workplace</div>
-                <div class="span7">
-                  <input type="text" name="workplace" class="span12" placeholder="Type workplace here">
-                </div>
-
                 <div class="span1">Wage</div>
                 <div class="span1 input-prepend">
-                  <span class="add-on">$</span><input type="text" name="dollars" class="span12" placeholder="Dollars">
+                  <span class="add-on">$</span><input type="text" name="dollars" class="span12" placeholder="dollars">
                 </div>
                 <div class="span1 input-prepend">
-                  <span class="add-on">.</span><input type="text" name="cents" class="span12" placeholder="Cents">
+                  <span class="add-on">.</span><input type="text" name="cents" class="span12" placeholder="cents">
                 </div>
-              </div>
-              
-              <div class="row-fluid">
-                <div class="span12" id="error-worker"></div>
-              </div>
-            </div>
-              
-            <div class="well">
-              <h5>Student Information (Optional)</h5>
+                
+                <div class="span1"></div>
 
-              <div class="row-fluid">
                 <div class="span1">School</div>
-                <div class="span8">
-                  <input type="text" class="span12" placeholder="Type school here">
+                <div class="span4">
+                  <input type="text" name="school" class="span12" placeholder="Type school here">
                 </div>
 
                 <div class="span1">Year</div>
-                <div class="span2">
-                  <input type="text" name="year" class="span12" placeholder="Type year here">
+                <div class="span1 input-prepend">
+                  <span class="add-on">20</span><input type="text" name="year" class="span12" placeholder="year">
                 </div>
               </div>
               
               <div class="row-fluid">
-                <div class="span12" id="error-student"></div>
+                <div class="span12" id="error-optional"></div>
               </div>
             </div>
-            
+              
             <div class="row-fluid">
               <div class="span3">
                 <button type="submit" class="btn btn-primary btn-large">Add Contact</button>

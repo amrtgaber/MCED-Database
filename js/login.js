@@ -11,6 +11,7 @@ $( document ).ready(function() {
     ).fail(function() {
       $( "#error" ).html( "Incorrect username or password" );
     });
+    
     return false;
   });
 });

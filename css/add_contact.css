@@ -1,4 +1,4 @@
-#error-contact, #error-worker, #error-student {
+#error, #error-optional {
   color: red;
 }
 
