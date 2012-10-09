@@ -47,7 +47,7 @@ $( document ).ready(function() {
         maxlength: 2,
         digits: true
       },
-      year: {
+      syear: {
         minlength: 2,
         maxlength: 2,
         digits: true
@@ -88,10 +88,10 @@ $( document ).ready(function() {
         maxlength: "Cents must be exactly 2 digits long.",
         digits: "Cents can only contain digits."
       },
-      year: {
-        minlength: "Year must be exactly 2 digits long.",
-        maxlength: "Year must be exactly 2 digits long.",
-        digits: "Year can only contain digits."
+      syear: {
+        minlength: "School year must be exactly 2 digits long.",
+        maxlength: "School year must be exactly 2 digits long.",
+        digits: "School year can only contain digits."
       }
     },
     errorPlacement: function( error, element ) {
@@ -99,6 +99,7 @@ $( document ).ready(function() {
           || element.attr( "name" ) == "lastName"
           || element.attr( "name" ) == "email"
           || element.attr( "name" ) == "phone"
+          || element.attr( "name" ) == "cell"
           || element.attr( "name" ) == "state"
           || element.attr( "name" ) == "zipcode" ) {
         error.appendTo( $( "#error" ) );
@@ -117,37 +118,39 @@ $( document ).ready(function() {
     $.post(
       "add_contact_action.php",
       $( "form" ).serialize(),
-      function( data, status, jqXHR ) {
-        if( jqXHR.responseText == "Success" ) {
+      function( data, st, jqXHR ) {
+        var response = jqXHR.responseText;
+
+        if( response == "Success" ) {
           alert( "Success! "
             + $( "input[name=firstName]" ).val()
             + " "
             + $( "input[name=lastName]" ).val()
             + " was added to the database." );
-        } else if( jqXHR.responseText == "Invalid Name" ) {
+        } else if( response == "Invalid Name" ) {
           alert( "First Name and Last Name are required fields.");
-        } else if( jqXHR.responseText == "Invalid State" ) {
+        } else if( response == "Invalid State" ) {
           alert( "State field is invalid." );
-        } else if( jqXHR.responseText == "Invalid Zipcode" ) {
+        } else if( response == "Invalid Zipcode" ) {
           alert( "Zipcode field is invalid." );
-        } else if( jqXHR.responseText == "Invalid Phone" ) {
+        } else if( response == "Invalid Phone" ) {
           alert( "Phone field is invalid." );
-        } else if( jqXHR.responseText == "Invalid Cell" ) {
+        } else if( response == "Invalid Cell" ) {
           alert( "Cell field is invalid." );
-        } else if( jqXHR.responseText == "Invalid Email" ) {
+        } else if( response == "Invalid Email" ) {
           alert( "Email field is invalid." );
-        } else if( jqXHR.responseText == "Invalid Dollars" ) {
+        } else if( response == "Invalid Dollars" ) {
           alert( "Dollars field is invalid." );
-        } else if( jqXHR.responseText == "Invalid Cents" ) {
+        } else if( response == "Invalid Cents" ) {
           alert( "Cents field is invalid." );
-        } else if( jqXHR.responseText == "Invalid Year" ) {
-          alert( "Year field is invalid." );
-        } else if( jqXHR.responseText == "Duplicate Entry" ) {
+        } else if( response == "Invalid School Year" ) {
+          alert( "School year field is invalid." );
+        } else if( response == "Duplicate Entry" ) {
           alert( "This contact already exists in the database." );
-        } else if( jqXHR.responseText == "SQL Error" ) {
+        } else if( response == "SQL Error" ) {
           alert( "There was an error with the database. If you get this response more than once, "
             + "please try again later or contact admin@debrijja.com" );
-        } else if( jqXHR.responseText == "Unauthorized" ) {
+        } else if( response == "Unauthorized" ) {
           alert( "You must be logged in to add a contact." );
           window.location = "login.php";
         } else {
@@ -155,11 +158,11 @@ $( document ).ready(function() {
             + "please try again later or contact admin@debrijja.com." );
         }
       }
-    ).fail(function( data, status, jqXHR ) {
+    ).fail(function( data, st, jqXHR ) {
       alert( "There was an unknown error in the server. If you get this error more than once, "
         + "please try again later or contact admin@debrijja.com." );
     }
-    ).always(function( data, status, jqXHR ) {
+    ).always(function( data, st, jqXHR ) {
       /* Debug */
       console.log( "Sent     --> " + $( "form" ).serialize() );
       console.log( "Received --> " + jqXHR.responseText );

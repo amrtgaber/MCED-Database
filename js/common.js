@@ -1,5 +1,5 @@
-$(document).ready(function() {
-  $("#logout").click(function() {
+$( document ).ready(function() {
+  $( "#logout" ).click(function() {
     $.post(
       'logout.php', 
       function() { 

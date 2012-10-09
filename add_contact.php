@@ -177,7 +177,7 @@ if( !$_SESSION['username'] ) {
 
                 <div class="span1">Year</div>
                 <div class="span1 input-prepend">
-                  <span class="add-on">20</span><input type="text" name="year" class="span12" placeholder="year">
+                  <span class="add-on">20</span><input type="text" name="syear" class="span12" placeholder="year">
                 </div>
               </div>
               

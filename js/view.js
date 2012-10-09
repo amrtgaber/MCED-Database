@@ -1,9 +1,9 @@
-$(document).ready(function() {
-  $("#generate-list").click(function() {
+$( document ).ready(function() {
+  $( "#generate-list" ).click(function() {
     window.location = "generate_list.php";
   });
 
-  $("#view-shop-profile").click(function() {
+  $( "#view-shop-profile" ).click(function() {
     window.location = "view_shop_profile.php";
   });
 });

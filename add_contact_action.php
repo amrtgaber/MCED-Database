@@ -68,12 +68,12 @@ if( $_POST[ 'dollars' ] ) {
 }
 
 
-if( $_POST[ 'employer' ] ) {
+/*if( $_POST[ 'employer' ] ) {
   $isWorker         = true;
   $workplace        = mysql_real_escape_string( strtolower( $_POST[ 'employer' ] ) );
   $workers_columns .= ", wname";
   $workers_values  .= ", '" . $workplace . "'";
-}
+}*/
 
 /* Student information */
 $isStudent = false;
@@ -82,15 +82,15 @@ if( $_POST[ 'school' ] ) {
   $isStudent = true;
   $school    = mysql_real_escape_string( strtolower( $_POST[ 'school' ] ) );
 
-  if( $_POST[ 'year' ] ) {
-    if( !ctype_digit( $_POST[ 'year' ] ) || strlen( $_POST[ 'year' ] ) != 2 ) {
-      echo( "Invalid Year" );
+  if( $_POST[ 'syear' ] ) {
+    if( !ctype_digit( $_POST[ 'syear' ] ) || strlen( $_POST[ 'syear' ] ) != 2 ) {
+      echo( "Invalid School Year" );
       exit;
     } else {
       /* school and year */
-      $year             = mysql_real_escape_string( $_POST[ 'year' ] );
-      $students_columns = "school, year";
-      $students_values  = "'" . $school . "', '20" . $year . "'";
+      $syear            = mysql_real_escape_string( $_POST[ 'syear' ] );
+      $students_columns = "school, syear";
+      $students_values  = "'" . $school . "', '20" . $syear . "'";
     }
   } else {
     /* school */
@@ -157,51 +157,37 @@ $hasPhoneInfo = false;
 if( $_POST[ 'phone' ] ) {
   $hasPhoneInfo = true;
 
-  if( ctype_digit( $_POST[ 'phone' ] ) && strlen( $_POST[ 'phone' ] ) == 7 ) {
-    /* phone number only */
-    $phone          = mysql_real_escape_string( $_POST[ 'phone' ] );
-    $phone_columns .= "phone";
-    $phone_values  .= "'" . $phone . "'";
-  } else if( ctype_digit( $_POST[ 'phone' ] ) && strlen( $_POST[ 'phone' ] ) == 10 ) {
-    /* area code and phone */
-    $phone          = mysql_real_escape_string( $_POST[ 'phone' ] );
-    $phone_columns .= "area_code, phone";
-    $phone_values  .= "'" . substr( $phone, 0, 3 ) . "', '" . substr( $phone, 3 ) . "'";
-  } else {
+  if( !ctype_digit( $_POST[ 'phone' ] ) || ( strlen( $_POST[ 'phone' ] ) != 7 && strlen( $_POST[ 'phone' ] ) != 10 ) ) {
     echo( "Invalid Phone" );
     exit;
+  } else {
+    $phone         = mysql_real_escape_string( $_POST[ 'phone' ] );
+    $phone_columns = "phone";
+    $phone_values  = "'" . $phone . "'";
   }
-
-  $phone_columns .= ", cell";
-  $phone_values  .= ", 0";
 }
 
-$hasCellInfo = false;
-
 if( $_POST[ 'cell' ] ) {
-  $hasCellInfo = true;
   
-  if( ctype_digit( $_POST[ 'phone' ] ) && strlen( $_POST[ 'cell' ] ) == 7 ) {
-    /* cell number only */
-    $phone         = mysql_real_escape_string( $_POST[ 'cell' ] );
-    $cell_columns .= "phone";
-    $cell_values  .= "'" . $phone . "'";
-  } else if( ctype_digit( $_POST[ 'phone' ] ) && strlen( $_POST[ 'cell' ] ) == 10 ) {
-    /* area code and cell */
-    $phone         = mysql_real_escape_string( $_POST[ 'cell' ] );
-    $cell_columns .= "area_code, phone";
-    $cell_values  .= "'" . substr( $phone, 0, 3 ) . "', '" . substr( $phone, 3 ) . "'";
-  } else {
+  if( !ctype_digit( $_POST[ 'cell' ] ) || ( strlen( $_POST[ 'cell' ] ) != 7 && strlen( $_POST[ 'cell' ] ) != 10 ) ) {
     echo( "Invalid Cell" );
     exit;
+  } else {
+    $cell = mysql_real_escape_string( $_POST[ 'cell' ] );
+
+    if( $hasPhoneInfo ) {
+      $phone_columns .= ", cell";
+      $phone_values  .= ", '" . $cell . "'";
+    } else {
+      $hasPhoneInfo  = true;
+      $phone_columns = "cell";
+      $phone_values  = "'" . $cell . "'";
+    }
   }
 
-  $cell_columns .= ", cell";
-  $cell_values  .= ", 1";
-
   if( $_POST[ 'textUpdates' ] ) {
-    $cell_columns .= ", text_updates";
-    $cell_values  .= ", 1";
+    $phone_columns .= ", text_updates";
+    $phone_values  .= ", 1";
   }
 }
 
@@ -251,13 +237,13 @@ if( $row[ 'first_name' ] && $row[ 'last_name' ] ) {
 
   $row = mysql_fetch_array( $qr );
 
-  if( ( $row[ 'address' ] == $address
-      && $row[ 'city' ] == $city
-      && $row[ 'state' ] == $state
+  if( (  $row[ 'address' ] == $address
+      && $row[ 'city'    ] == $city
+      && $row[ 'state'   ] == $state
       && $row[ 'zipcode' ] == $zipcode )
-      || $row[ 'phone' ] == $phone
-      || $row[ 'cell' ] == $cell
-      || $row[ 'email' ] == $email ) {
+      || $row[ 'phone'   ] == $phone
+      || $row[ 'cell'    ] == $cell
+      || $row[ 'email'   ] == $email ) {
     echo( "Duplicate Entry" );
     exit;
   }
@@ -318,18 +304,6 @@ if( $hasPhoneInfo ) {
   $qs = "INSERT INTO contact_phone
         ( cid, " . $phone_columns . ")
         VALUES (" . $cid . ", " . $phone_values . ")";
-  $qr = mysql_query( $qs, $mc );
-
-  if( !$qr ) {
-    echo( "SQL Error");
-    exit;
-  }
-}
-
-if( $hasCellInfo ) {
-  $qs = "INSERT INTO contact_phone
-        ( cid, " . $cell_columns . ")
-        VALUES (" . $cid . ", " . $cell_values . ")";
   $qr = mysql_query( $qs, $mc );
 
   if( !$qr ) {
