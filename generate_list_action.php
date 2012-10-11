@@ -101,7 +101,7 @@ if( $_POST[ 'wage' ] || $_POST[ 'workplace' ] ) {
   }
 
   if( $_POST[ 'workplace' ] ) {
-    $selection  .= ", workplaces.wname";
+    $selection  .= ", workers.employer, workplaces.wname";
     $joinString .= " LEFT JOIN workplaces ON workers.wid = workplaces.wid";
     $html       .= "<th>Workplace</th>";
   }
@@ -221,6 +221,8 @@ while( $row = mysql_fetch_array( $qr ) ) {
   if( $_POST[ 'workplace' ] ) {
     if( $row[ 'wname' ] ) {
       $html .= "<td>" . ucwords( $row[ 'wname' ] ) . "</td>";
+    } else if( $row[ 'employer' ] ) {
+      $html .= "<td>" . ucwords( $row[ 'employer' ] ) . "</td>";
     } else {
       $html .= "<td></td>";
     }

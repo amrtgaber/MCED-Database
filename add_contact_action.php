@@ -64,16 +64,16 @@ if( $_POST[ 'dollars' ] ) {
   }
 
   $workers_columns .= ", wage";
-  $workers_values  .= ", '" . $wage . "'";
+  $workers_values  .= ", " . $wage;
 }
 
 
-/*if( $_POST[ 'employer' ] ) {
+if( $_POST[ 'employer' ] ) {
   $isWorker         = true;
-  $workplace        = mysql_real_escape_string( strtolower( $_POST[ 'employer' ] ) );
-  $workers_columns .= ", wname";
-  $workers_values  .= ", '" . $workplace . "'";
-}*/
+  $employer         = mysql_real_escape_string( strtolower( $_POST[ 'employer' ] ) );
+  $workers_columns .= ", employer";
+  $workers_values  .= ", '" . $employer . "'";
+}
 
 /* Student information */
 $isStudent = false;
@@ -90,7 +90,7 @@ if( $_POST[ 'school' ] ) {
       /* school and year */
       $syear            = mysql_real_escape_string( $_POST[ 'syear' ] );
       $students_columns = "school, syear";
-      $students_values  = "'" . $school . "', '20" . $syear . "'";
+      $students_values  = "'" . $school . "', 20" . $syear;
     }
   } else {
     /* school */
@@ -141,7 +141,7 @@ if( $_POST[ 'zipcode' ] ) {
   } else {
     $zipcode           = mysql_real_escape_string( $_POST[ 'zipcode' ] );
     $contacts_columns .= ", zipcode";
-    $contacts_values  .= ", '" . $zipcode . "'";
+    $contacts_values  .= ", " . $zipcode;
   }
 }
 
@@ -163,7 +163,7 @@ if( $_POST[ 'phone' ] ) {
   } else {
     $phone         = mysql_real_escape_string( $_POST[ 'phone' ] );
     $phone_columns = "phone";
-    $phone_values  = "'" . $phone . "'";
+    $phone_values  = $phone;
   }
 }
 
@@ -177,11 +177,11 @@ if( $_POST[ 'cell' ] ) {
 
     if( $hasPhoneInfo ) {
       $phone_columns .= ", cell";
-      $phone_values  .= ", '" . $cell . "'";
+      $phone_values  .= ", " . $cell;
     } else {
       $hasPhoneInfo  = true;
       $phone_columns = "cell";
-      $phone_values  = "'" . $cell . "'";
+      $phone_values  = $cell;
     }
   }
 

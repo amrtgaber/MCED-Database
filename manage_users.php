@@ -1,7 +1,7 @@
 <?php
-/* File: manag_users.php
+/* File: manage_users.php
  * Author: Amr Gaber
- * Created: 9/27/2012
+ * Created: 27/9/2012
  * Description: Handles manage users page for KC99 database.
  */
 
@@ -86,19 +86,25 @@ if( !$_SESSION['username'] ) {
               <button class="btn btn-large btn-primary" type="button" id="remove-user">Remove User &raquo;</button>
             </div>
           </div><!--./row-fluid-->
-        </div><!--/.span9-->
         
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>Change Privilege Level</h2>
+              <p>Select this option if you'd like to change a user's privilege level.</p>
+            </div>
+          </div><!--/.row-fluid-->
+
+          <div class="row-fluid">
+            <div class="span6">
+              <button class="btn btn-large btn-primary" type="button" id="change-privileges">Change Privilege Level &raquo;</button>
+            </div>
+          </div><!--./row-fluid-->
+        </div><!--/.span9-->
+
         <!-- Sidebar -->
         <div class="span3">
           <div class="well sidebar-nav">
             <img src="img/kc99-logo-9-27.png">
-            <ul class="nav nav-list">
-              <li class="nav-header">Common Tasks</li>
-              <li class="active"><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-            </ul>
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/.row-fluid-->

@@ -248,13 +248,6 @@ if( !$_SESSION['username'] ) {
         <div class="span3">
           <div class="well sidebar-nav">
             <img src="img/kc99-logo-9-27.png">
-            <ul class="nav nav-list">
-              <li class="nav-header">Common Tasks</li>
-              <li class="active"><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-              <li><a href="#">Task</a></li>
-            </ul>
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/.row-fluid-->

@@ -1,8 +1,8 @@
 <?php
-/* File: modify.php
+/* File: add_user.php
  * Author: Amr Gaber
- * Created: 9/27/2012
- * Description: Handles modify page for KC99 database.
+ * Created: 10/10/2012
+ * Description: Handles adding a user to KC99 database.
  */
 
 /* Must be logged in to access this page */
@@ -20,12 +20,12 @@ if( !$_SESSION['username'] ) {
 
   <head>
     <meta charset="utf-8">
-    <title>KC99 - Database Modify</title>
+    <title>KC99 - Database Add User</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
-    <link href="css/modify.css" rel="stylesheet">
+    <link href="css/manage_users.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -54,7 +54,7 @@ if( !$_SESSION['username'] ) {
             <ul class="nav">
               <li><a href="view.php">View</a></li>
               <li><a href="add.php">Add</a></li>
-              <li class="active"><a href="modify.php">Modify</a></li>
+              <li><a href="modify.php">Modify</a></li>
               <li><a href="remove.php">Remove</a></li>
               <li><a href="manage_users.php">Manage Users</a></li>
             </ul>
@@ -69,25 +69,38 @@ if( !$_SESSION['username'] ) {
         <div class="span9">
           <div class="row-fluid">
             <div class="span6">
-              <h2>Modify Contact</h2>
-              <p>Select this option if you'd like to modify a contact.</p>
+              <h2>Add User</h2>
+              <p>Select this option if you'd like to add a user.</p>
             </div>
             <div class="span6">
-              <h2>Modify Shop Profile</h2>
-              <p>Select this option if you'd like to modify a shop profile.</p>
+              <h2>Remove user</h2>
+              <p>Select this option if you'd like to remove a user.</p>
             </div>
           </div><!--/.row-fluid-->
 
           <div class="row-fluid">
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="modify-contact">Modify Contact &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="add-user">Add User &raquo;</button>
             </div>
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="modify-shop-profile">Modify Shop Profile &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="remove-user">Remove User &raquo;</button>
+            </div>
+          </div><!--./row-fluid-->
+        
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>Change Privilege Level</h2>
+              <p>Select this option if you'd like to change a user's privilege level.</p>
+            </div>
+          </div><!--/.row-fluid-->
+
+          <div class="row-fluid">
+            <div class="span6">
+              <button class="btn btn-large btn-primary" type="button" id="change-privileges">Change Privilege Level &raquo;</button>
             </div>
           </div><!--./row-fluid-->
         </div><!--/.span9-->
-        
+
         <!-- Sidebar -->
         <div class="span3">
           <div class="well sidebar-nav">
@@ -107,7 +120,7 @@ if( !$_SESSION['username'] ) {
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/modify.js"></script>
+    <script src="js/manage_users.js"></script>
   </body>
 
 </html>
