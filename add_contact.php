@@ -8,8 +8,8 @@
 /* Must be logged in to access this page */
 session_start();
 
-if( !$_SESSION['username'] ) {
-  header('Location: login.php');
+if( !$_SESSION[ 'username' ] ) {
+  header( 'Location: login.php' );
   exit;
 }
 ?>
@@ -23,7 +23,7 @@ if( !$_SESSION['username'] ) {
     <title>KC99 - Database Add</title>
 
     <!-- CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/add_contact.css" rel="stylesheet">
       
@@ -46,7 +46,7 @@ if( !$_SESSION['username'] ) {
           <div class="nav-collapse collapse">
             <ul class="nav pull-right">
               <li><p class="navbar-text pull-right">
-                Logged in as <?php echo($_SESSION['username']); ?>
+                Logged in as <?php echo( $_SESSION[ 'username' ] ); ?>
               </p></li>
               <li class="divider-vertical"></li>
               <li><button type="button" id="logout" class="btn btn-small btn-inverse pull-right">Logout</button></li>
@@ -73,12 +73,12 @@ if( !$_SESSION['username'] ) {
               <div class="row-fluid">
                 <div class="span1">First Name</div>
                 <div class="span5">
-                  <input type="text" name="firstName" class="span12" placeholder="Type first name here" name="firstName">
+                  <input type="text" name="firstName" class="span12" placeholder="Type first name here">
                 </div>
                 
                 <div class="span1">Last Name</div>
                 <div class="span5">
-                  <input type="text" name="lastName" class="span12" placeholder="Type last name here" name="lastName">
+                  <input type="text" name="lastName" class="span12" placeholder="Type last name here">
                 </div>
               </div>
 
@@ -90,7 +90,7 @@ if( !$_SESSION['username'] ) {
                 
                 <div class="span1">Employer</div>
                 <div class="span8">
-                  <input type="text" name="employer" class="span12" placeholder="Type employer here" name="workplace">
+                  <input type="text" name="employer" class="span12" placeholder="Type employer here">
                 </div>
               </div>
 
@@ -212,7 +212,7 @@ if( !$_SESSION['username'] ) {
     
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/add_contact.js"></script>

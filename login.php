@@ -23,7 +23,7 @@ if( $_SESSION['username']) {
     <title>KC99 - Database Login</title>
 
     <!-- CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/login.css" rel="stylesheet">
       
@@ -84,7 +84,7 @@ if( $_SESSION['username']) {
 
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.js"></script>
     <script src="js/login.js"></script>
   </body>
 
