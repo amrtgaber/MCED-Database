@@ -99,23 +99,25 @@ if( !$_SESSION[ 'username' ] ) {
                 </div>
               </div>
 
-              <div class="span7 well">
-                <h4 id="privilege-header">Privilege Level</h4>
+              <div class="span5 well">
+                <h4 id="privilege-header">Privileges Granted</h4>
 
                 <div class="row-fluid">
-                  <span>More privileges</span>
-                  <span class="pull-right">Less privileges</span>
+                  <span>Least privileges</span>
+                  <span class="pull-right">Most privileges</span>
                   
                   <div id="slider"></div>
                 </div>
                   
                 <div class="row-fluid">
-                  <h5>Privileges Granted</h5>
-
-                  <div id="privilege-description">
-                    <ul>
-                      <li>View Database</li>
-                      <li>Add to Database</li>
+                  <div>
+                  <br />
+                    <ul id="privilege-description" class="unstyled">
+                      <li><span class="span4"></span><i class="icon-plus"></i>View Database</li>
+                      <li><i class="icon-plus"></i>Add to Database</li>
+                      <li><span class="span4"></span><i class="icon-plus"></i>Modify Database</li>
+                      <li><i class="icon-plus"></i>Remove from Database</li>
+                      <li><span class="span4"></span><i class="icon-plus"></i>Manage Users</li>
                     </ul>
                   </div>
                 </div>
