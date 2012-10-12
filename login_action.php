@@ -8,21 +8,25 @@
 /* Start a new session or continue an existing one */
 session_start();
 
-$username = mysql_real_escape_string($_POST['username']);
-$password = hash("sha256", $_POST['password']);
+$username = mysql_real_escape_string( $_POST[ 'username' ] );
+$password = hash( "sha256", $_POST[ 'password' ] );
 
-$mc = mysql_connect("localhost", "root", "debrijjadb") or die(mysql_error());
-mysql_select_db("kc99");
+$mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
+mysql_select_db( "kc99" );
 
-$qr = mysql_query("SELECT username, password FROM users WHERE username='" . $username . "' AND password='" . $password . "'", $mc);
-$row = mysql_fetch_array($qr);
-$username = $row['username'];
+$qs = "SELECT username, privilege_level
+       FROM users
+       WHERE username='" . $username . "' AND password='" . $password . "'";
+$qr = mysql_query( $qs, $mc );
 
-if($username) {
-  $_SESSION['username'] = $username;
-  header("HTTP/1.1 200 OK");
+$row = mysql_fetch_array( $qr );
+
+if( $username ) {
+  $_SESSION[ 'username' ] = $row[ 'username' ];
+  $_SESSION[ 'privilege_level' ] = $row[ 'privilege_level' ];
+  header( "HTTP/1.1 200 OK" );
 } else {
-  header("HTTP/1.1 401 Unauthorized");
+  header( "HTTP/1.1 401 Unauthorized" );
 }
 
 ?>

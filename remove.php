@@ -12,6 +12,12 @@ if( !$_SESSION[ 'username' ] ) {
   header( 'Location: login.php' );
   exit;
 }
+
+/* Must have privilege level of 3 or greater to access this page */
+if( $_SESSION[ 'privilege_level' ] < 3 ) {
+  header( 'Location: home.php' );
+  exit;
+}
 ?>
 
 <!DOCTYPE html>

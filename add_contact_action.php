@@ -17,7 +17,7 @@ if( !$_SESSION[ 'username' ] ) {
 /* Parse and sanitize $_POST[] input */
 
 /* First Name and Last Name */
-if( !$_POST[ 'firstName' ] || $_POST[ 'firstName' ] == "" || !$_POST[ 'lastName' ] || $_POST[ 'lastName' ] == "" ) {
+if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_POST[ 'lastName' ] ) || $_POST[ 'lastName' ] == "" ) {
   echo( "Invalid Name" );
   exit;
 } else {

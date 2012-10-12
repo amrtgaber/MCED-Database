@@ -53,10 +53,22 @@ if( !$_SESSION[ 'username' ] ) {
             </ul>
             <ul class="nav">
               <li><a href="view.php">View</a></li>
-              <li><a href="add.php">Add</a></li>
-              <li><a href="modify.php">Modify</a></li>
-              <li><a href="remove.php">Remove</a></li>
-              <li><a href="manage_users.php">Manage Users</a></li>
+ 
+              <?php if( $_SESSION[ 'privilege_level' ] > 0 ) { ?>
+                <li><a href="add.php">Add</a></li>
+              <?php } ?>
+              
+              <?php if( $_SESSION[ 'privilege_level' ] > 1 ) { ?>
+                <li><a href="modify.php">Modify</a></li>
+              <?php } ?>
+
+              <?php if( $_SESSION[ 'privilege_level' ] > 2 ) { ?>
+                <li><a href="remove.php">Remove</a></li>
+              <?php } ?>
+
+              <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
+                <li><a href="manage_users.php">Manage Users</a></li>
+              <?php } ?>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
@@ -72,52 +84,72 @@ if( !$_SESSION[ 'username' ] ) {
               <h2>View</h2>
               <p>Select this option if you'd like to generate a phone bank list, look at a shop profile, or view any other information.</p>
             </div>
-            <div class="span6">
-              <h2>Add</h2>
-              <p>Select this option if you'd like to add a contact (from a petition for example) or add a shop profile.</p>
-            </div>
+
+            <?php if( $_SESSION[ 'privilege_level' ] > 0 ) { ?>
+              <div class="span6">
+                <h2>Add</h2>
+                <p>Select this option if you'd like to add a contact (from a petition for example) or add a shop profile.</p>
+              </div>
+            <?php } ?>
           </div><!--/.row-fluid-->
 
           <div class="row-fluid">
             <div class="span6">
               <button class="btn btn-large btn-primary" type="button" id="view">View Database &raquo;</button>
             </div>
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="add">Add to Database &raquo;</button>
-            </div>
+
+            <?php if( $_SESSION[ 'privilege_level' ] > 0 ) { ?>
+              <div class="span6">
+                <button class="btn btn-large btn-primary" type="button" id="add">Add to Database &raquo;</button>
+              </div>
+            <?php } ?>
           </div><!--./row-fluid-->
           
           <div class="row-fluid">
+            <?php if( $_SESSION[ 'privilege_level' ] > 1 ) { ?>
             <div class="span6">
               <h2>Modify</h2>
               <p>Select this option if you'd like to modify a contact or shop profile.</p>
             </div>
-            <div class="span6">
-              <h2>Remove</h2>
-              <p>Select this option if you'd like to remove a contact or shop profile.</p>
-            </div>
+            <?php } ?>
+
+            <?php if( $_SESSION[ 'privilege_level' ] > 2 ) { ?>
+              <div class="span6">
+                <h2>Remove</h2>
+                <p>Select this option if you'd like to remove a contact or shop profile.</p>
+              </div>
+            <?php } ?>
           </div><!--/.row-fluid-->
           
           <div class="row-fluid">
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="modify">Modify Database &raquo;</button>
-            </div>
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="remove">Remove from Database &raquo;</button>
-            </div>
+            <?php if( $_SESSION[ 'privilege_level' ] > 1 ) { ?>
+              <div class="span6">
+                <button class="btn btn-large btn-primary" type="button" id="modify">Modify Database &raquo;</button>
+              </div>
+            <?php } ?>
+
+            <?php if( $_SESSION[ 'privilege_level' ] > 2 ) { ?>
+              <div class="span6">
+                <button class="btn btn-large btn-primary" type="button" id="remove">Remove from Database &raquo;</button>
+              </div>
+            <?php } ?>
           </div><!--./row-fluid-->
           
           <div class="row-fluid">
-            <div class="span6">
-              <h2>Manage Users</h2>
-              <p>Select this option if you'd like to manage user accounts or privileges.</p>
-            </div>
+            <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
+              <div class="span6">
+                <h2>Manage Users</h2>
+                <p>Select this option if you'd like to manage user accounts or privileges.</p>
+              </div>
+            <?php } ?>
           </div><!--/.row-fluid-->
           
           <div class="row-fluid">
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="manage-users">Manage Users &raquo;</button>
-            </div>
+            <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
+              <div class="span6">
+                <button class="btn btn-large btn-primary" type="button" id="manage-users">Manage Users &raquo;</button>
+              </div>
+            <?php } ?>
           </div><!--./row-fluid-->
         </div><!--/.span9-->
         

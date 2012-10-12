@@ -9,7 +9,7 @@
 session_start();
 
 /* Must be logged in for this to work */
-if( !$_SESSION[ 'username' ] ) {
+if( !isset( $_SESSION[ 'username' ] ) ) {
   echo( "Unauthorized" );
   exit;
 }
@@ -17,7 +17,7 @@ if( !$_SESSION[ 'username' ] ) {
 /* Parse and sanitize $_POST[] input */
 
 /* Username */
-if( !$_POST[ 'username' ] || $_POST[ 'username' ] == "" ) {
+if( !isset( $_POST[ 'username' ] ) || $_POST[ 'username' ] == "" ) {
   echo( "Invalid Username" );
   exit;
 }
@@ -30,7 +30,7 @@ if( strlen( $_POST[ 'username' ] ) < 4 ) {
 $username = mysql_real_escape_string( $_POST[ 'username' ] );
 
 /* Password */
-if( !$_POST[ 'password' ] || $_POST[ 'password' ] == "" ) {
+if( !isset( $_POST[ 'password' ] ) || $_POST[ 'password' ] == "" ) {
   echo( "Invalid Password" );
   exit;
 }
@@ -38,7 +38,7 @@ if( !$_POST[ 'password' ] || $_POST[ 'password' ] == "" ) {
 $password = mysql_real_escape_string( $_POST[ 'password' ] );
 
 /* Confirm Password */
-if( !$_POST[ 'confirmPassword' ]
+if( !isset( $_POST[ 'confirmPassword' ] )
     || $_POST[ 'confirmPassword' ] == ""
     || strcmp( $_POST[ 'confirmPassword' ], $password ) != 0 ) {
   echo( "Invalid Confirm Password" );
@@ -48,7 +48,7 @@ if( !$_POST[ 'confirmPassword' ]
 $password = hash( "sha256", $password );
 
 /* Privilege Level */
-if( !$_POST[ 'privilegeLevel' ] ) {
+if( !isset( $_POST[ 'privilegeLevel' ] ) ) {
   echo( "Invalid Privilege Level" );
   exit;
 }
