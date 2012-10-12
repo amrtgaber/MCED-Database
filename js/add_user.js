@@ -100,6 +100,8 @@ $( document ).ready(function() {
         } else if( response == "SQL Error" ) {
           alert( "There was an error with the database. If you get this response more than once, "
             + "please try again later or contact admin@debrijja.com" );
+        } else if( response == "Permission Denied" ) {
+          alert( "You do not have the required privilege level to add a user." );
         } else if( response == "Unauthorized" ) {
           alert( "You must be logged in to add a user." );
           window.location = "login.php";

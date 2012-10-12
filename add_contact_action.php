@@ -14,6 +14,12 @@ if( !$_SESSION[ 'username' ] ) {
   exit;
 }
 
+/* Must have privilege level of 1 or greater to access this page */
+if( $_SESSION[ 'privilege_level' ] < 1 ) {
+  echo( "Permission Denied" );
+  exit;
+}
+
 /* Parse and sanitize $_POST[] input */
 
 /* First Name and Last Name */
