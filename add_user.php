@@ -76,7 +76,7 @@ if( !$_SESSION[ 'username' ] ) {
 
           <form class="form-horizontal">
             <div class="row-fluid">
-              <div class="span5 well">
+              <div class="span6 well">
                 <div class="control-group">
                   <label class="control-label">Username</label>
                   <div class="controls">
@@ -87,16 +87,18 @@ if( !$_SESSION[ 'username' ] ) {
                 <div class="control-group">
                   <label class="control-label">Password</label>
                   <div class="controls">
-                    <input type="text" name="password" placeholder="Type password here">
+                    <input type="password" name="password" id="password" placeholder="Type password here">
                   </div>
                 </div>
                 
                 <div class="control-group">
                   <label class="control-label">Confirm Password</label>
                   <div class="controls">
-                    <input type="text" name="confirm-password" placeholder="Retype password here">
+                    <input type="password" name="confirmPassword" placeholder="Retype password here">
                   </div>
                 </div>
+
+                <div id="error"></div>
               </div>
 
               <div class="span5 well">
@@ -152,6 +154,7 @@ if( !$_SESSION[ 'username' ] ) {
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
 		<script src="js/jquery-ui-1.9.0.custom.js"></script>
+		<script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/add_user.js"></script>
   </body>

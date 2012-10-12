@@ -118,7 +118,7 @@ $( document ).ready(function() {
     $.post(
       "add_contact_action.php",
       $( "form" ).serialize(),
-      function( data, st, jqXHR ) {
+      function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
 
         if( response == "Success" ) {
@@ -158,11 +158,11 @@ $( document ).ready(function() {
             + "please try again later or contact admin@debrijja.com." );
         }
       }
-    ).fail(function( data, st, jqXHR ) {
+    ).fail(function( data, s, jqXHR ) {
       alert( "There was an unknown error in the server. If you get this error more than once, "
         + "please try again later or contact admin@debrijja.com." );
     }
-    ).always(function( data, st, jqXHR ) {
+    ).always(function( data, s, jqXHR ) {
       /* Debug */
       console.log( "Sent     --> " + $( "form" ).serialize() );
       console.log( "Received --> " + jqXHR.responseText );
