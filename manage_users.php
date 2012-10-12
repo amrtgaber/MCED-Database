@@ -59,10 +59,22 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
             </ul>
             <ul class="nav">
               <li><a href="view.php">View</a></li>
-              <li><a href="add.php">Add</a></li>
-              <li><a href="modify.php">Modify</a></li>
-              <li><a href="remove.php">Remove</a></li>
-              <li class="active"><a href="manage_users.php">Manage Users</a></li>
+ 
+              <?php if( $_SESSION[ 'privilege_level' ] > 0 ) { ?>
+                <li><a href="add.php">Add</a></li>
+              <?php } ?>
+              
+              <?php if( $_SESSION[ 'privilege_level' ] > 1 ) { ?>
+                <li><a href="modify.php">Modify</a></li>
+              <?php } ?>
+
+              <?php if( $_SESSION[ 'privilege_level' ] > 2 ) { ?>
+                <li><a href="remove.php">Remove</a></li>
+              <?php } ?>
+
+              <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
+                <li class="active"><a href="manage_users.php">Manage Users</a></li>
+              <?php } ?>
             </ul>
           </div><!--/.nav-collapse -->
         </div>
