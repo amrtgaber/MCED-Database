@@ -104,6 +104,67 @@ if( !$_SESSION[ 'username' ] ) {
         <div class="span3">
           <div class="well sidebar-nav">
             <img src="img/kc99-logo-9-27.png">
+
+            <ul class="nav nav-list">
+              <li class="nav-header">Database Statistics</li>
+            </ul>
+
+            <?php
+              $mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
+              mysql_select_db( "kc99" );
+              
+              $qs = "SELECT *
+                     FROM contacts
+                     WHERE contact_type='worker'";
+              $qr = mysql_query( $qs, $mc );
+              $numWorkers = mysql_num_rows( $qr );
+              
+              $qs = "SELECT *
+                     FROM contacts
+                     WHERE contact_type='student'";
+              $qr = mysql_query( $qs, $mc );
+              $numStudents = mysql_num_rows( $qr );
+              
+              $qs = "SELECT *
+                     FROM contacts
+                     WHERE contact_type='supporter'";
+              $qr = mysql_query( $qs, $mc );
+              $numSupporters = mysql_num_rows( $qr );
+              
+              $qs = "SELECT *
+                     FROM contacts
+                     WHERE contact_type='organizer'";
+              $qr = mysql_query( $qs, $mc );
+              $numOrganizers = mysql_num_rows( $qr );
+            ?>
+
+             <table class="table table-bordered table-hover table-condensed">
+              <thead>
+                <tr>
+                  <th>Contact Type</th>
+                  <th>Amount</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td>Workers</td>
+                  <td><?php echo( $numWorkers ); ?></td>
+                </tr>
+                <tr>
+                  <td>Students</td>
+                  <td><?php echo( $numStudents ); ?></td>
+                </tr>
+                <tr>
+                  <td>Supporters</td>
+                  <td><?php echo( $numSupporters ); ?></td>
+                </tr>
+                <tr>
+                  <td>Organizers</td>
+                  <td><?php echo( $numOrganizers ); ?></td>
+                </tr>
+              </tbody>
+            </table>
           </div><!--/.well -->
         </div><!--/span-->
       </div><!--/.row-fluid-->

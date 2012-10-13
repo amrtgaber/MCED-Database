@@ -8,8 +8,8 @@
 /* If user is already logged in redirect to home page */
 session_start();
 
-if( $_SESSION['username']) {
-  header("Location: home.php");
+if( $_SESSION[ 'username' ] ) {
+  header( "Location: home.php" );
   exit;
 }
 ?>
