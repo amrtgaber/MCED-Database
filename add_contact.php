@@ -173,11 +173,6 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
 
             <div class="well">
               <div class="row-fluid">
-                <div class="span4"><h5>Worker Information (Optional)</h5></div>
-                <div class="span8"><h5>Student Information (Optional)</h5></div>
-              </div>
-
-              <div class="row-fluid">
                 <div class="span1">Wage</div>
                 <div class="span1 input-prepend">
                   <span class="add-on">$</span><input type="text" name="dollars" class="span12" placeholder="dollars">

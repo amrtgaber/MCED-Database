@@ -1,5 +1,9 @@
 $(document).ready(function() {
-  $("#view").click(function() {
-    window.location = "view.php";
+  $("#modify-contact").click(function() {
+    window.location = "modify_contact.php";
+  });
+
+  $("#modify-shop-profile").click(function() {
+    window.location = "modify_shop_profile.php";
   });
 });

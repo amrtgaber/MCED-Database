@@ -138,7 +138,7 @@ if( !$_SESSION[ 'username' ] ) {
               $numOrganizers = mysql_num_rows( $qr );
             ?>
 
-             <table class="table table-bordered table-hover table-condensed">
+             <table class="table table-condensed">
               <thead>
                 <tr>
                   <th>Contact Type</th>

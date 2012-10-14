@@ -127,6 +127,10 @@ $( document ).ready(function() {
             + " "
             + $( "input[name=lastName]" ).val()
             + " was added to the database." );
+
+          $( "form" ).each(function () {
+            this.reset();
+          });
         } else if( response == "Invalid Name" ) {
           alert( "First Name and Last Name are required fields.");
         } else if( response == "Invalid State" ) {
