@@ -122,9 +122,9 @@ $response .= "<div class=\"row-fluid\">";
 $response .= "<div class=\"span1\">Phone</div>";
 $response .= "<div class=\"span5\">";
 if( $row[ 'phone' ] != 0 ) {
-  $phone = "";
-} else {
   $phone = $row[ 'phone' ];
+} else {
+  $phone = "";
 }
 $response .= "<input type=\"text\" name=\"phone\" class=\"span12\" value=\"". $phone . "\" placeholder=\"Type phone number here\">";
 $response .= "</div>";
@@ -132,9 +132,9 @@ $response .= "</div>";
 $response .= "<div class=\"span1\">Cell</div>";
 $response .= "<div class=\"span5\">";
 if( $row[ 'cell' ] != 0 ) {
-  $cell = "";
-} else {
   $cell = $row[ 'cell' ];
+} else {
+  $cell = "";
 }
 $response .= "<input type=\"text\" name=\"cell\" class=\"span12\" value=\"". $cell . "\" placeholder=\"Type cell phone number here\">";
 $response .= "</div></div>";
@@ -191,8 +191,10 @@ $response .= "<div class=\"span12\" id=\"error-optional\"></div>";
 $response .= "</div></div>";
 
 $response .= "<div class=\"row-fluid\">";
-$response .= "<div class=\"span3\">";
+$response .= "<div class=\"span1\">";
 $response .= "<button type=\"submit\" class=\"btn btn-primary btn-large\">Update</button>";
+$response .= "</div><div class=\"span1\">";
+$response .= "<button type=\"button\" id=\"backToSelect\" class=\"btn btn-large\">Back</button>";
 $response .= "<input type=\"hidden\" name=\"id\" value=\"" . $id . "\">";
 $response .= "</div></div>";
 

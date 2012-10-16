@@ -1,21 +1,21 @@
 $(document).ready(function() {
-  $("#view").click(function() {
+  $( "#view" ).click(function() {
     window.location = "view.php";
   });
 
-  $("#add").click(function() {
+  $( "#add" ).click(function() {
     window.location = "add.php";
   });
 
-  $("#modify").click(function() {
+  $( "#modify" ).click(function() {
     window.location = "modify.php";
   });
 
-  $("#remove").click(function() {
+  $( "#remove" ).click(function() {
     window.location = "remove.php";
   });
 
-  $("#manage-users").click(function() {
+  $( "#manage-users" ).click(function() {
     window.location = "manage_users.php";
   });
 });

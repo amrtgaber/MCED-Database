@@ -5,3 +5,7 @@
 #update {
   display: none;
 }
+
+#error, #error-optional {
+  color: red;
+}

@@ -1,6 +1,5 @@
 $( document ).ready(function() {
   $( "#search" ).submit(function() {
-    console.log( "#search submitted" );
     $.post(
       "modify_contact_action_search.php",
       $( "#search" ).serialize(),
@@ -12,6 +11,11 @@ $( document ).ready(function() {
           $( "#select" ).html( response.substring( 8 ) );
           $( "input[type=radio]:first" ).attr( "checked", true);
           $( "#select" ).fadeToggle( "slow" );
+  
+          $( "#backToSearch" ).click(function() {
+            $( "#select" ).hide();
+            $( "#search" ).fadeToggle( "slow" );
+          });
         } else if( response == "Not Found" ) {
           alert( "The contact you searched for was not found in the database.");
         } else if( response == "Invalid Name" ) {
@@ -43,7 +47,6 @@ $( document ).ready(function() {
   });
 
   $( "#select" ).submit(function() {
-    console.log( "#select submitted" );
     $.post(
       "modify_contact_action_select.php",
       $( "#select" ).serialize(),
@@ -54,6 +57,15 @@ $( document ).ready(function() {
           $( "#select" ).hide();
           $( "#update" ).html( response.substring( 8 ) );
           $( "#update" ).fadeToggle( "slow" );
+  
+          $( "#backToSelect" ).click(function() {
+            $( "#update" ).hide();
+            $( "#select" ).fadeToggle( "slow" );
+            
+            $( "#update" ).each(function () {
+              this.reset();
+            });
+          });
         } else if( response == "Invalid ID" ) {
           alert( "The ID of the contact you selected is invalid.");
         } else if( response == "SQL Error" ) {
@@ -188,7 +200,6 @@ $( document ).ready(function() {
   
   /* Submit form if valid */
   $( "#update" ).submit(function() {
-    console.log( "#update submitted" );
     if( !v.form() ) {
       return false;
     }
