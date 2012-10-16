@@ -214,7 +214,7 @@ $( document ).ready(function() {
           alert( "Success! The entry for "
             + $( "input[name=firstName]:last" ).val()
             + " "
-            + $( "input[name=lastName:last]" ).val()
+            + $( "input[name=lastName]:last" ).val()
             + " was successfully changed." );
 
           $( "#update" ).hide();

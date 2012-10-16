@@ -1,0 +1,8 @@
+.modal {
+  left: 30%;
+  width: 80%;
+}
+
+#error, #error-optional {
+  color: red;
+}

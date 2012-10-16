@@ -61,7 +61,7 @@ if( $contactType == "" ) {
 }
 
 /* Parse info and build response html */
-$selection  = "contacts.first_name, contacts.last_name";
+$selection  = "contacts.id, contacts.first_name, contacts.last_name";
 $joinString = "";
 $html = "<thead><tr><th>Last Name</th><th>First Name</th>";
 
@@ -250,6 +250,14 @@ while( $row = mysql_fetch_array( $qr ) ) {
     } else {
       $html .= "<td></td>";
     }
+  }
+
+  if( $_SESSION[ 'privilege_level' ] > 1 ) {
+    $html .= "<td width=\"20\"><button type=\"button\" data-id=\"" . $row[ 'id' ] . "\" class=\"btn btn-small btn-info edit\"><i class=\"icon-pencil\"></i></button></td>";
+  }
+  
+  if( $_SESSION[ 'privilege_level' ] > 2 ) {
+    $html .= "<td width=\"20\"><button type=\"button\" data-id=\"" . $row[ 'id' ] . "\" class=\"btn btn-small btn-danger remove\"><i class=\"icon-remove\"></i></button></td>";
   }
 
   $html .= "</tr>";

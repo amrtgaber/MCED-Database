@@ -146,7 +146,7 @@ if( $_POST[ 'phone' ] ) {
     $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
   }
 } else {
-  $phone = "NULL";
+  $phone = "0";
 }
 
 if( $_POST[ 'cell' ] ) {
@@ -158,7 +158,7 @@ if( $_POST[ 'cell' ] ) {
   }
 
 } else {
-  $cell = "NULL";
+  $cell = "0";
 }
 
 if( $_POST[ 'textUpdates' ] ) {
@@ -213,7 +213,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
            text_updates = " . $textupdates . "
          WHERE cid = " . $id;
 } else {
-  if( $phone != "NULL" || $cell != "NULL" ) {
+  if( $phone != "0" || $cell != "0" ) {
     $qs = "INSERT INTO contact_phone
            (cid, phone, cell, text_updates)
            VALUES

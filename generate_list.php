@@ -271,6 +271,16 @@ if( !$_SESSION[ 'username' ] ) {
         </div>
       </div>
 
+      <div id="modal" class="modal hide fade">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3>Modify Contact</h3>
+        </div>
+          
+        <form id="update">
+        </form>
+      </div>
+
       <!-- Footer -->
       <hr>
       <footer class="footer">
@@ -281,6 +291,7 @@ if( !$_SESSION[ 'username' ] ) {
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/generate_list.js"></script>
   </body>
