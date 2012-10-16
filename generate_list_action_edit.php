@@ -90,7 +90,12 @@ $response .= "</div>";
                 
 $response .= "<div class=\"span1\">Employer</div>";
 $response .= "<div class=\"span8\">";
-$response .= "<input type=\"text\" name=\"employer\" class=\"span12\" value=\"" . ucwords( $row[ 'employer' ] ) . "\" placeholder=\"Type employer here\">";
+if( strcmp( $row[ 'employer' ], "null" ) != 0 ) {
+  $employer = ucwords( $row[ 'employer' ] );
+} else {
+  $employer = "";
+}
+$response .= "<input type=\"text\" name=\"employer\" class=\"span12\" value=\"" . $employer . "\" placeholder=\"Type employer here\">";
 $response .= "</div></div>";
 
 $response .= "<div class=\"row-fluid\">";
@@ -101,7 +106,7 @@ $response .= "</div>";
 
 $response .= "<div class=\"span1\">Apt. no.</div>";
 $response .= "<div class=\"span2\">";
-$response .= "<input type=\"text\" name=\"aptNo\" class=\"span12\" value=\"" . $row[ 'apt_no' ] . "\" placeholder=\"Type Apt. no. here\">";
+$response .= "<input type=\"text\" name=\"aptNo\" class=\"span12\" value=\"" . strtoupper( $row[ 'apt_no' ] ) . "\" placeholder=\"Type Apt. no. here\">";
 $response .= "</div></div>";
                 
 $response .= "<div class=\"row-fluid\">";
@@ -184,7 +189,12 @@ $response .= "</div>";
 
 $response .= "<div class=\"span1\">Year</div>";
 $response .= "<div class=\"span1 input-prepend\">";
-$response .= "<span class=\"add-on\">20</span><input type=\"text\" name=\"syear\" class=\"span12\" value=\"" . $row[ 'syear'] . "\" placeholder=\"year\">";
+if( $row[ 'syear' ] != 0 ) {
+  $syear = $row[ 'syear' ];
+} else {
+  $syear = "";
+}
+$response .= "<span class=\"add-on\">20</span><input type=\"text\" name=\"syear\" class=\"span12\" value=\"" . $syear . "\" placeholder=\"year\">";
 $response .= "</div></div>";
               
 $response .= "<div class=\"row-fluid\">";

@@ -145,7 +145,9 @@ if( mysql_num_rows( $qr ) > 0 ) {
     $response .= "</td>";
 
     $response .= "<td>";
-    $response .= $row[ 'employer' ];
+    if( strcmp( $row[ 'employer' ], "null" ) != 0 ) {
+      $response .= $row[ 'employer' ];
+    }
     $response .= "</td>";
   
     $response .= "</tr>";

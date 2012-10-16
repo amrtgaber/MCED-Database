@@ -89,11 +89,11 @@ if( $_POST[ 'school' ] ) {
       $syear = mysql_real_escape_string( $_POST[ 'syear' ] );
     }
   } else {
-    $syear = "NULL";
+    $syear = 0;
   }
 } else {
   $school = "NULL";
-  $syear  = "NULL";
+  $syear  = 0;
 }
 
 /* Address */
@@ -213,7 +213,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
            text_updates = " . $textupdates . "
          WHERE cid = " . $id;
 } else {
-  if( $phone != "0" || $cell != "0" ) {
+  if( strcmp( $phone, "0" ) != 0 || strcmp( $cell, "0" ) != 0 ) {
     $qs = "INSERT INTO contact_phone
            (cid, phone, cell, text_updates)
            VALUES
@@ -239,7 +239,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
          SET email = '" . $email . "'
          WHERE cid = " . $id;
 } else {
-  if( $email != "NULL" ) {
+  if( strcmp( $email, "NULL" ) != 0 ) {
     $qs = "INSERT INTO contact_email
            (cid, email)
            VALUES
@@ -267,7 +267,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
            employer = '" . $employer . "'
          WHERE cid = " . $id;
 } else {
-  if( $wagebelow10 != 0 || $wage != "NULL" || $employer != "NULL" ) {
+  if( $wagebelow10 != 0 || strcmp( $wage, "NULL" ) != 0 || strcmp( $employer, "NULL" ) != 0 ) {
     $qs = "INSERT INTO workers
            (cid, wage_below_10, wage, employer)
            VALUES
@@ -294,9 +294,9 @@ if( mysql_num_rows( $qr ) == 1 ) {
            syear = " . $syear . "
          WHERE cid = " . $id;
 } else {
-  if( $school != "NULL" || $syear != "NULL" ) {
-    $qs = "INSERT INTO workers
-           (cid, school, year)
+  if( strcmp( $school, "NULL" ) != 0 || $syear != 0 ) {
+    $qs = "INSERT INTO students
+           (cid, school, syear)
            VALUES
            (" . $id . ", '" . $school . "', " . $syear . ")";
   }

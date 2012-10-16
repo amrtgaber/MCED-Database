@@ -221,7 +221,7 @@ while( $row = mysql_fetch_array( $qr ) ) {
   if( $_POST[ 'workplace' ] ) {
     if( $row[ 'wname' ] ) {
       $html .= "<td>" . ucwords( $row[ 'wname' ] ) . "</td>";
-    } else if( $row[ 'employer' ] ) {
+    } else if( strcmp( $row[ 'employer' ], "null" ) != 0 ) {
       $html .= "<td>" . ucwords( $row[ 'employer' ] ) . "</td>";
     } else {
       $html .= "<td></td>";
@@ -257,7 +257,7 @@ while( $row = mysql_fetch_array( $qr ) ) {
   }
   
   if( $_SESSION[ 'privilege_level' ] > 2 ) {
-    $html .= "<td width=\"20\"><button type=\"button\" data-id=\"" . $row[ 'id' ] . "\" class=\"btn btn-small btn-danger remove\"><i class=\"icon-remove\"></i></button></td>";
+    $html .= "<td width=\"20\"><button type=\"button\" data-id=\"" . $row[ 'id' ] . "\" class=\"btn btn-small btn-danger remove\"><i class=\"icon-trash\"></i></button></td>";
   }
 
   $html .= "</tr>";
