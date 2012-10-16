@@ -58,14 +58,20 @@ if( $_SESSION[ 'username' ] ) {
         <div class="span3">
           <div class="well">
             <form>
-              <h2>Login</h2>
-              <label>Username</label>
-              <input type="text" name="username" placeholder="Type username here" required>
-              <label>Password</label>
-              <input type="password" name="password" placeholder="Type password here" required>
-              <br />
-              <button type="submit" class="btn btn-primary">Login</button> 
-              <span id="error"></span>
+              <div class="row-fluid">
+                <h2>Login</h2>
+                
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Type username here" required>
+                
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Type password here" required>
+              </div>
+
+              <div class="row-fluid">
+                <button type="submit" class="btn btn-primary">Login</button> 
+                <div id="error"></div>
+              </div>
             </form>
           </div>
         </div><!--/.span3-->

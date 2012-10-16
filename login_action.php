@@ -19,11 +19,12 @@ $qs = "SELECT username, privilege_level
        WHERE username='" . $username . "' AND password='" . $password . "'";
 $qr = mysql_query( $qs, $mc );
 
-$row = mysql_fetch_array( $qr );
+if( mysql_num_rows( $qr ) > 0 ) {
+  $row = mysql_fetch_array( $qr );
 
-if( $username ) {
   $_SESSION[ 'username' ] = $row[ 'username' ];
   $_SESSION[ 'privilege_level' ] = $row[ 'privilege_level' ];
+
   header( "HTTP/1.1 200 OK" );
 } else {
   header( "HTTP/1.1 401 Unauthorized" );
