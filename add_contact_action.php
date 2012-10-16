@@ -174,7 +174,6 @@ if( $_POST[ 'phone' ] ) {
 }
 
 if( $_POST[ 'cell' ] ) {
-  
   if( !ctype_digit( $_POST[ 'cell' ] ) || ( strlen( $_POST[ 'cell' ] ) != 7 && strlen( $_POST[ 'cell' ] ) != 10 ) ) {
     echo( "Invalid Cell" );
     exit;

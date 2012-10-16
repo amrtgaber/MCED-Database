@@ -85,19 +85,20 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
+        <legend>Modify Contact</legend>
           <form id="search">
-          <legend>Modify Contact</legend>
             <h4>Which contact would you like to modify?</h4>
+
             <div class="well"> 
               <div class="row-fluid">
                 <div class="span1">First Name</div>
                 <div class="span5">
-                  <input type="text" name="firstName" class="span12" placeholder="Type first name here">
+                  <input type="text" name="firstName" class="span12" placeholder="Type first name here" required>
                 </div>
                 
                 <div class="span1">Last Name</div>
                 <div class="span5">
-                  <input type="text" name="lastName" class="span12" placeholder="Type last name here">
+                  <input type="text" name="lastName" class="span12" placeholder="Type last name here" required>
                 </div>
               </div>
             </div>
@@ -107,6 +108,12 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
                 <button type="submit" class="btn btn-primary btn-large">Search</button>
               </div>
             </div>
+          </form>
+
+          <form id="select">
+          </form>
+
+          <form id="update">
           </form>
         </div><!--/.span9-->
         
@@ -128,6 +135,7 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/modify_contact.js"></script>
   </body>

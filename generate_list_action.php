@@ -179,7 +179,7 @@ while( $row = mysql_fetch_array( $qr ) ) {
 
       if( $row[ 'apt_no' ] ) {
         $address .= " Apt. " . $row[ 'apt_no' ];
-    }
+      }
 
       $address .= ", " . ucwords( $row[ 'city' ] ) . ", " . strtoupper( $row[ 'state' ] ) . " " . $row[ 'zipcode' ];
       $html    .= "<td>" . $address . "</td>";
