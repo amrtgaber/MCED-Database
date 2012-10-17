@@ -163,6 +163,10 @@ if( !$_SESSION[ 'username' ] ) {
                   <td>Organizers</td>
                   <td><?php echo( $numOrganizers ); ?></td>
                 </tr>
+                <tr>
+                  <td><em>Total</em></td>
+                  <td><em><?php echo( $numWorkers + $numStudents + $numSupporters + $numOrganizers ); ?></em></td>
+                </tr>
               </tbody>
             </table>
           </div><!--/.well -->

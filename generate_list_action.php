@@ -135,6 +135,14 @@ if( $_POST[ 'assignedOrganizer' ] ) {
   $html       .= "<th>Assigned Organizer</th>";
 }
 
+if( $_SESSION[ 'privilege_level' ] > 1 ) {
+  $html .= "<th><i class=\"icon-pencil\"></i></th>";
+}
+
+if( $_SESSION[ 'privilege_level' ] > 2 ) {
+  $html .= "<th><i class=\"icon-trash\"></i></th>";
+}
+
 $html .= "</tr></thead><tbody>";
 
 /* Connect to database */

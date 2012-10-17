@@ -218,7 +218,7 @@ $( document ).ready(function() {
             + " was successfully changed." );
 
           $( "#update" ).hide();
-          $( "#search" ).fadeToggle();
+          $( "#search" ).fadeToggle( "slow" );
 
           $( "#update" ).each(function () {
             this.reset();

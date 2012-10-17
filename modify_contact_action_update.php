@@ -67,14 +67,14 @@ if( $_POST[ 'dollars' ] ) {
     }
   }
 } else {
-  $wage = "NULL";
+  $wage = 0;
 }
 
 
 if( $_POST[ 'employer' ] ) {
   $employer = mysql_real_escape_string( strtolower( $_POST[ 'employer' ] ) );
 } else {
-  $employer = "NULL";
+  $employer = "";
 }
 
 /* Student information */
@@ -92,7 +92,7 @@ if( $_POST[ 'school' ] ) {
     $syear = 0;
   }
 } else {
-  $school = "NULL";
+  $school = "";
   $syear  = 0;
 }
 
@@ -100,13 +100,13 @@ if( $_POST[ 'school' ] ) {
 if( $_POST[ 'address' ] ) {
   $address = mysql_real_escape_string( strtolower( $_POST[ 'address' ] ) );
 } else {
-  $address = "NULL";
+  $address = "";
 }
 
 if( $_POST[ 'city' ] ) {
   $city = mysql_real_escape_string( strtolower( $_POST[ 'city' ] ) );
 } else {
-  $city = "NULL";
+  $city = "";
 }
 
 if( $_POST[ 'state' ] ) {
@@ -117,7 +117,7 @@ if( $_POST[ 'state' ] ) {
     $state = mysql_real_escape_string( strtolower( $_POST[ 'state' ] ) );
   }
 } else {
-  $state = "NULL";
+  $state = "";
 }
 
 if( $_POST[ 'zipcode' ] ) {
@@ -128,13 +128,13 @@ if( $_POST[ 'zipcode' ] ) {
     $zipcode = mysql_real_escape_string( $_POST[ 'zipcode' ] );
   }
 } else {
-  $zipcode = "NULL";
+  $zipcode = "";
 }
 
 if( $_POST[ 'aptNo' ] ) {
   $aptno = mysql_real_escape_string( strtolower( $_POST[ 'aptNo' ] ) );
 } else {
-  $aptno = "NULL";
+  $aptno = "";
 }
 
 /* Phone and cell phone */
@@ -146,7 +146,7 @@ if( $_POST[ 'phone' ] ) {
     $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
   }
 } else {
-  $phone = "0";
+  $phone = 0;
 }
 
 if( $_POST[ 'cell' ] ) {
@@ -158,7 +158,7 @@ if( $_POST[ 'cell' ] ) {
   }
 
 } else {
-  $cell = "0";
+  $cell = 0;
 }
 
 if( $_POST[ 'textUpdates' ] ) {
@@ -176,7 +176,7 @@ if( $_POST[ 'email' ] ) {
     $email = mysql_real_escape_string( strtolower( $_POST[ 'email' ] ) );
   }
 } else {
-  $email = "NULL";
+  $email = "";
 }
 
 /* Connect to database */
@@ -213,7 +213,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
            text_updates = " . $textupdates . "
          WHERE cid = " . $id;
 } else {
-  if( strcmp( $phone, "0" ) != 0 || strcmp( $cell, "0" ) != 0 ) {
+  if( $phone != 0 || $cell != 0 ) {
     $qs = "INSERT INTO contact_phone
            (cid, phone, cell, text_updates)
            VALUES
@@ -239,7 +239,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
          SET email = '" . $email . "'
          WHERE cid = " . $id;
 } else {
-  if( strcmp( $email, "NULL" ) != 0 ) {
+  if( strcmp( $email, "" ) != 0 ) {
     $qs = "INSERT INTO contact_email
            (cid, email)
            VALUES
@@ -267,7 +267,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
            employer = '" . $employer . "'
          WHERE cid = " . $id;
 } else {
-  if( $wagebelow10 != 0 || strcmp( $wage, "NULL" ) != 0 || strcmp( $employer, "NULL" ) != 0 ) {
+  if( $wagebelow10 != 0 || strcmp( $wage, "" ) != 0 || strcmp( $employer, "" ) != 0 ) {
     $qs = "INSERT INTO workers
            (cid, wage_below_10, wage, employer)
            VALUES
@@ -294,7 +294,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
            syear = " . $syear . "
          WHERE cid = " . $id;
 } else {
-  if( strcmp( $school, "NULL" ) != 0 || $syear != 0 ) {
+  if( strcmp( $school, "" ) != 0 || $syear != 0 ) {
     $qs = "INSERT INTO students
            (cid, school, syear)
            VALUES

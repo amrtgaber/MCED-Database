@@ -1,5 +1,5 @@
 $(document).ready(function() {
-  $("#view").click(function() {
-    window.location = "view.php";
+  $( "#remove-contact" ).click(function() {
+    window.location = "remove_contact.php";
   });
 });
