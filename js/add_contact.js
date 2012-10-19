@@ -151,9 +151,11 @@ $( document ).ready(function() {
           alert( "School year field is invalid." );
         } else if( response == "Duplicate Entry" ) {
           alert( "This contact already exists in the database." );
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
+        } else if( response.substring( 0, 9 ) == "SQL Error" ) {
+          alert( "There was an error with the database: "
+                 + response.substring( 10 ) + ". "
+                 + "If you get this response more than once, "
+                 + "please try again later or contact admin@debrijja.com" );
         } else if( response == "Permission Denied" ) {
           alert( "You do not have the required privilege level to add a contact." );
         } else if( response == "Unauthorized" ) {
