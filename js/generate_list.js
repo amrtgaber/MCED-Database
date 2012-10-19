@@ -233,7 +233,7 @@ $(document).ready(function() {
     }
 
     $.post(
-      "modify_contact_action_update.php",
+      "contact_update_action.php",
       $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase(),
       function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
@@ -269,9 +269,11 @@ $(document).ready(function() {
           alert( "Cents field is invalid." );
         } else if( response == "Invalid School Year" ) {
           alert( "School year field is invalid." );
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
+        } else if( response.substring( 0, 9 ) == "SQL Error" ) {
+          alert( "There was an error with the database: "
+                 + response.substring( 10 ) + ". "
+                 + "If you get this response more than once, "
+                 + "please try again later or contact admin@debrijja.com" );
         } else if( response == "Permission Denied" ) {
           alert( "You do not have the required privilege level to modify a contact." );
         } else if( response == "Unauthorized" ) {

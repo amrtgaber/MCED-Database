@@ -1,8 +1,8 @@
 <?php
-/* File: add_contact_action.php
+/* File: contact_update_action.php
  * Author: Amr Gaber
  * Created: 02/10/2012
- * Description: Handles adding contact into KC99 database.
+ * Description: Handles adding or updating a contact for KC99 database.
  */
 
 /* Start a new session or continue an existing one */
@@ -11,12 +11,6 @@ session_start();
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
   echo( "Unauthorized" );
-  exit;
-}
-
-/* Must have privilege level of 1 or greater to access this page */
-if( $_SESSION[ 'privilege_level' ] < 1 ) {
-  echo( "Permission Denied" );
   exit;
 }
 
@@ -30,35 +24,93 @@ if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_
   exit;
 }
   
-/* Add to database */
 $firstname = mysql_real_escape_string( strtolower( $_POST[ 'firstName' ] ) );
 $lastname  = mysql_real_escape_string( strtolower( $_POST[ 'lastName' ] ) );
 
-$qs = "INSERT INTO contacts
-      ( first_name, last_name )
-      VALUES ( '" . $firstname . "', '" . $lastname . "' )";
-$qr = mysql_query( $qs, $mc );
+/* If id is present, update existing contact. Otherwise insert new contact. */
+if( $_POST[ 'id' ] ) {
+  /* Must have privilege level of 2 or greater to modify a contact */
+  if( $_SESSION[ 'privilege_level' ] < 2 ) {
+    echo( "Permission Denied" );
+    exit;
+  }
 
-if( !$qr ) {
-  echo( "SQL Error " . mysql_error() );
-  exit;
+  $id = mysql_real_escape_string( $_POST[ 'id' ] );
+
+  /* Update existing contact */
+  $qs = "UPDATE contacts
+         SET first_name = '" . $firstname . "',
+         last_name = '" . $lastname . "'
+         WHERE id = " . $id;
+
+  $qr = mysql_query( $qs, $mc );
+
+  if( !$qr ) {
+    echo( "SQL Error " . mysql_error() );
+    exit;
+  }
+
+  /* Get contact information */
+  $qs = "SELECT contacts.*,
+                contact_phone.*,
+                contact_email.*,
+                workers.*,
+                students.*,
+                CONCAT( assigned_organizers.first_name, ' ', assigned_organizers.last_name ) AS assigned_organizer
+         FROM contacts
+         LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
+         LEFT JOIN contact_email ON contacts.id = contact_email.cid
+         LEFT JOIN workers       ON contacts.id = workers.cid
+         LEFT JOIN workplaces    ON workers.wid = workplaces.wid
+         LEFT JOIN students      ON contacts.id = students.cid
+         LEFT JOIN ( 
+                   SELECT contact_organizer.cid, contacts.first_name, contacts.last_name
+                   FROM contacts, contact_organizer
+                   WHERE contacts.id = contact_organizer.oid
+                   ) assigned_organizers ON contacts.id = assigned_organizers.cid
+         WHERE contacts.id = " . $id;
+  $qr = mysql_query( $qs, $mc );
+
+  if( !$qr ) {
+    echo( "SQL Error " . mysql_error() );
+    exit;
+  }
+
+  $contact_info = mysql_fetch_array( $qr );
+} else {
+  /* Must have privilege level of 1 or greater to add a contact */
+  if( $_SESSION[ 'privilege_level' ] < 1 ) {
+    echo( "Permission Denied" );
+    exit;
+  }
+
+  /* Insert new contact */
+  $qs = "INSERT INTO contacts
+        ( first_name, last_name )
+        VALUES ( '" . $firstname . "', '" . $lastname . "' )";
+  $qr = mysql_query( $qs, $mc );
+
+  if( !$qr ) {
+    echo( "SQL Error " . mysql_error() );
+    exit;
+  }
+
+  /* Get id of the contact that was just added */
+  $qs = "SELECT id
+         FROM contacts
+         WHERE first_name = '" . $firstname . "' AND last_name = '" . $lastname. "'
+         ORDER BY id DESC
+         LIMIT 1";
+  $qr = mysql_query( $qs, $mc );
+
+  if( !$qr ) {
+    echo( "SQL Error " . mysql_error() );
+    exit;
+  }
+
+  $contact_info = mysql_fetch_array( $qr );
+  $id = $contact_info[ 'id' ];
 }
-
-/* Get id of the contact that was just added */
-$qs = "SELECT id
-       FROM contacts
-       WHERE first_name = '" . $firstname . "' AND last_name = '" . $lastname. "'
-       ORDER BY id DESC
-       LIMIT 1";
-$qr = mysql_query( $qs, $mc );
-
-if( !$qr ) {
-  echo( "SQL Error " . mysql_error() );
-  exit;
-}
-
-$row = mysql_fetch_array( $qr );
-$id = $row[ 'id' ];
 
 /* Contact type */
 $contactType = mysql_real_escape_string( strtolower( $_POST[ 'contactType' ] ) );
@@ -87,6 +139,19 @@ if( $_POST[ 'address' ] ) {
     echo( "SQL Error " . mysql_error() );
     exit;
   }
+} else {
+  if( !is_null( $contact_info[ 'street_no' ] ) ) {
+    $qs = "UPDATE contacts
+           SET street_no = NULL
+           WHERE id = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
 }
 
 /* City */
@@ -103,6 +168,19 @@ if( $_POST[ 'city' ] ) {
     echo( "SQL Error " . mysql_error() );
     exit;
   }
+} else {
+  if( !is_null( $contact_info[ 'city' ] ) ) {
+    $qs = "UPDATE contacts
+           SET city = NULL
+           WHERE id = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
 }
 
 /* State */
@@ -115,6 +193,19 @@ if( $_POST[ 'state' ] ) {
     
     $qs = "UPDATE contacts
            SET state = '" . $state . "'
+           WHERE id = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
+} else {
+  if( !is_null( $contact_info[ 'state' ] ) ) {
+    $qs = "UPDATE contacts
+           SET state = NULL
            WHERE id = " . $id;
 
     $qr = mysql_query( $qs, $mc );
@@ -145,6 +236,19 @@ if( $_POST[ 'zipcode' ] ) {
       exit;
     }
   }
+} else {
+  if( !is_null( $contact_info[ 'zipcode' ] ) ) {
+    $qs = "UPDATE contacts
+           SET zipcode = NULL
+           WHERE id = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
 }
 
 /* Apt No */
@@ -161,6 +265,19 @@ if( $_POST[ 'aptNo' ] ) {
     echo( "SQL Error " . mysql_error() );
     exit;
   }
+} else {
+  if( !is_null( $contact_info[ 'apt_no' ] ) ) {
+    $qs = "UPDATE contacts
+           SET apt_no = NULL
+           WHERE id = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
 }
 
 /* Phone Information */
@@ -174,16 +291,30 @@ if( $_POST[ 'phone' ] ) {
   } else {
     $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
 
-    if( $hasPhoneInfo ) {
+    if( $hasPhoneInfo || !is_null( $contact_info[ 'phone' ] ) ) {
       $qs = "UPDATE contact_phone
              SET phone = " . $phone . "
              WHERE cid = " . $id;
     } else {
-      $hasPhoneInfo = true;
       $qs = "INSERT INTO contact_phone
             ( cid, phone )
             VALUES ( " . $id . ", " . $phone . " )";
     }
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+    
+    $hasPhoneInfo = true;
+  }
+} else {
+  if( $contact_info[ 'phone' ] != 0 ) {
+    $qs = "UPDATE contact_phone
+           SET phone = 0
+           WHERE cid = " . $id;
 
     $qr = mysql_query( $qs, $mc );
 
@@ -202,16 +333,30 @@ if( $_POST[ 'cell' ] ) {
   } else {
     $cell = mysql_real_escape_string( $_POST[ 'cell' ] );
 
-    if( $hasPhoneInfo ) {
+    if( $hasPhoneInfo || !is_null( $contact_info[ 'cell' ] ) ) {
       $qs = "UPDATE contact_phone
              SET cell = " . $cell . "
              WHERE cid = " . $id;
     } else {
-      $hasPhoneInfo = true;
       $qs = "INSERT INTO contact_phone
             ( cid, cell )
             VALUES ( " . $id . ", " . $cell . " )";
     }
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+      
+    $hasPhoneInfo = true;
+  }
+} else {
+  if( $contact_info[ 'cell' ] != 0 ) {
+    $qs = "UPDATE contact_phone
+           SET cell = 0
+           WHERE cid = " . $id;
 
     $qr = mysql_query( $qs, $mc );
 
@@ -234,6 +379,32 @@ if( $_POST[ 'textUpdates' ] && $hasPhoneInfo ) {
     echo( "SQL Error " . mysql_error() );
     exit;
   }
+} else {
+  if( $contact_info[ 'text_updates' ] == 1 ) {
+    $qs = "UPDATE contact_phone
+           SET text_updates = 0
+           WHERE cid = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
+}
+
+if( !$hasPhoneInfo ) {
+  $qs = "DELETE
+         FROM contact_phone
+         WHERE cid = " . $id;
+
+  $qr = mysql_query( $qs, $mc );
+
+  if( !$qr ) {
+    echo( "SQL Error " . mysql_error() );
+    exit;
+  }
 }
 
 /* Email */
@@ -244,9 +415,35 @@ if( $_POST[ 'email' ] ) {
   } else {
     $email = mysql_real_escape_string( strtolower( $_POST[ 'email' ] ) );
     
-    $qs = "INSERT INTO contact_email
-          ( cid, email )
-          VALUES ( " . $id . ", '" . $email . "' )";
+    if( !is_null( $contact_info[ 'email' ] ) ) {
+      $qs = "UPDATE contact_email
+             SET email = '" . $email . "'
+             WHERE cid = " . $id;
+      
+      $qr = mysql_query( $qs, $mc );
+
+      if( !$qr ) {
+        echo( "SQL Error " . mysql_error() );
+        exit;
+      }
+    } else {
+      $qs = "INSERT INTO contact_email
+            ( cid, email )
+            VALUES ( " . $id . ", '" . $email . "' )";
+
+      $qr = mysql_query( $qs, $mc );
+
+      if( !$qr ) {
+        echo( "SQL Error " . mysql_error() );
+        exit;
+      }
+    }
+  }
+} else {
+  if( !is_null( $contact_info[ 'email' ] ) ) {
+    $qs = "DELETE
+           FROM contact_email
+           WHERE cid = " . $id;
 
     $qr = mysql_query( $qs, $mc );
 
@@ -258,18 +455,17 @@ if( $_POST[ 'email' ] ) {
 }
 
 /* Worker information */
-$hasWorkerInfo = false;
+$hasWorkerInfo      = false;
 
 /* Employer */
 if( $_POST[ 'employer' ] ) {
   $employer = mysql_real_escape_string( strtolower( $_POST[ 'employer' ] ) );
 
-  if( $hasWorkerInfo ) {
+  if( $hasWorkerInfo || !is_null( $contact_info[ 'employer' ] ) ) {
     $qs = "UPDATE workers
            SET employer = '" . $employer . "'
            WHERE cid = " . $id;
   } else {
-    $hasWorkerInfo = true;
     $qs = "INSERT INTO workers
           ( cid, employer )
           VALUES ( " . $id . ", '" . $employer . "' )";
@@ -281,18 +477,32 @@ if( $_POST[ 'employer' ] ) {
     echo( "SQL Error " . mysql_error() );
     exit;
   }
+    
+  $hasWorkerInfo = true;
+} else {
+  if( !is_null( $contact_info[ 'employer' ] ) ) {
+    $qs = "UPDATE workers
+           SET employer = NULL
+           WHERE cid = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
 }
 
 /* Wage below $10 / hour */
 if( $_POST[ 'wageBelow10' ] ) {
   $wagebelow10 = 1;
   
-  if( $hasWorkerInfo ) {
+  if( $hasWorkerInfo || !is_null( $contact_info[ 'wage_below_10' ] ) ) {
     $qs = "UPDATE workers
            SET wage_below_10 = " . $wagebelow10 . "
            WHERE cid = " . $id;
   } else {
-    $hasWorkerInfo = true;
     $qs = "INSERT INTO workers
           ( cid, wage_below_10 )
           VALUES ( " . $id . ", " . $wagebelow10 . " )";
@@ -307,11 +517,9 @@ if( $_POST[ 'wageBelow10' ] ) {
 
   $hasWorkerInfo = true;
 } else {
-  $wagebelow10 = 0;
-  
-  if( $hasWorkerInfo ) {
+  if( $hasWorkerInfo || !is_null( $contact_info[ 'wage_below_10' ] ) ) {
     $qs = "UPDATE workers
-           SET wage_below_10 = " . $wagebelow10 . "
+           SET wage_below_10 = NULL
            WHERE cid = " . $id;
     $qr = mysql_query( $qs, $mc );
 
@@ -344,16 +552,43 @@ if( $_POST[ 'dollars' ] ) {
     }
   }
 
-  if( $hasWorkerInfo ) {
+  if( $hasWorkerInfo || !is_null( $contact_info[ 'wage' ] ) ) {
     $qs = "UPDATE workers
            SET wage = " . $wage . "
            WHERE cid = " . $id;
   } else {
-    $hasWorkerInfo = true;
     $qs = "INSERT INTO workers
           ( cid, wage )
           VALUES ( " . $id . ", " . $wage . " )";
   }
+
+  $qr = mysql_query( $qs, $mc );
+
+  if( !$qr ) {
+    echo( "SQL Error " . mysql_error() );
+    exit;
+  }
+    
+  $hasWorkerInfo = true;
+} else {
+  if( !is_null( $contact_info[ 'wage' ] ) ) {
+    $qs = "UPDATE workers
+           SET wage = NULL
+           WHERE cid = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
+}
+
+if( !$hasWorkerInfo ) {
+  $qs = "DELETE
+         FROM workers
+         WHERE cid = " . $id;
 
   $qr = mysql_query( $qs, $mc );
 
@@ -370,12 +605,11 @@ $hasStudentInfo = false;
 if( $_POST[ 'school' ] ) {
   $school = mysql_real_escape_string( strtolower( $_POST[ 'school' ] ) );
 
-  if( $hasStudentInfo ) {
+  if( $hasStudentInfo  || !is_null( $contact_info[ 'school' ] ) ) {
     $qs = "UPDATE students
            SET school = '" . $school . "'
            WHERE cid = " . $id;
   } else {
-    $hasStudentInfo = true;
     $qs = "INSERT INTO students
           ( cid, school )
           VALUES ( " . $id . ", '" . $school . "' )";
@@ -387,6 +621,21 @@ if( $_POST[ 'school' ] ) {
     echo( "SQL Error " . mysql_error() );
     exit;
   }
+  
+  $hasStudentInfo = true;
+} else {
+  if( !is_null( $contact_info[ 'school' ] ) ) {
+    $qs = "DELETE
+           FROM students
+           WHERE cid = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
+    }
+  }
 }
 
 /* School Year */
@@ -397,7 +646,7 @@ if( $_POST[ 'syear' ] ) {
   } else {
     $syear = mysql_real_escape_string( $_POST[ 'syear' ] );
   
-    if( $hasStudentInfo ) {
+    if( $hasStudentInfo || !is_null( $contact_info[ 'syear' ] ) ) {
       $qs = "UPDATE students
              SET syear = " . $syear . "
              WHERE cid = " . $id;
@@ -408,6 +657,19 @@ if( $_POST[ 'syear' ] ) {
         echo( "SQL Error " . mysql_error() );
         exit;
       }
+    }
+  }
+} else {
+  if( !is_null( $contact_info[ 'syear' ] ) ) {
+    $qs = "UPDATE students
+           SET syear = NULL
+           WHERE cid = " . $id;
+
+    $qr = mysql_query( $qs, $mc );
+
+    if( !$qr ) {
+      echo( "SQL Error " . mysql_error() );
+      exit;
     }
   }
 }
