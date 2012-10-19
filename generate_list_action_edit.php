@@ -221,6 +221,11 @@ $response .= "<option id=\"optionOrganizer\" selected=\"true\">Organizer</option
 } else {
 $response .= "<option id=\"optionOrganizer\">Organizer</option>";
 }
+if( strcmp( $row[ 'contact_type' ], 'other' ) == 0 ) {
+  $response .= "<option id=\"optionOther\" selected=\"true\">Other</option>";
+} else {
+  $response .= "<option id=\"optionOther\">Other</option>";
+}
 $response .= "</select>";
 $response .= "</div></div>";
               

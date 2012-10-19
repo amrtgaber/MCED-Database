@@ -211,14 +211,19 @@ if( strcmp( $row[ 'contact_type' ], 'student' ) == 0 ) {
   $response .= "<option id=\"optionStudent\">Student</option>";
 }
 if( strcmp( $row[ 'contact_type' ], 'supporter' ) == 0 ) {
-$response .= "<option id=\"optionSupporter\" selected=\"true\">Supporter</option>";
+  $response .= "<option id=\"optionSupporter\" selected=\"true\">Supporter</option>";
 } else {
-$response .= "<option id=\"optionSupporter\">Supporter</option>";
+  $response .= "<option id=\"optionSupporter\">Supporter</option>";
 }
 if( strcmp( $row[ 'contact_type' ], 'organizer' ) == 0 ) {
-$response .= "<option id=\"optionOrganizer\" selected=\"true\">Organizer</option>";
+  $response .= "<option id=\"optionOrganizer\" selected=\"true\">Organizer</option>";
 } else {
-$response .= "<option id=\"optionOrganizer\">Organizer</option>";
+  $response .= "<option id=\"optionOrganizer\">Organizer</option>";
+}
+if( strcmp( $row[ 'contact_type' ], 'other' ) == 0 ) {
+  $response .= "<option id=\"optionOther\" selected=\"true\">Other</option>";
+} else {
+  $response .= "<option id=\"optionOther\">Other</option>";
 }
 $response .= "</select>";
 $response .= "</div></div>";

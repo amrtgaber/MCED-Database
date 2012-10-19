@@ -200,7 +200,7 @@ $qs = "UPDATE contacts
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error : " . mysql_error() );
+  echo( "SQL Error" );
   exit;
 }
 

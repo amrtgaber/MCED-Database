@@ -203,6 +203,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
                     <option id="optionStudent">Student</option>
                     <option id="optionSupporter">Supporter</option>
                     <option id="optionOrganizer">Organizer</option>
+                    <option id="optionOther">Other</option>
                   </select>
                 </div>
               </div>
