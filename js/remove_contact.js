@@ -64,7 +64,7 @@ $( document ).ready(function() {
           $( "#select" ).hide();
           $( "#search" ).fadeToggle( "slow" );
         } else if( response == "Invalid ID" ) {
-          alert( "The ID of the contact you selected is invalid.");
+          alert( "ID is a required field.");
         } else if( response == "SQL Error" ) {
           alert( "There was an error with the database. If you get this response more than once, "
             + "please try again later or contact admin@debrijja.com" );
