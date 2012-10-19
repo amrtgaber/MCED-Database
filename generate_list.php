@@ -278,6 +278,13 @@ if( !$_SESSION[ 'username' ] ) {
         </div>
           
         <form id="update">
+          <div id="modalBodyEdit" class="modal-body">
+          </div>
+          
+          <div class="modal-footer">
+            <button type="submit" id="updateButton" class="btn btn-primary btn-large">Save Changes</button>
+            <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+          </div>
         </form>
       </div>
         
@@ -287,7 +294,7 @@ if( !$_SESSION[ 'username' ] ) {
           <h3>Are you sure?</h3>
         </div>
           
-        <div class="modal-body">
+        <div id="modalBodyRemove" class="modal-body">
         </div>
         
         <div class="modal-footer">

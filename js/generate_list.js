@@ -1,7 +1,96 @@
 $(document).ready(function() {
+  /* Reset all fields when forms are switched */
   $( "a[data-toggle='tab']" ).click(function() {
     $( "form" ).each(function() {
       this.reset();
+    });
+  });
+
+  /* Basic form */
+  $( "#basic-form" ).submit(function() {
+    $.post(
+      "generate_list_action.php",
+      $( "#basic-form" ).serialize(),
+      function( data, st, jqXHR ) {
+        var response = jqXHR.responseText;
+
+        if( response == "Invalid People" ) {
+          alert( "You must select at least one group to include in the list." );
+        } else if( response == "Unauthorized" ) {
+          alert( "You must be logged in to add a contact." );
+          window.location = "login.php";
+        } else if( response == "SQL Error" ) {
+          alert( "There was an error with the database. If you get this response more than once, "
+            + "please try again later or contact admin@debrijja.com" );
+        } else {
+          $( "#list" ).html( response );
+
+          /* Edit contact */
+          $( "button.edit" ).click(function() {
+            var id = $( this ).attr( "data-id" );
+
+            $( "#modalBodyEdit" ).load( "contact_form_fields.php?id=" + id );
+            $( "#updateButton" ).attr( "data-id", id );
+            $( "#modal-edit" ).modal( "show" );
+          });
+          
+          /* Remove contact */
+          $( "button.remove" ).click(function() {
+            $( "#removeConfirm" ).attr( "data-id", $( this ).attr( "data-id" ) );
+            $( "#modalBodyRemove" ).html( "This action cannot be undone." );
+            $( "#modal-remove" ).modal( "show" );
+          });
+        }
+      }
+    ).fail(function( data, st, jqXHR ) {
+      alert( "There was an unknown error in the server. If you get this error more than once, "
+        + "please try again later or contact admin@debrijja.com." );
+    }
+    ).always(function( data, st, jqXHR ) {
+      /* Debug */
+      console.log( "Sent     --> " + $( "form" ).serialize() );
+      console.log( "Received --> " + jqXHR.responseText );
+    });
+    
+    return false;
+  });
+  
+  /* Remove confirmed */
+  $( "#removeConfirm" ).click(function() {
+    $.post(
+      "remove_contact_action.php",
+      "id=" + $( "#removeConfirm" ).attr( "data-id" ),
+      function( data, s, jqXHR ) {
+        var response = jqXHR.responseText;
+
+        if( response == "Success" ) {
+          alert( "Success! The entry was successfully removed." );
+          
+          $( "#modal-remove" ).modal( "hide" );
+          $( "#basic-form" ).submit();
+        } else if( response == "Invalid ID" ) {
+          alert( "The ID of the contact you selected is invalid.");
+        } else if( response == "SQL Error" ) {
+          alert( "There was an error with the database. If you get this response more than once, "
+            + "please try again later or contact admin@debrijja.com" );
+        } else if( response == "Permission Denied" ) {
+          alert( "You do not have the required privilege level to modify a contact." );
+        } else if( response == "Unauthorized" ) {
+          alert( "You must be logged in to add a contact." );
+          window.location = "login.php";
+        } else {
+          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
+            + "please try again later or contact admin@debrijja.com." );
+        }
+      }
+    ).fail(function( data, s, jqXHR ) {
+      alert( "There was an unknown error in the server. If you get this error more than once, "
+        + "please try again later or contact admin@debrijja.com." );
+    }
+    ).always(function( data, s, jqXHR ) {
+      /* Debug */
+      console.log( "Sent     --> " + "id=" + $( "#removeConfirm" ).attr( "data-id" ) );
+      console.log( "Received --> " + jqXHR.responseText );
     });
   });
 
@@ -109,124 +198,7 @@ $(document).ready(function() {
     }
   });
 
-  $( "#basic-form" ).submit(function() {
-    $.post(
-      "generate_list_action.php",
-      $( "#basic-form" ).serialize(),
-      function( data, st, jqXHR ) {
-        var response = jqXHR.responseText;
-
-        if( response == "Invalid People" ) {
-          alert( "You must select at least one group to include in the list." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a contact." );
-          window.location = "login.php";
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
-        } else {
-          $( "#list" ).html( response );
-
-          $( "button.edit" ).click(function() {
-            var id = $( this ).attr( "data-id" );
-
-            $.post(
-              "generate_list_action_edit.php",
-              "id=" + id,
-              function( data, st, jqXHR ) {
-                var response = jqXHR.responseText;
-
-                if( response.substring( 0, 7 ) == "Success" ) {
-                  $( "#update" ).html( response.substring( 8 ) );
-                  $( "#modal-edit" ).modal( "show" );
-                } else if( response == "Invalid ID" ) {
-                  alert( "The ID of the contact you selected is invalid." );
-                } else if( response == "SQL Error" ) {
-                  alert( "There was an error with the database. If you get this response more than once, "
-                    + "please try again later or contact admin@debrijja.com" );
-                } else if( response == "Permission Denied" ) {
-                  alert( "You do not have the required privilege level to modify a contact." );
-                } else if( response == "Unauthorized" ) {
-                  alert( "You must be logged in to add a contact." );
-                  window.location = "login.php";
-                } else {
-                  alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-                    + "please try again later or contact admin@debrijja.com." );
-                }
-              }
-            ).fail(function( data, s, jqXHR ) {
-              alert( "There was an unknown error in the server. If you get this error more than once, "
-                + "please try again later or contact admin@debrijja.com." );
-            }
-            ).always(function( data, s, jqXHR ) {
-              /* Debug */
-              console.log( "Sent     --> " + "id=" + id );
-              console.log( "Received --> " + jqXHR.responseText );
-            });
-          });
-          
-          $( "button.remove" ).click(function() {
-            var id = $( this ).attr( "data-id" );
-            
-            $( "#removeConfirm" ).attr( "data-id", id );
-
-            $( ".modal-body" ).html( "This action cannot be undone." );
-            $( "#modal-remove" ).modal( "show" );
-          });
-        }
-      }
-    ).fail(function( data, st, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
-    }
-    ).always(function( data, st, jqXHR ) {
-      /* Debug */
-      console.log( "Sent     --> " + $( "form" ).serialize() );
-      console.log( "Received --> " + jqXHR.responseText );
-    });
-    
-    return false;
-  });
-  
-  $( "#removeConfirm" ).click(function() {
-    $.post(
-      "remove_contact_action.php",
-      "id=" + $( "#removeConfirm" ).attr( "data-id" ),
-      function( data, s, jqXHR ) {
-        var response = jqXHR.responseText;
-
-        if( response == "Success" ) {
-          alert( "Success! The entry was successfully removed." );
-          
-          $( "#modal-remove" ).modal( "hide" );
-          $( "#basic-form" ).submit();
-        } else if( response == "Invalid ID" ) {
-          alert( "The ID of the contact you selected is invalid.");
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
-        } else if( response == "Permission Denied" ) {
-          alert( "You do not have the required privilege level to modify a contact." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a contact." );
-          window.location = "login.php";
-        } else {
-          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com." );
-        }
-      }
-    ).fail(function( data, s, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
-    }
-    ).always(function( data, s, jqXHR ) {
-      /* Debug */
-      console.log( "Sent     --> " + "id=" + $( "#removeConfirm" ).attr( "data-id" ) );
-      console.log( "Received --> " + jqXHR.responseText );
-    });
-  });
-
-  /* Submit form if valid */
+  /* Update contact */
   $( "#update" ).submit(function() {
     if( !v.form() ) {
       return false;
@@ -234,7 +206,7 @@ $(document).ready(function() {
 
     $.post(
       "contact_update_action.php",
-      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase(),
+      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
       function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
 
@@ -290,7 +262,12 @@ $(document).ready(function() {
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */
-      console.log( "Sent     --> " + $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() );
+      console.log( "Sent     --> "
+                   + $( "#update" ).serialize()
+                   + "&contactType="
+                   + $( "#contactType" ).val().toLowerCase()
+                   + "&id="
+                   + $( "#updateButton" ).attr( "data-id" ) );
       console.log( "Received --> " + jqXHR.responseText );
     });
     

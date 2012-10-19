@@ -154,7 +154,7 @@ $qs = "SELECT " . $selection . " "
       . "FROM contacts "
       . $joinString . " "
       . "WHERE " . $contactType . " "
-      . "ORDER BY contacts.last_name"; /* echo( $qs ); */
+      . "ORDER BY contacts.last_name";
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
@@ -271,10 +271,8 @@ while( $row = mysql_fetch_array( $qr ) ) {
   $html .= "</tr>";
 }
 
-/* Construct table body html */
 $html .= "</tbody>";
 
 echo( $html );
 
 ?>
-

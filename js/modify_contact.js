@@ -1,97 +1,38 @@
 $( document ).ready(function() {
+  /* Search button */
   $( "#search" ).submit(function() {
-    $.post(
-      "modify_contact_action_search.php",
-      $( "#search" ).serialize(),
-      function( data, s, jqXHR ) {
-        var response = jqXHR.responseText;
+    $( "#search" ).hide();
 
-        if( response.substring( 0, 7 ) == "Success" ) {
-          $( "#search" ).hide();
-          $( "#select" ).html( response.substring( 8 ) );
-          $( "input[type=radio]:first" ).attr( "checked", true);
-          $( "#select" ).fadeToggle( "slow" );
-  
-          $( "#backToSearch" ).click(function() {
-            $( "#select" ).hide();
-            $( "#search" ).fadeToggle( "slow" );
-          });
-        } else if( response == "Not Found" ) {
-          alert( "The contact you searched for was not found in the database.");
-        } else if( response == "Invalid Name" ) {
-          alert( "First Name and Last Name are required fields.");
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
-        } else if( response == "Permission Denied" ) {
-          alert( "You do not have the required privilege level to modify a contact." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a contact." );
-          window.location = "login.php";
-        } else {
-          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com." );
-        }
-      }
-    ).fail(function( data, s, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
-    }
-    ).always(function( data, s, jqXHR ) {
-      /* Debug */
-      console.log( "Sent     --> " + $( "#search" ).serialize() );
-      console.log( "Received --> " + jqXHR.responseText );
-    });
+    $( "#selectTable" ).load( "select_contact_table.php?" + $( "#search" ).serialize() );
+    $( "input[type=radio]:first" ).attr( "checked", true );
+    $( "#select" ).fadeToggle( "slow" );
     
     return false;
   });
-
-  $( "#select" ).submit(function() {
-    $.post(
-      "modify_contact_action_select.php",
-      $( "#select" ).serialize(),
-      function( data, s, jqXHR ) {
-        var response = jqXHR.responseText;
-
-        if( response.substring( 0, 7 ) == "Success" ) {
-          $( "#select" ).hide();
-          $( "#update" ).html( response.substring( 8 ) );
-          $( "#update" ).fadeToggle( "slow" );
   
-          $( "#backToSelect" ).click(function() {
-            $( "#update" ).hide();
-            $( "#select" ).fadeToggle( "slow" );
-            
-            $( "#update" ).each(function () {
-              this.reset();
-            });
-          });
-        } else if( response == "Invalid ID" ) {
-          alert( "The ID of the contact you selected is invalid.");
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
-        } else if( response == "Permission Denied" ) {
-          alert( "You do not have the required privilege level to modify a contact." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a contact." );
-          window.location = "login.php";
-        } else {
-          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com." );
-        }
-      }
-    ).fail(function( data, s, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
-    }
-    ).always(function( data, s, jqXHR ) {
-      /* Debug */
-      console.log( "Sent     --> " + $( "#select" ).serialize() );
-      console.log( "Received --> " + jqXHR.responseText );
-    });
+  /* Back to search */
+  $( "#backToSearch" ).click(function() {
+    $( "#select" ).hide();
+    $( "#search" ).fadeToggle( "slow" );
+  });
+
+  /* Select button */
+  $( "#selectButton" ).click(function() {
+    $( "#select" ).hide();
+
+    $( "#formFields" ).load( "contact_form_fields.php?id=" + $( "input[type=radio]" ).val() );
+    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]" ).val() );
+    $( "#update" ).fadeToggle( "slow" );
+  });
+
+  /* Back to select */
+  $( "#backToSelect" ).click(function() {
+    $( "#update" ).hide();
+    $( "#select" ).fadeToggle( "slow" );
     
-    return false;
+    $( "#update" ).each(function () {
+      this.reset();
+    });
   });
 
   jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
@@ -206,7 +147,7 @@ $( document ).ready(function() {
 
     $.post(
       "contact_update_action.php",
-      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase(),
+      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
       function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
 
@@ -262,7 +203,12 @@ $( document ).ready(function() {
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */
-      console.log( "Sent     --> " + $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() );
+      console.log( "Sent     --> "
+                   + $( "#update" ).serialize()
+                   + "&contactType="
+                   + $( "#contactType" ).val().toLowerCase()
+                   + "&id="
+                   + $( "#updateButton" ).attr( "data-id" ) );
       console.log( "Received --> " + jqXHR.responseText );
     });
     

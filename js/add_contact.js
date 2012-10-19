@@ -1,4 +1,7 @@
 $( document ).ready(function() {
+  /* Load form fields */
+  $( "#form-fields" ).load( "contact_form_fields.php" );
+
   /* Clear button */
   $( 'button[type="reset"]' ).click(function() {
     $( "#error" ).html( "" );

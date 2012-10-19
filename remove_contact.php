@@ -110,8 +110,17 @@ if( $_SESSION[ 'privilege_level' ] < 3 ) {
             </div>
           </form>
 
-          <form id="select">
-          </form>
+          <div id="select">
+            <h4>Please select from the list of results</h4>
+
+            <div id="selectTable" class="row-fluid">
+            </div>
+
+            <div class="row-fluid">
+              <button type="button" id="selectButton" class="btn btn-primary btn-large btn-danger">Remove</button>
+              <button type="button" id="backToSearch" class="btn btn-large">Back</button>
+            </div>
+          </div>
         </div><!--/.span9-->
         
         <div id="modal" class="modal hide fade">

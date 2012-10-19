@@ -86,6 +86,7 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
         <!-- Body -->
         <div class="span9">
         <legend>Modify Contact</legend>
+
           <form id="search">
             <h4>Which contact would you like to modify?</h4>
 
@@ -110,10 +111,28 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             </div>
           </form>
 
-          <form id="select">
-          </form>
+          <div id="select">
+            <h4>Please select from the list of results</h4>
+
+            <div id="selectTable" class="row-fluid">
+            </div>
+
+            <div class="row-fluid">
+              <button type="button" id="selectButton" class="btn btn-primary btn-large">Select</button>
+              <button type="button" id="backToSearch" class="btn btn-large">Back</button>
+            </div>
+          </div>
 
           <form id="update">
+            <div id="formFields">
+            </div>
+            
+            <div class="row-fluid">
+              <div class="span3">
+                <button type="submit" id="updateButton" class="btn btn-primary btn-large">Save Changes</button>
+                <button type="button" id="backToSelect" class="btn btn-large">Back</button>
+              </div>
+            </div>
           </form>
         </div><!--/.span9-->
         
