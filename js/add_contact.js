@@ -117,7 +117,7 @@ $( document ).ready(function() {
 
     $.post(
       "add_contact_action.php",
-      $( "form" ).serialize(),
+      $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase(),
       function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
 
@@ -170,7 +170,7 @@ $( document ).ready(function() {
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */
-      console.log( "Sent     --> " + $( "form" ).serialize() );
+      console.log( "Sent     --> " + $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() );
       console.log( "Received --> " + jqXHR.responseText );
     });
     

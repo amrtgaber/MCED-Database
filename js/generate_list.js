@@ -234,7 +234,7 @@ $(document).ready(function() {
 
     $.post(
       "modify_contact_action_update.php",
-      $( "#update" ).serialize(),
+      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase(),
       function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
 
@@ -288,7 +288,7 @@ $(document).ready(function() {
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */
-      console.log( "Sent     --> " + $( "#update" ).serialize() );
+      console.log( "Sent     --> " + $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() );
       console.log( "Received --> " + jqXHR.responseText );
     });
     

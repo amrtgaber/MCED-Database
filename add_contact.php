@@ -195,6 +195,19 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
               </div>
               
               <div class="row-fluid">
+                <div class="span1">Contact Type</div>
+                
+                <div class="span2">
+                  <select id="contactType">
+                    <option id="optionWorker">Worker</option>
+                    <option id="optionStudent">Student</option>
+                    <option id="optionSupporter">Supporter</option>
+                    <option id="optionOrganizer">Organizer</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="row-fluid">
                 <div class="span12" id="error-optional"></div>
               </div>
             </div>

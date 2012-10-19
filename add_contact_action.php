@@ -35,7 +35,7 @@ if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_
 }
 
 /* Worker information */
-$isWorker = false;
+$hasWorkerInfo = false;
 
 if( $_POST[ 'wageBelow10' ] ) {
   $wagebelow10 = "1";
@@ -47,7 +47,7 @@ $workers_columns = "wage_below_10";
 $workers_values  = $wagebelow10;
 
 if( $_POST[ 'dollars' ] ) {
-  $isWorker = true;
+  $hasWorkerInfo = true;
 
   if( !ctype_digit( $_POST[ 'dollars' ] ) ) {
     echo( "Invalid Dollars" );
@@ -75,17 +75,17 @@ if( $_POST[ 'dollars' ] ) {
 
 
 if( $_POST[ 'employer' ] ) {
-  $isWorker         = true;
+  $hasWorkerInfo         = true;
   $employer         = mysql_real_escape_string( strtolower( $_POST[ 'employer' ] ) );
   $workers_columns .= ", employer";
   $workers_values  .= ", '" . $employer . "'";
 }
 
 /* Student information */
-$isStudent = false;
+$hasStudentInfo = false;
 
 if( $_POST[ 'school' ] ) {
-  $isStudent = true;
+  $hasStudentInfo = true;
   $school    = mysql_real_escape_string( strtolower( $_POST[ 'school' ] ) );
 
   if( $_POST[ 'syear' ] ) {
@@ -106,15 +106,9 @@ if( $_POST[ 'school' ] ) {
 }
 
 /* Contact type */
-if( $isWorker ) {
-  $contacts_columns .= ", contact_type";
-  $contacts_values  .= ", 'worker'";
-} else {
-  if( $isStudent ) {
-    $contacts_columns .= ", contact_type";
-    $contacts_values  .= ", 'student'";
-  }
-}
+$contactType = mysql_real_escape_string( strtolower( $_POST[ 'contactType' ] ) );
+$contacts_columns .= ", contact_type";
+$contacts_values  .= ", '". $contactType . "'";
 
 /* Address */
 if( $_POST[ 'address' ] ) {
@@ -281,7 +275,7 @@ if( !$qr ) {
 $row = mysql_fetch_array( $qr );
 $cid = $row[ 'id' ];
 
-if( $isWorker ) {
+if( $hasWorkerInfo ) {
   $qs = "INSERT INTO workers
         ( cid, " . $workers_columns . ")
         VALUES (" . $cid . ", " . $workers_values . ")";
@@ -293,7 +287,7 @@ if( $isWorker ) {
   }
 }
 
-if( $isStudent ) {
+if( $hasStudentInfo ) {
   $qs = "INSERT INTO students
         ( cid, " . $students_columns . ")
         VALUES (" . $cid . ", " . $students_values . ")";

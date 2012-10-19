@@ -198,6 +198,33 @@ $response .= "<span class=\"add-on\">20</span><input type=\"text\" name=\"syear\
 $response .= "</div></div>";
               
 $response .= "<div class=\"row-fluid\">";
+$response .= "<div class=\"span1\">Contact Type</div>";
+$response .= "<div class=\"span2\">";
+$response .= "<select id=\"contactType\">";
+if( strcmp( $row[ 'contact_type' ], 'worker' ) == 0 ) {
+  $response .= "<option id=\"optionWorker\" selected=\"true\">Worker</option>";
+} else {
+  $response .= "<option id=\"optionWorker\">Worker</option>";
+}
+if( strcmp( $row[ 'contact_type' ], 'student' ) == 0 ) {
+  $response .= "<option id=\"optionStudent\" selected=\"true\">Student</option>";
+} else {
+  $response .= "<option id=\"optionStudent\">Student</option>";
+}
+if( strcmp( $row[ 'contact_type' ], 'supporter' ) == 0 ) {
+$response .= "<option id=\"optionSupporter\" selected=\"true\">Supporter</option>";
+} else {
+$response .= "<option id=\"optionSupporter\">Supporter</option>";
+}
+if( strcmp( $row[ 'contact_type' ], 'organizer' ) == 0 ) {
+$response .= "<option id=\"optionOrganizer\" selected=\"true\">Organizer</option>";
+} else {
+$response .= "<option id=\"optionOrganizer\">Organizer</option>";
+}
+$response .= "</select>";
+$response .= "</div></div>";
+              
+$response .= "<div class=\"row-fluid\">";
 $response .= "<div class=\"span12\" id=\"error-optional\"></div>";
 $response .= "</div></div>";
 

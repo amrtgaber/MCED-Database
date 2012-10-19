@@ -96,6 +96,9 @@ if( $_POST[ 'school' ] ) {
   $syear  = 0;
 }
 
+/* Contact type */
+$contactType = mysql_real_escape_string( strtolower( $_POST[ 'contactType' ] ) );
+
 /* Address */
 if( $_POST[ 'address' ] ) {
   $address = mysql_real_escape_string( strtolower( $_POST[ 'address' ] ) );
@@ -187,16 +190,17 @@ mysql_select_db( "kc99" );
 $qs = "UPDATE contacts
        SET first_name = '" . $firstname . "',
          last_name = '" . $lastname . "',
+         contact_type = '" . $contactType . "',
          street_no = '" . $address . "',
          city = '" . $city . "',
          state = '" . $state . "',
-         zipcode = " . $zipcode . ",
+         zipcode = '" . $zipcode . "',
          apt_no = '" . $aptno . "'
        WHERE contacts.id = " . $id;
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error");
+  echo( "SQL Error : " . mysql_error() );
   exit;
 }
 
@@ -224,7 +228,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error");
+  echo( "SQL Error" );
   exit;
 }
 
@@ -250,7 +254,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error");
+  echo( "SQL Error" );
   exit;
 }
 
@@ -263,7 +267,7 @@ $qr = mysql_query( $qs, $mc );
 if( mysql_num_rows( $qr ) == 1 ) {
   $qs = "UPDATE workers
          SET wage_below_10 = " . $wagebelow10 . ",
-           wage = " . $wage . ",
+           wage = '" . $wage . "',
            employer = '" . $employer . "'
          WHERE cid = " . $id;
 } else {
@@ -278,7 +282,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error");
+  echo( "SQL Error" );
   exit;
 }
 
@@ -305,7 +309,7 @@ if( mysql_num_rows( $qr ) == 1 ) {
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error");
+  echo( "SQL Error" );
   exit;
 }
 
