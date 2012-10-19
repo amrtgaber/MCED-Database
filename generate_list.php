@@ -271,7 +271,7 @@ if( !$_SESSION[ 'username' ] ) {
         </div>
       </div>
 
-      <div id="modal" class="modal hide fade">
+      <div id="modal-edit" class="modal hide fade">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
           <h3>Modify Contact</h3>
@@ -279,6 +279,21 @@ if( !$_SESSION[ 'username' ] ) {
           
         <form id="update">
         </form>
+      </div>
+        
+      <div id="modal-remove" class="modal hide fade">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3>Are you sure?</h3>
+        </div>
+          
+        <div class="modal-body">
+        </div>
+        
+        <div class="modal-footer">
+          <button type="submit" id="removeConfirm" class="btn btn-primary btn-danger">Remove</button>
+          <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+        </div>
       </div>
 
       <!-- Footer -->

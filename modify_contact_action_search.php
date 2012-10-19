@@ -156,15 +156,9 @@ if( mysql_num_rows( $qr ) > 0 ) {
   $response .= "</div>";
 
   $response .= "<div class=\"row-fluid\">";
-  $response .= "<div class=\"span1\">";
-  if( $_POST[ 'remove' ] ) {
-    $response .= "<button type=\"submit\" class=\"btn btn-primary btn-large btn-danger\">Remove</button>";
-  } else {
-    $response .= "<button type=\"submit\" class=\"btn btn-primary btn-large\">Select</button>";
-  }
-  $response .= "</div><div class=\"span1\">";
+  $response .= "<button type=\"submit\" class=\"btn btn-primary btn-large\">Select</button>";
   $response .= "<button type=\"button\" id=\"backToSearch\" class=\"btn btn-large\">Back</button>";
-  $response .= "</div></div>";
+  $response .= "</div>";
 
   echo( $response );
 } else {

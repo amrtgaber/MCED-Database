@@ -2,7 +2,7 @@ $( document ).ready(function() {
   $( "#search" ).submit(function() {
     $.post(
       "modify_contact_action_search.php",
-      $( "#search" ).serialize() + "&remove=true",
+      $( "#search" ).serialize(),
       function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
 
@@ -39,14 +39,14 @@ $( document ).ready(function() {
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */
-      console.log( "Sent     --> " + $( "#search" ).serialize() + "&remove=true" );
+      console.log( "Sent     --> " + $( "#search" ).serialize() );
       console.log( "Received --> " + jqXHR.responseText );
     });
     
     return false;
   });
 
-  $( "#select" ).submit(function() {
+  $( "#removeConfirm" ).click(function() {
     $.post(
       "remove_contact_action.php",
       $( "#select" ).serialize(),
@@ -60,6 +60,7 @@ $( document ).ready(function() {
             + $( "input[name=lastName]" ).val()
             + " was successfully removed." );
           
+          $( "#modal" ).modal( "hide" );
           $( "#select" ).hide();
           $( "#search" ).fadeToggle( "slow" );
         } else if( response == "Invalid ID" ) {
@@ -86,7 +87,16 @@ $( document ).ready(function() {
       console.log( "Sent     --> " + $( "#select" ).serialize() );
       console.log( "Received --> " + jqXHR.responseText );
     });
-    
+  });
+
+  $( "#select" ).submit(function() {
+    $( ".modal-body" ).html( "This action cannot be undone. Clicking remove will permanently remove "
+                              + $( "input[name=firstName]" ).val()
+                              + " "
+                              + $( "input[name=lastName]" ).val()
+                              + " from the database." );
+    $( "#modal" ).modal( "show" );
+
     return false;
   });
 });

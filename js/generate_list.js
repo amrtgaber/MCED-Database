@@ -138,7 +138,7 @@ $(document).ready(function() {
 
                 if( response.substring( 0, 7 ) == "Success" ) {
                   $( "#update" ).html( response.substring( 8 ) );
-                  $( "#modal" ).modal( "show" );
+                  $( "#modal-edit" ).modal( "show" );
                 } else if( response == "Invalid ID" ) {
                   alert( "The ID of the contact you selected is invalid." );
                 } else if( response == "SQL Error" ) {
@@ -167,45 +167,11 @@ $(document).ready(function() {
           
           $( "button.remove" ).click(function() {
             var id = $( this ).attr( "data-id" );
+            
+            $( "#removeConfirm" ).attr( "data-id", id );
 
-            $.post(
-              "remove_contact_action.php",
-              "id=" + id,
-              function( data, s, jqXHR ) {
-                var response = jqXHR.responseText;
-
-                if( response == "Success" ) {
-                  alert( "Success! The entry for "
-                    + $( "input[name=firstName]" ).val()
-                    + " "
-                    + $( "input[name=lastName]" ).val()
-                    + " was successfully removed." );
-                  
-                  $( "#basic-form" ).submit();
-                } else if( response == "Invalid ID" ) {
-                  alert( "The ID of the contact you selected is invalid.");
-                } else if( response == "SQL Error" ) {
-                  alert( "There was an error with the database. If you get this response more than once, "
-                    + "please try again later or contact admin@debrijja.com" );
-                } else if( response == "Permission Denied" ) {
-                  alert( "You do not have the required privilege level to modify a contact." );
-                } else if( response == "Unauthorized" ) {
-                  alert( "You must be logged in to add a contact." );
-                  window.location = "login.php";
-                } else {
-                  alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-                    + "please try again later or contact admin@debrijja.com." );
-                }
-              }
-            ).fail(function( data, s, jqXHR ) {
-              alert( "There was an unknown error in the server. If you get this error more than once, "
-                + "please try again later or contact admin@debrijja.com." );
-            }
-            ).always(function( data, s, jqXHR ) {
-              /* Debug */
-              console.log( "Sent     --> " + "id=" + id );
-              console.log( "Received --> " + jqXHR.responseText );
-            });
+            $( ".modal-body" ).html( "This action cannot be undone." );
+            $( "#modal-remove" ).modal( "show" );
           });
         }
       }
@@ -222,6 +188,44 @@ $(document).ready(function() {
     return false;
   });
   
+  $( "#removeConfirm" ).click(function() {
+    $.post(
+      "remove_contact_action.php",
+      "id=" + $( "#removeConfirm" ).attr( "data-id" ),
+      function( data, s, jqXHR ) {
+        var response = jqXHR.responseText;
+
+        if( response == "Success" ) {
+          alert( "Success! The entry was successfully removed." );
+          
+          $( "#modal-remove" ).modal( "hide" );
+          $( "#basic-form" ).submit();
+        } else if( response == "Invalid ID" ) {
+          alert( "The ID of the contact you selected is invalid.");
+        } else if( response == "SQL Error" ) {
+          alert( "There was an error with the database. If you get this response more than once, "
+            + "please try again later or contact admin@debrijja.com" );
+        } else if( response == "Permission Denied" ) {
+          alert( "You do not have the required privilege level to modify a contact." );
+        } else if( response == "Unauthorized" ) {
+          alert( "You must be logged in to add a contact." );
+          window.location = "login.php";
+        } else {
+          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
+            + "please try again later or contact admin@debrijja.com." );
+        }
+      }
+    ).fail(function( data, s, jqXHR ) {
+      alert( "There was an unknown error in the server. If you get this error more than once, "
+        + "please try again later or contact admin@debrijja.com." );
+    }
+    ).always(function( data, s, jqXHR ) {
+      /* Debug */
+      console.log( "Sent     --> " + "id=" + $( "#removeConfirm" ).attr( "data-id" ) );
+      console.log( "Received --> " + jqXHR.responseText );
+    });
+  });
+
   /* Submit form if valid */
   $( "#update" ).submit(function() {
     if( !v.form() ) {
@@ -241,7 +245,7 @@ $(document).ready(function() {
             + $( "input[name=lastName]" ).val()
             + " was successfully changed." );
 
-          $( "#modal" ).modal( "hide" );
+          $( "#modal-edit" ).modal( "hide" );
           $( "#basic-form" ).submit();
 
           $( "#update" ).each(function () {
