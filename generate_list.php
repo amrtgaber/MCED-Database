@@ -298,7 +298,7 @@ if( !$_SESSION[ 'username' ] ) {
         </div>
         
         <div class="modal-footer">
-          <button type="submit" id="removeConfirm" class="btn btn-primary btn-danger">Remove</button>
+          <button type="button" id="removeConfirm" class="btn btn-primary btn-danger">Remove</button>
           <button type="button" class="btn" data-dismiss="modal">Cancel</button>
         </div>
       </div>
