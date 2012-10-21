@@ -119,7 +119,7 @@ $( document ).ready(function() {
     }
 
     $.post(
-      "contact_update_action.php",
+      "contact_form_action.php",
       $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase(),
       function( data, s, jqXHR ) {
         var response = jqXHR.responseText;
