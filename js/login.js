@@ -1,5 +1,8 @@
 $( document ).ready(function() {
-  $( "input" ).keydown(function() { $( "#error" ).html( "" ); });
+  $( "input" ).keydown(function() {
+    $( "#error" ).hide();
+    $( "#error" ).html( "" );
+  });
 
   $( "form" ).submit(function() {
     $.post(
@@ -10,6 +13,7 @@ $( document ).ready(function() {
       }
     ).fail(function() {
       $( "#error" ).html( "Incorrect username or password" );
+      $( "#error" ).show();
     });
     
     return false;

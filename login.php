@@ -64,9 +64,11 @@ if( $_SESSION[ 'username' ] ) {
 
               <div class="row-fluid">
                 <button type="submit" class="btn btn-primary">Login</button> 
-                <div id="error"></div>
               </div>
             </form>
+            
+            <div id="error" class="alert alert-error hide">
+            </div>
           </div>
         </div>
 
