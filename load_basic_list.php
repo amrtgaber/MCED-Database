@@ -1,5 +1,5 @@
 <?php
-/* File: basic_list.php
+/* File: load_basic_list.php
  * Author: Amr Gaber
  * Created: 20/10/2012
  * Description: Handles generating a basic list for KC99 database.
@@ -235,8 +235,35 @@ if( !$qr ) {
           <?php } ?>
 
           <?php if( $_GET[ 'phoneNumber' ] ) { ?>
-            <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
-            <td><?php if( $contact_info[ 'cell' ] != 0 ) { echo( $contact_info[ 'cell' ] ); } ?></td>
+            <td>
+              <?php if( $contact_info[ 'phone' ] != 0 ) {
+                if( strlen( $contact_info[ 'phone' ] ) == 10 ) {
+                  /* Area code and phone number */
+                  echo( "(" . substr( $contact_info[ 'phone' ], 0, 3 ) . ") "
+                        . substr( $contact_info[ 'phone' ], 3, 3 ) . "-"
+                        . substr( $contact_info[ 'phone' ], 6 ) );
+                } else {
+                  /* Only phone number */
+                  echo( substr( $contact_info[ 'phone' ], 0, 3 ) . "-"
+                        . substr( $contact_info[ 'phone' ], 3 ) );
+                }
+              } ?>
+            </td>
+           
+            <td>
+              <?php if( $contact_info[ 'cell' ] != 0 ) {
+                if( strlen( $contact_info[ 'cell' ] ) == 10 ) {
+                  /* Area code and cell phone number */
+                  echo( "(" . substr( $contact_info[ 'cell' ], 0, 3 ) . ") "
+                        . substr( $contact_info[ 'cell' ], 3, 3 ) . "-"
+                        . substr( $contact_info[ 'cell' ], 6 ) );
+                } else {
+                  /* Only cell phone number */
+                  echo( substr( $contact_info[ 'cell' ], 0, 3 ) . "-"
+                        . substr( $contact_info[ 'cell' ], 3 ) );
+                }
+              } ?>
+            </td>
           <?php } ?>
 
           <?php if( $_GET[ 'email' ] ) { ?>

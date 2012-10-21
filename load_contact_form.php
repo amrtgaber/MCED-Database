@@ -1,5 +1,5 @@
 <?php
-/* File: contact_form_fields.php
+/* File: load_contact_form.php
  * Author: Amr Gaber
  * Created: 02/10/2012
  * Description: Returns the contact add/update form for KC99 database.

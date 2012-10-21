@@ -1,5 +1,5 @@
 <?php
-/* File: select_user_table.php
+/* File: load_select_user.php
  * Author: Amr Gaber
  * Created: 19/10/2012
  * Description: Table containing a radio list of all users in KC99 database.

@@ -1,5 +1,5 @@
 <?php
-/* File: select_contact_table.php
+/* File: load_select_contact.php
  * Author: Amr Gaber
  * Created: 14/10/2012
  * Description: Displays a table of contacts selectable by a radio button.

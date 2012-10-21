@@ -36,6 +36,12 @@ $(document).ready(function() {
     return false;
   });
   
+  /* Phone Bank form */
+  $( "#phone-bank-form" ).submit(function() {
+    $( "#list" ).load( "load_phone_bank_list.php?" + $( "#phone-bank-form" ).serialize() );
+    return false;
+  });
+
   /* Remove confirmed */
   $( "#removeConfirm" ).click(function() {
     $.post(
