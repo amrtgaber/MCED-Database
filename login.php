@@ -37,17 +37,11 @@ if( $_SESSION[ 'username' ] ) {
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
           <a class="brand" href="#">Database</a>
+
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">
-              Not logged in
-            </p>
-          </div><!--/.nav-collapse -->
+            <p class="navbar-text pull-right">Not logged in</p>
+          </div>
         </div>
       </div>
     </div>
@@ -74,17 +68,17 @@ if( $_SESSION[ 'username' ] ) {
               </div>
             </form>
           </div>
-        </div><!--/.span3-->
+        </div>
 
         <div class="span9">
           <img src="img/kc99-banner-7-13.png">
-        </div><!--/.span9-->
+        </div>
       </div><!--/.row-fluid-->
 
       <!-- Footer -->
       <hr>
       <footer class="footer">
-        <p>Copyright &copy;&nbsp;2012 <a href="http://www.kansascity99.org/">KC99</a></p>
+        <p>Copyright &copy;&nbsp;2012 <a href="http://kc99.org/">KC99</a></p>
       </footer>
     </div><!--/.fluid-container-->
 

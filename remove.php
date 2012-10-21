@@ -40,45 +40,7 @@ if( $_SESSION[ 'privilege_level' ] < 3 ) {
   </head>
 
   <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-      <div class="navbar-inner">
-        <div class="container-fluid">
-          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </a>
-          <a class="brand" href="home.php">Database</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav pull-right">
-              <li><p class="navbar-text pull-right">
-                Logged in as <?php echo( $_SESSION[ 'username' ] ); ?>
-              </p></li>
-              <li class="divider-vertical"></li>
-              <li><button type="button" id="logout" class="btn btn-small btn-inverse pull-right">Logout</button></li>
-            </ul>
-            <ul class="nav">
-              <li><a href="view.php">View</a></li>
- 
-              <?php if( $_SESSION[ 'privilege_level' ] > 0 ) { ?>
-                <li><a href="add.php">Add</a></li>
-              <?php } ?>
-              
-              <?php if( $_SESSION[ 'privilege_level' ] > 1 ) { ?>
-                <li><a href="modify.php">Modify</a></li>
-              <?php } ?>
-
-              <?php if( $_SESSION[ 'privilege_level' ] > 2 ) { ?>
-                <li class="active"><a href="remove.php">Remove</a></li>
-              <?php } ?>
-
-              <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
-                <li><a href="manage_users.php">Manage Users</a></li>
-              <?php } ?>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
-      </div>
+    <div id="navbar">
     </div>
 
     <div class="container-fluid">
@@ -109,16 +71,15 @@ if( $_SESSION[ 'privilege_level' ] < 3 ) {
         <!-- Sidebar -->
         <div class="span3">
           <div class="well sidebar-nav">
-            <img src="img/kc99-logo-9-27.png">
-          </div><!--/.well -->
-        </div><!--/span-->
+            <div id="sidebar">
+            </div>
+          </div>
+        </div>
       </div><!--/.row-fluid-->
 
       <!-- Footer -->
-      <hr>
-      <footer class="footer">
-        <p>Copyright &copy;&nbsp;2012 <a href="http://www.kansascity99.org/">KC99</a></p>
-      </footer>
+      <div id="footer">
+      </div>
     </div><!--/.fluid-container-->
     
     <!-- JavaScript -->
