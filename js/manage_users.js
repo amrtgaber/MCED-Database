@@ -8,6 +8,6 @@ $(document).ready(function() {
   });
   
   $("#change-privileges").click(function() {
-    window.location = "change_user_privileges.php";
+    //window.location = "change_user_privileges.php";
   });
 });

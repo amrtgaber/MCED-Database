@@ -4,6 +4,6 @@ $(document).ready(function() {
   });
 
   $("#modify-shop-profile").click(function() {
-    window.location = "modify_shop_profile.php";
+    //window.location = "modify_shop_profile.php";
   });
 });
