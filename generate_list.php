@@ -50,7 +50,6 @@ if( !$_SESSION[ 'username' ] ) {
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#basic-tab" data-toggle="tab">Basic List</a></li>
                 <li><a href="#phone-bank-tab" data-toggle="tab">Phone Bank</a></li>
-                <li><a href="#walk-tab" data-toggle="tab">Walk List</a></li>
               </ul>
             </div> 
           </div>
@@ -201,16 +200,6 @@ if( !$_SESSION[ 'username' ] ) {
                   <div class="span12">
                     <button type="submit" id="phone-bank-submit" class="btn btn-primary btn-large">Generate</button>
                     <button type="reset" class="btn btn-large">Clear</button>
-                  </div>
-                </div>
-              </form>
-            </div>
-
-            <div class="tab-pane" id="walk-tab">
-              <form>
-                <div class="row-fluid">
-                  <div class="span12">
-                    <p>Coming soon...</p>
                   </div>
                 </div>
               </form>
