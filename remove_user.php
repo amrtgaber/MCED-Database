@@ -104,7 +104,6 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
             </div>
               
             <div class="modal-body">
-              This action cannot be undone.
             </div>
             
             <div class="modal-footer">

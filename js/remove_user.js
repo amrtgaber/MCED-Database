@@ -2,6 +2,10 @@ $( document ).ready(function() {
   $( "#user-list" ).load( "load_select_user.php" );
 
   $( "form" ).submit(function() {
+    $( ".modal-body" ).html( "This action cannot be undone. Clicking remove will permanently remove "
+                             + $( "input[type=radio]:checked" ).val()
+                             + " as a user." );
+
     $( "#modal" ).modal( "show" );
     return false;
   });

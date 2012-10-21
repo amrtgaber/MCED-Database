@@ -202,8 +202,8 @@ if( !$qr ) {
     <?php
       while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
         <tr>
-          <td><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
-          <td><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
+          <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
+          <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
 
           <?php if( $_GET[ 'contactType' ] ) { ?>
             <td><?php echo( $contact_info[ 'contact_type' ] ); ?></td>

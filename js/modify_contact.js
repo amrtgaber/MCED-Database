@@ -20,8 +20,8 @@ $( document ).ready(function() {
   $( "#selectButton" ).click(function() {
     $( "#select" ).hide();
 
-    $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]" ).val() );
-    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]" ).val() );
+    $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]:checked" ).val() );
+    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
     $( "#update" ).fadeToggle( "slow" );
   });
 

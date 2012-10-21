@@ -50,7 +50,8 @@ $qs = "SELECT contacts.*,
        LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
        LEFT JOIN workers       ON contacts.id = workers.cid "
-       . $whereString;
+       . $whereString
+       . "ORDER BY contacts.last_name";
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
@@ -63,8 +64,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
     <thead>
       <tr>
         <th></th>
-        <th>First Name</th>
         <th>Last Name</th>
+        <th>First Name</th>
         <th>Contact Type</th>
         <th>Address</th>
         <th>Phone</th>
@@ -79,15 +80,15 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
           <tr>
             <td><input type="radio" name="id" value="<?php echo( $contact_info[ 'id' ] ); ?>"></td>
-            <td><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
-            <td><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
+            <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
+            <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
             <td><?php echo( $contact_info[ 'contact_type' ] ); ?></td>
             <td><?php
               if( $contact_info[ 'street_no' ] ) {
                 $address = ucwords( $contact_info[ 'street_no' ] );
     
                 if( $contact_info[ 'apt_no' ] ) {
-                  $address .= " Apt. " . $contact_info[ 'apt_no' ];
+                  $address .= " Apt. " . strtoupper( $contact_info[ 'apt_no' ] );
                 }
     
                 $address .= ", "
@@ -103,7 +104,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
             <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
             <td><?php if( $contact_info[ 'cell' ] != 0 ) { echo( $contact_info[ 'cell' ] ); } ?></td>
             <td><?php echo( $contact_info[ 'email' ] ); ?></td>
-            <td><?php echo( $contact_info[ 'employer' ] ); ?></td>
+            <td><?php echo( ucwords( $contact_info[ 'employer' ] ) ); ?></td>
           </tr>
         <?php } ?>
       </tbody>

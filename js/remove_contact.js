@@ -18,14 +18,15 @@ $( document ).ready(function() {
 
   /* First remove button press */
   $( "#selectButton" ).click(function() {
+    var id = $( "input[type=radio]:checked" ).val();
     $( ".modal-body" ).html( "This action cannot be undone. Clicking remove will permanently remove "
-                              + $( "input[name=firstName]" ).val()
-                              + " "
-                              + $( "input[name=lastName]" ).val()
-                              + " from the database." );
+                             + $( "#firstname" + id ).text()
+                             + " "
+                             + $( "#lastname" + id ).text()
+                             + " from the database." );
 
     $( "#modal" ).modal( "show" );
-    $( "#removeConfirm" ).attr( "data-id", $( "input[type=radio]" ).val() );
+    $( "#removeConfirm" ).attr( "data-id", id );
 
     return false;
   });

@@ -20,8 +20,15 @@ $(document).ready(function() {
       
       /* Remove contact */
       $( "button.remove" ).click(function() {
-        $( "#removeConfirm" ).attr( "data-id", $( this ).attr( "data-id" ) );
-        $( "#modalBodyRemove" ).html( "This action cannot be undone." );
+        var id = $( this ).attr( "data-id" );
+        
+        $( "#removeConfirm" ).attr( "data-id", id );
+        $( "#modalBodyRemove" ).html( "This action cannot be undone. Clicking remove will permanently remove "
+                                 + $( "#firstname" + id ).text()
+                                 + " "
+                                 + $( "#lastname" + id ).text()
+                                 + " from the database." );
+
         $( "#modal-remove" ).modal( "show" );
       });
     });
