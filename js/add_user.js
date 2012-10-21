@@ -35,7 +35,8 @@ $( document ).ready(function() {
   });
 
   $( 'button[type="reset"]' ).click(function() {
-    $( "#error" ).html( "" );
+    $( "#form-invalid" ).hide();
+    $( "#form-invalid" ).html( "" );
   });
 
   var v = $( "form" ).validate({
@@ -66,7 +67,14 @@ $( document ).ready(function() {
       }
     },
     errorPlacement: function( error, element ) {
-      error.appendTo( $( "#error" ) );
+      error.appendTo( $( "#form-invalid" ) );
+      $( "#form-invalid" ).show();
+    },
+    success: function() {
+      if( v.numberOfInvalids() == 0 ) {
+        $( "#form-invalid" ).hide();
+        $( "#form-invalid" ).html( "" );
+      }
     }
   });
 
@@ -82,38 +90,56 @@ $( document ).ready(function() {
         var response = jqXHR.responseText.trim();
 
         if( response == "Success" ) {
-          alert( "Success! "
-            + $( "input[name=username]" ).val()
-            + " is now a user and can login immediately." );
-        } else if( response == "Invalid Username" ) {
-          alert( "Username is a required field.");
-        } else if( response == "Invalid Username Length" ) {
-          alert( "Username must be at least 4 characters long.");
-        } else if( response == "Invalid Password" ) {
-          alert( "Password is a required field." );
-        } else if( response == "Invalid Confirm Password" ) {
-          alert( "Passwords must match." );
-        } else if( response == "Invalid Privilege Level" ) {
-          alert( "Privilege level is invalid." );
-        } else if( response == "Duplicate Entry" ) {
-          alert( "That user already exists in the database. Please choose a different username." );
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
-        } else if( response == "Permission Denied" ) {
-          alert( "You do not have the required privilege level to add a user." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a user." );
-          window.location = "login.php";
+          $( "#response" ).removeClass( "alert-error" );
+          $( "#response" ).addClass( "alert-success" );
+          $( "#response" ).html( $( "input[name=username]" ).val() + " is now a user and can login immediately." );
+
+          $( "form" ).each(function () {
+            this.reset();
+          });
         } else {
-          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com." );
+          $( "#response" ).removeClass( "alert-success" );
+          $( "#response" ).addClass( "alert-error" );
+
+          if( response == "Invalid Username" ) {
+            $( "#response" ).html( "Username is a required field.");
+          } else if( response == "Invalid Username Length" ) {
+            $( "#response" ).html( "Username must be at least 4 characters long.");
+          } else if( response == "Invalid Password" ) {
+            $( "#response" ).html( "Password is a required field." );
+          } else if( response == "Invalid Confirm Password" ) {
+            $( "#response" ).html( "Passwords must match." );
+          } else if( response == "Invalid Privilege Level" ) {
+            $( "#response" ).html( "Privilege level is invalid." );
+          } else if( response == "Duplicate Entry" ) {
+            $( "#response" ).html( "That user already exists in the database. Please choose a different username." );
+          } else if( response.substring( 0, 9 ) == "SQL Error" ) {
+            $( "#response" ).html( "There was an error with the database. "
+              + "If you get this response more than once, "
+              + "please try again later or contact admin@debrijja.com. "
+              + "ERROR: "
+              + response.substring( 10 ) + "." );
+          } else if( response == "Permission Denied" ) {
+            $( "#response" ).html( "You do not have the required privilege level to add a user." );
+          } else if( response == "Unauthorized" ) {
+            alert( "You must be logged in to add a user." );
+            window.location = "login.php";
+          } else {
+            $( "#response" ).html( "The server received the request but returned an unknown response. If you get this response more than once, "
+              + "please try again later or contact admin@debrijja.com." );
+          }
         }
+
+        $( "#response" ).show();
       }
     ).fail(function( data, s, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
+      $( "#response" ).removeClass( "alert-success" );
+      $( "#response" ).addClass( "alert-error" );
+      $( "#response" ).html( "There was an unknown error in the server. "
+        + "If you get this error more than once, "
         + "please try again later or contact admin@debrijja.com." );
-      }
+      $( "#response" ).show();
+    }
     ).always(function( data, s, jqXHR ) {
       /* Debug */
       console.log( "Sent     --> " + $( "form" ).serialize() + "&privilegeLevel=" + $( "#slider" ).slider( "value" ) );

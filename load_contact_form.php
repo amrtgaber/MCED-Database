@@ -179,10 +179,6 @@ if( $_GET[ 'id' ] ) {
              placeholder="Type email here">
     </div>
   </div>
-
-  <div class="row-fluid">
-    <div class="span12" id="error"></div>
-  </div>
 </div>
 
 <?php
@@ -256,9 +252,5 @@ $cents = $wage[ 1 ];
                 >Other</option>
       </select>
     </div>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span12" id="error-optional"></div>
   </div>
 </div>

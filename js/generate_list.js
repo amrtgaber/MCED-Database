@@ -15,6 +15,8 @@ $(document).ready(function() {
 
         $( "#modalBodyEdit" ).load( "load_contact_form.php?id=" + id );
         $( "#updateButton" ).attr( "data-id", id );
+        $( "#response" ).hide();
+        $( "#response" ).html( "" );
         $( "#modal-edit" ).modal( "show" );
       });
       
@@ -51,8 +53,6 @@ $(document).ready(function() {
         var response = jqXHR.responseText;
 
         if( response == "Success" ) {
-          alert( "Success! The entry was successfully removed." );
-          
           $( "#modal-remove" ).modal( "hide" );
           $( "#basic-form" ).submit();
         } else if( response == "Invalid ID" ) {
@@ -171,16 +171,15 @@ $(document).ready(function() {
       }
     },
     errorPlacement: function( error, element ) {
-      if( element.attr( "name" ) == "firstName"
-          || element.attr( "name" ) == "lastName"
-          || element.attr( "name" ) == "email"
-          || element.attr( "name" ) == "phone"
-          || element.attr( "name" ) == "cell"
-          || element.attr( "name" ) == "state"
-          || element.attr( "name" ) == "zipcode" ) {
-        error.appendTo( $( "#error" ) );
-      } else {
-        error.appendTo( $( "#error-optional" ) );
+      error.appendTo( $( "#form-invalid" ) );
+      $( "#response" ).hide();
+      $( "#response" ).html( "" );
+      $( "#form-invalid" ).show();
+    },
+    success: function() {
+      if( v.numberOfInvalids() == 0 ) {
+        $( "#form-invalid" ).hide();
+        $( "#form-invalid" ).html( "" );
       }
     }
   });
@@ -191,6 +190,9 @@ $(document).ready(function() {
       return false;
     }
 
+    $( "#form-invalid" ).hide();
+    $( "#form-invalid" ).html( "" );
+
     $.post(
       "contact_form_action.php",
       $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
@@ -198,7 +200,9 @@ $(document).ready(function() {
         var response = jqXHR.responseText;
 
         if( response == "Success" ) {
-          alert( "Success! The entry for "
+          $( "#response" ).removeClass( "alert-error" );
+          $( "#response" ).addClass( "alert-success" );
+          $( "#response" ).html( "The entry for "
             + $( "input[name=firstName]" ).val()
             + " "
             + $( "input[name=lastName]" ).val()
@@ -210,42 +214,55 @@ $(document).ready(function() {
           $( "#update" ).each(function () {
             this.reset();
           });
-        } else if( response == "Invalid Name" ) {
-          alert( "First Name and Last Name are required fields.");
-        } else if( response == "Invalid State" ) {
-          alert( "State field is invalid." );
-        } else if( response == "Invalid Zipcode" ) {
-          alert( "Zipcode field is invalid." );
-        } else if( response == "Invalid Phone" ) {
-          alert( "Phone field is invalid." );
-        } else if( response == "Invalid Cell" ) {
-          alert( "Cell field is invalid." );
-        } else if( response == "Invalid Email" ) {
-          alert( "Email field is invalid." );
-        } else if( response == "Invalid Dollars" ) {
-          alert( "Dollars field is invalid." );
-        } else if( response == "Invalid Cents" ) {
-          alert( "Cents field is invalid." );
-        } else if( response == "Invalid School Year" ) {
-          alert( "School year field is invalid." );
-        } else if( response.substring( 0, 9 ) == "SQL Error" ) {
-          alert( "There was an error with the database: "
-                 + response.substring( 10 ) + ". "
-                 + "If you get this response more than once, "
-                 + "please try again later or contact admin@debrijja.com" );
-        } else if( response == "Permission Denied" ) {
-          alert( "You do not have the required privilege level to modify a contact." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a contact." );
-          window.location = "login.php";
         } else {
-          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com." );
+          $( "#response" ).removeClass( "alert-success" );
+          $( "#response" ).addClass( "alert-error" );
+
+          if( response == "Invalid Name" ) {
+            $( "#response" ).html( "First Name and Last Name are required fields." );
+          } else if( response == "Invalid State" ) {
+            $( "#response" ).html( "State field is invalid." );
+          } else if( response == "Invalid Zipcode" ) {
+            $( "#response" ).html( "Zipcode field is invalid." );
+          } else if( response == "Invalid Phone" ) {
+            $( "#response" ).html( "Phone field is invalid." );
+          } else if( response == "Invalid Cell" ) {
+            $( "#response" ).html( "Cell field is invalid." );
+          } else if( response == "Invalid Email" ) {
+            $( "#response" ).html( "Email field is invalid." );
+          } else if( response == "Invalid Dollars" ) {
+            $( "#response" ).html( "Dollars field is invalid." );
+          } else if( response == "Invalid Cents" ) {
+            $( "#response" ).html( "Cents field is invalid." );
+          } else if( response == "Invalid School Year" ) {
+            $( "#response" ).html( "School year field is invalid." );
+          } else if( response.substring( 0, 9 ) == "SQL Error" ) {
+            $( "#response" ).html( "There was an error with the database. "
+              + "If you get this response more than once, "
+              + "please try again later or contact admin@debrijja.com. "
+              + "ERROR: "
+              + response.substring( 10 ) + "." );
+          } else if( response == "Permission Denied" ) {
+            $( "#response" ).html( "You do not have the required privilege level to add a contact." );
+          } else if( response == "Unauthorized" ) {
+            alert( "You must be logged in to add a contact." );
+            window.location = "login.php";
+          } else {
+            $( "#response" ).html( "The server received the request but returned an unknown response. "
+              + "If you get this response more than once, "
+              + "please try again later or contact admin@debrijja.com." );
+          }
         }
+        
+        $( "#response" ).show();
       }
     ).fail(function( data, s, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
+      $( "#response" ).removeClass( "alert-success" );
+      $( "#response" ).addClass( "alert-error" );
+      $( "#response" ).html( "There was an unknown error in the server. "
+        + "If you get this error more than once, "
         + "please try again later or contact admin@debrijja.com." );
+      $( "#response" ).show();
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */

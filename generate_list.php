@@ -243,6 +243,12 @@ if( !$_SESSION[ 'username' ] ) {
           </div>
           
           <div class="modal-footer">
+            <span id="form-invalid" class="alert hide pull-left">
+            </span>
+
+            <span id="response" class="alert hide pull-left">
+            </span>
+
             <button type="submit" id="updateButton" class="btn btn-primary btn-large">Save Changes</button>
             <button type="button" class="btn" data-dismiss="modal">Cancel</button>
           </div>

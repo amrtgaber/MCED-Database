@@ -51,7 +51,7 @@ $qs = "DELETE contacts.*,
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error");
+  echo( "SQL Error " . mysql_error() );
   exit;
 }
 

@@ -72,7 +72,12 @@ if( $_SESSION[ 'privilege_level' ] < 3 ) {
             </div>
           </form>
 
-          <div id="select">
+          <div class="row-fluid">
+            <div id="response" class="alert hide">
+            </div>
+          </div>
+
+          <div id="select" class="hide">
             <h4>Please select from the list of results</h4>
 
             <div id="selectTable" class="row-fluid">

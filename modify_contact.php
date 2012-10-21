@@ -73,7 +73,7 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             </div>
           </form>
 
-          <div id="select">
+          <div id="select" class="hide">
             <h4>Please select from the list of results</h4>
 
             <div id="selectTable" class="row-fluid">
@@ -85,8 +85,13 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             </div>
           </div>
 
-          <form id="update">
+          <form id="update" class="hide">
             <div id="formFields">
+            </div>
+
+            <div class="row-fluid">
+              <div id="form-invalid" class="alert hide">
+              </div>
             </div>
             
             <div class="row-fluid">
@@ -96,6 +101,11 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
               </div>
             </div>
           </form>
+
+          <div class="row-fluid">
+            <div id="response" class="alert hide">
+            </div>
+          </div>
         </div><!--/.span9-->
         
         <!-- Sidebar -->

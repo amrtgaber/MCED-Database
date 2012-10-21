@@ -52,28 +52,39 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
           <form>
             <h4>Please select from the list of users</h4>
 
-            <div id="user-list" class="row-fluid"></div>
+            <div id="user-list" class="row-fluid">
+            </div>
+
+          <div class="row-fluid">
+            <div id ="form-invalid" class="span4 alert alert-error hide">
+            </div>
+          </div>
 
             <div class="row-fluid">
               <button type="submit" class="btn btn-primary btn-large btn-danger">Remove</button>
             </div>
           </form>
-        
-          <div id="modal" class="modal hide fade">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h3>Are you sure?</h3>
-            </div>
-              
-            <div class="modal-body">
-            </div>
-            
-            <div class="modal-footer">
-              <button type="submit" id="removeConfirm" class="btn btn-primary btn-danger">Remove</button>
-              <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+
+          <div class="row-fluid">
+            <div id="response" class="alert hide">
             </div>
           </div>
         </div><!--/.span9-->
+          
+        <div id="modal" class="modal hide fade">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Are you sure?</h3>
+          </div>
+            
+          <div class="modal-body">
+          </div>
+          
+          <div class="modal-footer">
+            <button type="submit" id="removeConfirm" class="btn btn-primary btn-danger">Remove</button>
+            <button type="button" class="btn" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
         
         <!-- Sidebar -->
         <div class="span3">

@@ -2,11 +2,19 @@ $( document ).ready(function() {
   $( "#user-list" ).load( "load_select_user.php" );
 
   $( "form" ).submit(function() {
-    $( ".modal-body" ).html( "This action cannot be undone. Clicking remove will permanently remove "
-                             + $( "input[type=radio]:checked" ).val()
-                             + " as a user." );
+    if( $( "input[type=radio]:checked" ).val() == undefined ) {
+      $( "#form-invalid" ).html( "You must select a user from the list." );
+      $( "#form-invalid" ).show();
+    } else {
+      $( "#form-invalid" ).hide();
+      $( "#form-invalid" ).html( "" );
 
-    $( "#modal" ).modal( "show" );
+      $( ".modal-body" ).html( "This action cannot be undone. Clicking remove will permanently remove "
+                               + $( "input[type=radio]:checked" ).val()
+                               + " as a user." );
+      $( "#modal" ).modal( "show" );
+    }
+
     return false;
   });
   
@@ -18,30 +26,44 @@ $( document ).ready(function() {
         var response = jqXHR.responseText;
 
         if( response == "Success" ) {
-          alert( "Success! The user was successfully removed." );
+          $( "#response" ).removeClass( "alert-error" );
+          $( "#response" ).addClass( "alert-success" );
+          $( "#response" ).html( "Success! The user was successfully removed." );
           
           $( "#modal" ).modal( "hide" );
           $( "#user-list" ).load( "load_select_user.php" );
-        } else if( response == "Invalid Username" ) {
-          alert( "Username is a required field.");
-        } else if( response.substring( 0, 9 ) == "SQL Error" ) {
-          alert( "There was an error with the database: "
-                 + response.substring( 10 ) + ". "
-                 + "If you get this response more than once, "
-                 + "please try again later or contact admin@debrijja.com" );
-        } else if( response == "Permission Denied" ) {
-          alert( "You do not have the required privilege level to modify a contact." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a contact." );
-          window.location = "login.php";
         } else {
-          alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com." );
+          $( "#response" ).removeClass( "alert-success" );
+          $( "#response" ).addClass( "alert-error" );
+        
+          if( response == "Invalid Username" ) {
+            $( "#response" ).html( "Username is a required field.");
+          } else if( response.substring( 0, 9 ) == "SQL Error" ) {
+            $( "#response" ).html( "There was an error with the database. "
+              + "If you get this response more than once, "
+              + "please try again later or contact admin@debrijja.com. "
+              + "ERROR: "
+              + response.substring( 10 ) + "." );
+          } else if( response == "Permission Denied" ) {
+            $( "#response" ).html( "You do not have the required privilege level to modify a contact." );
+          } else if( response == "Unauthorized" ) {
+            alert( "You must be logged in to add a contact." );
+            window.location = "login.php";
+          } else {
+            $( "#response" ).html( "The server received the request but returned an unknown response. If you get this response more than once, "
+              + "please try again later or contact admin@debrijja.com." );
+          }
         }
+        
+        $( "#response" ).show();
       }
     ).fail(function( data, s, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
+      $( "#response" ).removeClass( "alert-success" );
+      $( "#response" ).addClass( "alert-error" );
+      $( "#response" ).html( "There was an unknown error in the server. "
+        + "If you get this error more than once, "
         + "please try again later or contact admin@debrijja.com." );
+      $( "#response" ).show();
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */

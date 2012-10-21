@@ -3,6 +3,6 @@
   width: 80%;
 }
 
-#error, #error-optional {
+#form-invalid {
   color: red;
 }

@@ -65,24 +65,6 @@ $privilege_level = mysql_real_escape_string( $_POST[ 'privilegeLevel' ] );
 $mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
 mysql_select_db( "kc99" );
 
-/* Check for duplicate */
-$qs = "SELECT username, password
-       FROM users
-       WHERE username='" . $username . "' AND password='" . $password . "'";
-$qr = mysql_query( $qs, $mc );
-
-if( !$qr ) {
-  echo( "SQL Error");
-  exit;
-}
-
-$row = mysql_fetch_array( $qr );
-
-if( $row[ 'username' ] && $row[ 'password' ] ) {
-  echo( "Duplicate Entry" );
-  exit;
-}
-
 /* Add to database */
 $qs = "INSERT INTO users
       (username, password, privilege_level)
@@ -90,7 +72,7 @@ $qs = "INSERT INTO users
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error" );
+  echo( "SQL Error " . mysql_error() );
   exit;
 }
 
