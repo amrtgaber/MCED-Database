@@ -93,12 +93,12 @@ if( $_SESSION[ 'privilege_level' ] < 3 ) {
               <div class="row-fluid">
                 <div class="span1">First Name</div>
                 <div class="span5">
-                  <input type="text" name="firstName" class="span12" placeholder="Type first name here" required>
+                  <input type="text" name="firstName" class="span12" placeholder="Type first name here">
                 </div>
                 
                 <div class="span1">Last Name</div>
                 <div class="span5">
-                  <input type="text" name="lastName" class="span12" placeholder="Type last name here" required>
+                  <input type="text" name="lastName" class="span12" placeholder="Type last name here">
                 </div>
               </div>
             </div>

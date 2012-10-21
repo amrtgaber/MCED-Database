@@ -2,9 +2,9 @@ $( document ).ready(function() {
   /* Search button */
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
-
-    $( "#selectTable" ).load( "select_contact_table.php?" + $( "#search" ).serialize() );
-    $( "input[type=radio]:first" ).attr( "checked", true );
+    $( "#selectTable" ).load( "load_select_contact.php?" + $( "#search" ).serialize(), function() {
+      $( "input[type=radio]:first" ).attr( "checked", true );
+    });
     $( "#select" ).fadeToggle( "slow" );
     
     return false;

@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-  $( "#user-list" ).load( "select_user_table.php" );
+  $( "#user-list" ).load( "load_select_user.php" );
 
   $( "form" ).submit(function() {
     $( "#modal" ).modal( "show" );
@@ -17,7 +17,7 @@ $( document ).ready(function() {
           alert( "Success! The user was successfully removed." );
           
           $( "#modal" ).modal( "hide" );
-          $( "#user-list" ).load( "select_user_table.php" );
+          $( "#user-list" ).load( "load_select_user.php" );
         } else if( response == "Invalid Username" ) {
           alert( "Username is a required field.");
         } else if( response.substring( 0, 9 ) == "SQL Error" ) {

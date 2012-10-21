@@ -265,9 +265,7 @@ if( !$_SESSION[ 'username' ] ) {
       </div><!--/.row-fluid-->
       
       <div class="row-fluid">
-        <div class="span12">
-          <table id="list" class="table table-bordered table-striped table-condensed">
-          </table>
+        <div id="list" class="span12">
         </div>
       </div>
 

@@ -10,20 +10,32 @@ session_start();
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
-  echo( "Unauthorized" );
+  header( "Location: login.php" );
   exit;
 }
 
-/* Parse and sanitize $_GET input */
+include( "common.php" );
+
+/* Build query string */
+$whereString = "";
 
 /* First Name and Last Name */
-if( !isset( $_GET[ 'firstName' ] ) || $_GET[ 'firstName' ] == "" || !isset( $_GET[ 'lastName' ] ) || $_GET[ 'lastName' ] == "" ) {
-  echo( "Invalid Name" );
-  exit;
+if( $_GET[ 'firstName' ] ) {
+  $firstname = mysql_real_escape_string( strtolower( $_GET[ 'firstName' ] ) );
+  $whereString .= "WHERE contacts.first_name = '" . $firstname . "'";
 }
 
-$firstname = mysql_real_escape_string( strtolower( $_GET[ 'firstName' ] ) );
-$lastname  = mysql_real_escape_string( strtolower( $_GET[ 'lastName' ] ) );
+if( $_GET[ 'lastName' ] ) {
+  $lastname = mysql_real_escape_string( strtolower( $_GET[ 'lastName' ] ) );
+
+  if( $_GET[ 'firstname' ] ) {
+    $whereString .= " AND ";
+  } else {
+    $whereString .= "WHERE ";
+  }
+
+  $whereString .= "contacts.last_name = '" . $lastname . "'";
+}
 
 /* Connect to database */
 $mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
@@ -37,12 +49,12 @@ $qs = "SELECT contacts.*,
        FROM contacts
        LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
-       LEFT JOIN workers       ON contacts.id = workers.cid
-       WHERE contacts.first_name = '" . $firstname . "' AND contacts.last_name = '" . $lastname . "'";
+       LEFT JOIN workers       ON contacts.id = workers.cid "
+       . $whereString;
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error");
+  echo( database_error_alert( mysql_error() ) );
   exit;
 }
 
@@ -98,5 +110,5 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
     </table>
 <?php
 } else { ?>
-  <div class="alert alert-error">No Results Found for <?php echo( ucwords( $firstname . " " . $lastname ) ); ?>.</div>
+  <div class="alert alert-error">No results found for <?php echo( ucwords( $firstname . " " . $lastname ) ); ?>.</div>
 <?php } ?>

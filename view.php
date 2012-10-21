@@ -136,6 +136,12 @@ if( !$_SESSION[ 'username' ] ) {
                      WHERE contact_type='organizer'";
               $qr = mysql_query( $qs, $mc );
               $numOrganizers = mysql_num_rows( $qr );
+              
+              $qs = "SELECT *
+                     FROM contacts
+                     WHERE contact_type='other'";
+              $qr = mysql_query( $qs, $mc );
+              $numOther = mysql_num_rows( $qr );
             ?>
 
              <table class="table table-condensed">
@@ -151,21 +157,30 @@ if( !$_SESSION[ 'username' ] ) {
                   <td>Workers</td>
                   <td><?php echo( $numWorkers ); ?></td>
                 </tr>
+                
                 <tr>
                   <td>Students</td>
                   <td><?php echo( $numStudents ); ?></td>
                 </tr>
+                
                 <tr>
                   <td>Supporters</td>
                   <td><?php echo( $numSupporters ); ?></td>
                 </tr>
+                
                 <tr>
                   <td>Organizers</td>
                   <td><?php echo( $numOrganizers ); ?></td>
                 </tr>
+                
+                <tr>
+                  <td>Other</td>
+                  <td><?php echo( $numOther ); ?></td>
+                </tr>
+                
                 <tr>
                   <td><em>Total</em></td>
-                  <td><em><?php echo( $numWorkers + $numStudents + $numSupporters + $numOrganizers ); ?></em></td>
+                  <td><em><?php echo( $numWorkers + $numStudents + $numSupporters + $numOrganizers + $numOther ); ?></em></td>
                 </tr>
               </tbody>
             </table>

@@ -2,9 +2,9 @@ $( document ).ready(function() {
   /* Search button */
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
-
-    $( "#selectTable" ).load( "select_contact_table.php?" + $( "#search" ).serialize() );
-    $( "input[type=radio]:first" ).attr( "checked", true );
+    $( "#selectTable" ).load( "load_select_contact.php?" + $( "#search" ).serialize(), function() {
+      $( "input[type=radio]:first" ).attr( "checked", true );
+    });
     $( "#select" ).fadeToggle( "slow" );
     
     return false;
@@ -20,7 +20,7 @@ $( document ).ready(function() {
   $( "#selectButton" ).click(function() {
     $( "#select" ).hide();
 
-    $( "#formFields" ).load( "contact_form_fields.php?id=" + $( "input[type=radio]" ).val() );
+    $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]" ).val() );
     $( "#updateButton" ).attr( "data-id", $( "input[type=radio]" ).val() );
     $( "#update" ).fadeToggle( "slow" );
   });

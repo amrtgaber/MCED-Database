@@ -9,15 +9,17 @@
 session_start();
 
 if( !$_SESSION[ 'username' ] ) {
-  header( 'Location: login.php' );
+  header( "Location: login.php" );
   exit;
 }
 
 /* Must have privilege level of 4 or greater to access this page */
-if( $_SESSION[ 'privilege_level' ] < 4 ) {
-  header( 'Location: home.php' );
-  exit;
+if( $_SESSION[ 'privilege_level' ] < 4 ) { ?>
+  <div class="alert alert-error">You do not have the required privilege level to manage users.</div>
+  <?php exit;
 }
+
+include( "common.php" );
 
 /* Connect to database */
 $mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
@@ -30,7 +32,7 @@ $qs = "SELECT username, privilege_level
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
-  echo( "SQL Error " . mysql_error() );
+  echo( database_error_alert( mysql_error() ) );
   exit;
 }
 ?>

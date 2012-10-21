@@ -10,9 +10,11 @@ session_start();
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
-  echo( "Unauthorized" );
+  header( "Location: login.php" );
   exit;
 }
+
+include( "common.php" );
 
 /* Connect to database */
 $mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
@@ -21,9 +23,9 @@ mysql_select_db( "kc99" );
 /* If id is present, populate form. */
 if( $_GET[ 'id' ] ) {
   /* Must have privilege level of 2 or greater to modify a contact */
-  if( $_SESSION[ 'privilege_level' ] < 2 ) {
-    echo( "Permission Denied" );
-    exit;
+  if( $_SESSION[ 'privilege_level' ] < 2 ) { ?>
+    <div class="alert alert-error">You do not have the required privilege level to modify a contact.</div>
+    <?php exit;
   }
 
   $id = mysql_real_escape_string( $_GET[ 'id' ] );
@@ -50,16 +52,16 @@ if( $_GET[ 'id' ] ) {
   $qr = mysql_query( $qs, $mc );
 
   if( !$qr ) {
-    echo( "SQL Error " . mysql_error() );
+    echo( database_error_alert( mysql_error() ) );
     exit;
   }
 
   $contact_info = mysql_fetch_array( $qr );
 } else {
   /* Must have privilege level of 1 or greater to add a contact */
-  if( $_SESSION[ 'privilege_level' ] < 1 ) {
-    echo( "Permission Denied" );
-    exit;
+  if( $_SESSION[ 'privilege_level' ] < 1 ) { ?>
+    <div class="alert alert-error">You do not have the required privilege level to add a contact.</div>
+    <?php exit;
   }
 
   $contact_info = Array();
@@ -88,7 +90,7 @@ if( $_GET[ 'id' ] ) {
     <div class="span3">
       <input type="checkbox" name="wageBelow10" value="true"
              <?php
-               if( $contact_info[ 'wage_below_10' ] == 1 ) {
+               if( isset( $contact_info[ 'wage_below_10' ] ) ) {
                  echo( "checked" );
                }
              ?>>
@@ -145,14 +147,14 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">Phone</div>
     <div class="span5">
       <input type="text" name="phone" class="span12"
-             value="<?php echo( $contact_info[ 'phone' ] ); ?>"
+             value="<?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?>"
              placeholder="Type phone number here">
     </div>
     
     <div class="span1">Cell</div>
     <div class="span5">
       <input type="text" name="cell" class="span12"
-             value="<?php echo( $contact_info[ 'cell' ] ); ?>"
+             value="<?php if( $contact_info[ 'cell' ] != 0 ) { echo( $contact_info[ 'cell' ] ); } ?>"
              placeholder="Type cell phone number here">
     </div>
   </div>
@@ -161,7 +163,7 @@ if( $_GET[ 'id' ] ) {
     <div class="span12">
       <input type="checkbox" name="textUpdates" value="true"
              <?php
-               if( $contact_info[ 'text_updates' ] == 1 ) {
+               if( isset( $contact_info[ 'text_updates' ] ) ) {
                  echo( "checked" );
                }
              ?>>
@@ -185,7 +187,7 @@ if( $_GET[ 'id' ] ) {
 
 <?php
 
-$wage = explode( '.', (string)$row[ 'wage' ] );
+$wage = explode( '.', (string)$contact_info[ 'wage' ] );
 $dollars = $wage[ 0 ];
 $cents = $wage[ 1 ];
 
@@ -210,7 +212,7 @@ $cents = $wage[ 1 ];
     <div class="span1">School</div>
     <div class="span4">
       <input type="text" name="school" class="span12"
-             value="<?php echo( $contact_info[ 'school' ] ); ?>"
+             value="<?php echo( strtoupper( $contact_info[ 'school' ] ) ); ?>"
              placeholder="Type school here">
     </div>
 
@@ -228,45 +230,30 @@ $cents = $wage[ 1 ];
     <div class="span2">
       <select id="contactType">
         <option id="optionWorker"
-                selected="<?php
-                  if( strcmp( $contact_info[ 'contact_type' ], 'worker' ) == 0 ) {
-                    echo( "true" );
-                  } else {
-                    echo( "false" );
-                  }
-                ?>">Worker</option>
+                <?php if( strcmp( $contact_info[ 'contact_type' ], 'worker' ) == 0 ) { ?>
+                  selected="selected"
+                <?php } ?>
+                >Worker</option>
         <option id="optionStudent" 
-                selected="<?php
-                  if( strcmp( $contact_info[ 'contact_type' ], 'student' ) == 0 ) {
-                    echo( "true" );
-                  } else {
-                    echo( "false" );
-                  }
-                ?>">Student</option>
+                <?php if( strcmp( $contact_info[ 'contact_type' ], 'student' ) == 0 ) { ?>
+                  selected="selected"
+                <?php } ?>
+                >Student</option>
         <option id="optionSupporter"
-                selected="<?php
-                  if( strcmp( $contact_info[ 'contact_type' ], 'supporter' ) == 0 ) {
-                    echo( "true" );
-                  } else {
-                    echo( "false" );
-                  }
-                ?>">Supporter</option>
+                <?php if( strcmp( $contact_info[ 'contact_type' ], 'supporter' ) == 0 ) { ?>
+                  selected="selected"
+                <?php } ?>
+                >Supporter</option>
         <option id="optionOrganizer"
-                selected="<?php
-                  if( strcmp( $contact_info[ 'contact_type' ], 'organizer' ) == 0 ) {
-                    echo( "true" );
-                  } else {
-                    echo( "false" );
-                  }
-                ?>">Organizer</option>
+                <?php if( strcmp( $contact_info[ 'contact_type' ], 'organizer' ) == 0 ) { ?>
+                  selected="selected"
+                <?php } ?>
+                >Organizer</option>
         <option id="optionOther"
-                selected="<?php
-                  if( strcmp( $contact_info[ 'contact_type' ], 'other' ) == 0 ) {
-                    echo( "true" );
-                  } else {
-                    echo( "false" );
-                  }
-                ?>">Other</option>
+                <?php if( strcmp( $contact_info[ 'contact_type' ], 'other' ) == 0 ) { ?>
+                  selected="selected"
+                <?php } ?>
+                >Other</option>
       </select>
     </div>
   </div>

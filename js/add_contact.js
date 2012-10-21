@@ -1,6 +1,6 @@
 $( document ).ready(function() {
   /* Load form fields */
-  $( "#form-fields" ).load( "contact_form_fields.php" );
+  $( "#form-fields" ).load( "load_contact_form.php" );
 
   /* Clear button */
   $( 'button[type="reset"]' ).click(function() {

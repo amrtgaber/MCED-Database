@@ -8,50 +8,24 @@ $(document).ready(function() {
 
   /* Basic form */
   $( "#basic-form" ).submit(function() {
-    $.post(
-      "generate_list_action.php",
-      $( "#basic-form" ).serialize(),
-      function( data, st, jqXHR ) {
-        var response = jqXHR.responseText;
+    $( "#list" ).load( "load_basic_list.php?" + $( "#basic-form" ).serialize(), function() {
+      /* Edit contact */
+      $( "button.edit" ).click(function() {
+        var id = $( this ).attr( "data-id" );
 
-        if( response == "Invalid People" ) {
-          alert( "You must select at least one group to include in the list." );
-        } else if( response == "Unauthorized" ) {
-          alert( "You must be logged in to add a contact." );
-          window.location = "login.php";
-        } else if( response == "SQL Error" ) {
-          alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
-        } else {
-          $( "#list" ).html( response );
-
-          /* Edit contact */
-          $( "button.edit" ).click(function() {
-            var id = $( this ).attr( "data-id" );
-
-            $( "#modalBodyEdit" ).load( "contact_form_fields.php?id=" + id );
-            $( "#updateButton" ).attr( "data-id", id );
-            $( "#modal-edit" ).modal( "show" );
-          });
-          
-          /* Remove contact */
-          $( "button.remove" ).click(function() {
-            $( "#removeConfirm" ).attr( "data-id", $( this ).attr( "data-id" ) );
-            $( "#modalBodyRemove" ).html( "This action cannot be undone." );
-            $( "#modal-remove" ).modal( "show" );
-          });
-        }
-      }
-    ).fail(function( data, st, jqXHR ) {
-      alert( "There was an unknown error in the server. If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
-    }
-    ).always(function( data, st, jqXHR ) {
-      /* Debug */
-      console.log( "Sent     --> " + $( "form" ).serialize() );
-      console.log( "Received --> " + jqXHR.responseText );
+        $( "#modalBodyEdit" ).load( "load_contact_form.php?id=" + id );
+        $( "#updateButton" ).attr( "data-id", id );
+        $( "#modal-edit" ).modal( "show" );
+      });
+      
+      /* Remove contact */
+      $( "button.remove" ).click(function() {
+        $( "#removeConfirm" ).attr( "data-id", $( this ).attr( "data-id" ) );
+        $( "#modalBodyRemove" ).html( "This action cannot be undone." );
+        $( "#modal-remove" ).modal( "show" );
+      });
     });
-    
+      
     return false;
   });
   
