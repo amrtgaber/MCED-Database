@@ -8,10 +8,10 @@ $( document ).ready(function() {
     $.post(
       "login_action.php", 
       $( "form" ).serialize(),
-      function() { 
+      function( data, s, jqXHR ) { 
         window.location = "home.php";  
       }
-    ).fail(function() {
+    ).fail(function( data, s, jqXHR ) {
       $( "#error" ).html( "Incorrect username or password" );
       $( "#error" ).show();
     });

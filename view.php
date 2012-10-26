@@ -73,8 +73,8 @@ if( !$_SESSION[ 'username' ] ) {
             </ul>
 
             <?php
-              $mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
-              mysql_select_db( "kc99" );
+              $mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
+              mysql_select_db( "kc99_data" );
               
               $qs = "SELECT *
                      FROM contacts

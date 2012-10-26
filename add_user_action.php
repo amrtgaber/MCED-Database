@@ -62,8 +62,8 @@ if( !isset( $_POST[ 'privilegeLevel' ] ) ) {
 $privilege_level = mysql_real_escape_string( $_POST[ 'privilegeLevel' ] );
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
-mysql_select_db( "kc99" );
+$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
+mysql_select_db( "kc99_data" );
 
 /* Add to database */
 $qs = "INSERT INTO users

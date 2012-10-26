@@ -15,8 +15,8 @@ if( !$_SESSION[ 'username' ] ) {
 }
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
-mysql_select_db( "kc99" );
+$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
+mysql_select_db( "kc99_data" );
 
 /* Check that First Name and Last Name exist */
 if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_POST[ 'lastName' ] ) || $_POST[ 'lastName' ] == "" ) {

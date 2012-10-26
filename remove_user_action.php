@@ -31,8 +31,8 @@ if( !isset( $_POST[ 'username' ] ) ) {
 $username = mysql_real_escape_string( $_POST[ 'username' ] );
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
-mysql_select_db( "kc99" );
+$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
+mysql_select_db( "kc99_data" );
 
 /* Search for entry */
 $qs = "DELETE

@@ -11,8 +11,9 @@ session_start();
 $username = mysql_real_escape_string( $_POST[ 'username' ] );
 $password = hash( "sha256", $_POST[ 'password' ] );
 
-$mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
-mysql_select_db( "kc99" );
+/* Connect to database */
+$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
+mysql_select_db( "kc99_data" );
 
 $qs = "SELECT username, privilege_level
        FROM users
@@ -20,10 +21,10 @@ $qs = "SELECT username, privilege_level
 $qr = mysql_query( $qs, $mc );
 
 if( mysql_num_rows( $qr ) > 0 ) {
-  $row = mysql_fetch_array( $qr );
+  $user_info = mysql_fetch_array( $qr );
 
-  $_SESSION[ 'username' ] = $row[ 'username' ];
-  $_SESSION[ 'privilege_level' ] = $row[ 'privilege_level' ];
+  $_SESSION[ 'username' ] = $user_info[ 'username' ];
+  $_SESSION[ 'privilege_level' ] = $user_info[ 'privilege_level' ];
 
   header( "HTTP/1.1 200 OK" );
 } else {

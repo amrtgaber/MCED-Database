@@ -22,8 +22,8 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) { ?>
 include( "common.php" );
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
-mysql_select_db( "kc99" );
+$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
+mysql_select_db( "kc99_data" );
 
 /* Get users */
 $qs = "SELECT username, privilege_level

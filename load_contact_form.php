@@ -17,8 +17,8 @@ if( !$_SESSION[ 'username' ] ) {
 include( "common.php" );
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "debrijjadb" ) or die( mysql_error() );
-mysql_select_db( "kc99" );
+$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
+mysql_select_db( "kc99_data" );
 
 /* If id is present, populate form. */
 if( $_GET[ 'id' ] ) {
