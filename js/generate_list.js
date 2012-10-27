@@ -59,7 +59,7 @@ $(document).ready(function() {
           alert( "The ID of the contact you selected is invalid.");
         } else if( response == "SQL Error" ) {
           alert( "There was an error with the database. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com" );
+            + "please try again later or contact jalhaj@mc-ed.org" );
         } else if( response == "Permission Denied" ) {
           alert( "You do not have the required privilege level to modify a contact." );
         } else if( response == "Unauthorized" ) {
@@ -67,12 +67,12 @@ $(document).ready(function() {
           window.location = "login.php";
         } else {
           alert( "The server received the request but returned an unknown response. If you get this response more than once, "
-            + "please try again later or contact admin@debrijja.com." );
+            + "please try again later or contact jalhaj@mc-ed.org." );
         }
       }
     ).fail(function( data, s, jqXHR ) {
       alert( "There was an unknown error in the server. If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
+        + "please try again later or contact jalhaj@mc-ed.org." );
     }
     ).always(function( data, s, jqXHR ) {
       /* Debug */
@@ -239,7 +239,7 @@ $(document).ready(function() {
           } else if( response.substring( 0, 9 ) == "SQL Error" ) {
             $( "#response" ).html( "There was an error with the database. "
               + "If you get this response more than once, "
-              + "please try again later or contact admin@debrijja.com. "
+              + "please try again later or contact jalhaj@mc-ed.org. "
               + "ERROR: "
               + response.substring( 10 ) + "." );
           } else if( response == "Permission Denied" ) {
@@ -250,7 +250,7 @@ $(document).ready(function() {
           } else {
             $( "#response" ).html( "The server received the request but returned an unknown response. "
               + "If you get this response more than once, "
-              + "please try again later or contact admin@debrijja.com." );
+              + "please try again later or contact jalhaj@mc-ed.org." );
           }
         }
         
@@ -261,7 +261,7 @@ $(document).ready(function() {
       $( "#response" ).addClass( "alert-error" );
       $( "#response" ).html( "There was an unknown error in the server. "
         + "If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
+        + "please try again later or contact jalhaj@mc-ed.org." );
       $( "#response" ).show();
     }
     ).always(function( data, s, jqXHR ) {

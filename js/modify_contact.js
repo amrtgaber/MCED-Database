@@ -188,7 +188,7 @@ $( document ).ready(function() {
           } else if( response.substring( 0, 9 ) == "SQL Error" ) {
             $( "#response" ).html( "There was an error with the database. "
               + "If you get this response more than once, "
-              + "please try again later or contact admin@debrijja.com. "
+              + "please try again later or contact jalhaj@mc-ed.org. "
               + "ERROR: "
               + response.substring( 10 ) + "." );
           } else if( response == "Permission Denied" ) {
@@ -199,7 +199,7 @@ $( document ).ready(function() {
           } else {
             $( "#response" ).html( "The server received the request but returned an unknown response. "
               + "If you get this response more than once, "
-              + "please try again later or contact admin@debrijja.com." );
+              + "please try again later or contact jalhaj@mc-ed.org." );
           }
         }
         
@@ -210,7 +210,7 @@ $( document ).ready(function() {
       $( "#response" ).addClass( "alert-error" );
       $( "#response" ).html( "There was an unknown error in the server. "
         + "If you get this error more than once, "
-        + "please try again later or contact admin@debrijja.com." );
+        + "please try again later or contact jalhaj@mc-ed.org." );
       $( "#response" ).show();
     }
     ).always(function( data, s, jqXHR ) {

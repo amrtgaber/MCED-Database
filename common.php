@@ -11,7 +11,7 @@ function database_error_alert( $mysql_error ) {
 ?>
 <div class="alert alert-error">There was an error with the database. 
                                If you get this response more than once,
-                               please try again later or contact admin@debrijja.com.
+                               please try again later or contact jalhaj@mc-ed.org.
                                ERROR: <?php echo( $mysql_error ) ?>.</div>
 <?php
 }
