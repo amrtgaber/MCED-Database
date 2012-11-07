@@ -200,6 +200,7 @@ if( !$_SESSION[ 'username' ] ) {
                   <div class="span12">
                     <button type="submit" id="phone-bank-submit" class="btn btn-primary btn-large">Generate</button>
                     <button type="reset" class="btn btn-large">Clear</button>
+                    <button type="button" id="phone-bank-print" class="btn pull-right">Print</button>
                   </div>
                 </div>
               </form>

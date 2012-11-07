@@ -16,6 +16,6 @@ if( !$_SESSION[ 'username' ] ) {
 ?>
 
 <hr>
-<footer class="footer">
+<div class="footer">
   <p>Copyright &copy;&nbsp;2012 <a href="http://kc99.org/">KC99</a></p>
-</footer>
+</div>

@@ -1,0 +1,12 @@
+table {
+  border: 1px solid #000;
+  empty-cells: show;
+}
+
+tr {
+  border: 1px solid #000;
+}
+
+td {
+  border: 1px solid #000;
+}

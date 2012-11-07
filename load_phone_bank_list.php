@@ -78,8 +78,12 @@ $qr = mysql_query( $qs, $mc );
 if( !$qr ) {
   echo( database_error_alert( mysql_error() ) );
   exit;
-} ?>
-          
+}
+
+if( $_GET[ 'print' ] ) { ?>
+  <link href="css/load_phone_bank_list.css" rel="stylesheet">
+<?php } ?>
+
 <table class="table table-bordered table-striped table-condensed">
   <thead>
     <tr>
@@ -101,7 +105,10 @@ if( !$qr ) {
   
   <tbody>
     <?php
-      while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
+      while( $contact_info = mysql_fetch_array( $qr ) ) {
+        if( $contact_info[ 'phone' ] == 0 && $contact_info[ 'cell' ] == 0 ) {
+          continue;
+        } ?>
         <tr>
           <td width="120"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
           <td width="120"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
@@ -145,8 +152,9 @@ if( !$qr ) {
           
           <td width="20"></td>
           <td width="50"></td>
-          <td></td>
+          <td width="500"></td>
         </tr>
       <?php } ?>
     </tbody>
   </table>
+		

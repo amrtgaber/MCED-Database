@@ -44,6 +44,11 @@ $(document).ready(function() {
     return false;
   });
 
+  /* phone bank print */
+  $( "#phone-bank-print" ).click( function() {
+    window.open( "load_phone_bank_list.php?" + $( "#phone-bank-form" ).serialize() + "&print=true" );
+  });
+
   /* Remove confirmed */
   $( "#removeConfirm" ).click(function() {
     $.post(
