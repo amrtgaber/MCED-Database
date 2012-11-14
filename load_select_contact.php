@@ -28,7 +28,7 @@ if( $_GET[ 'firstName' ] ) {
 if( $_GET[ 'lastName' ] ) {
   $lastname = mysql_real_escape_string( strtolower( $_GET[ 'lastName' ] ) );
 
-  if( $_GET[ 'firstname' ] ) {
+  if( $_GET[ 'firstName' ] ) {
     $whereString .= " AND ";
   } else {
     $whereString .= "WHERE ";
@@ -51,7 +51,7 @@ $qs = "SELECT contacts.*,
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
        LEFT JOIN workers       ON contacts.id = workers.cid "
        . $whereString
-       . "ORDER BY contacts.last_name";
+       . " ORDER BY contacts.last_name";
 $qr = mysql_query( $qs, $mc );
 
 if( !$qr ) {
