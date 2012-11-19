@@ -11,14 +11,16 @@ session_start();
 $username = mysql_real_escape_string( $_POST[ 'username' ] );
 $password = hash( "sha256", $_POST[ 'password' ] );
 
+include( "common.php" );
+
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
 $qs = "SELECT username, privilege_level
        FROM users
        WHERE username='" . $username . "' AND password='" . $password . "'";
-$qr = mysql_query( $qs, $mc );
+
+$qr = execute_query( $qs, $mc );
 
 if( mysql_num_rows( $qr ) > 0 ) {
   $user_info = mysql_fetch_array( $qr );

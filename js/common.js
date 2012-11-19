@@ -55,7 +55,7 @@ $( document ).ready(function() {
       $( "#change-password-form-invalid" ).html( "" );
 
       $.post(
-        "change_password_action.php",
+        "action_change_password.php",
         $( "#change-password-form" ).serialize(),
         function( data, textStatus, jqXHR ) {
           $( "#change-password-form-response" ).html( jqXHR.responseText );
@@ -64,15 +64,15 @@ $( document ).ready(function() {
             this.reset();
           });
         }
-      ).fail(function( data, textStatus, jqXHR ) {
+        ).fail(function( data, textStatus, jqXHR ) {
           $( "#change-password-form-response" ).html( jqXHR.responseText );
           $( "#change-password-form-response" ).show();
         }
-      ).always(function( data, textStatus, jqXHR ) {
-        /* Debug */
-        console.log( "Sent     --> " + $( "#change-password-form" ).serialize() );
-        console.log( "Received --> " + jqXHR.responseText );
-      });
+        ).always(function( data, textStatus, jqXHR ) {
+          /* Debug */
+          console.log( "Sent     --> " + $( "#change-password-form" ).serialize() );
+          console.log( "Received --> " + jqXHR.responseText );
+        });
 
       return false;
     });

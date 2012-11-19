@@ -10,41 +10,35 @@ session_start();
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
-  echo( "Unauthorized" );
-  exit;
+  alert_error( "You must be logged in to remove a user." );
 }
 
 /* Must have privilege level of 4 or greater to access this page */
 if( $_SESSION[ 'privilege_level' ] < 4 ) {
-  echo( "Permission Denied" );
-  exit;
+  alert_error( "You do not have the required privilege level to remove a user." );
 }
 
 /* Parse and sanitize $_POST[] input */
 
 /* Get username */
 if( !isset( $_POST[ 'username' ] ) ) {
-  echo( "Invalid Username" );
-  exit;
+  alert_error( "Username is a required field." );
 }
 
 $username = mysql_real_escape_string( $_POST[ 'username' ] );
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
 /* Search for entry */
 $qs = "DELETE
        FROM users
        WHERE username = '" . $username . "'";
-$qr = mysql_query( $qs, $mc );
 
-if( !$qr ) {
-  echo( "SQL Error");
-  exit;
-}
+$qr = execute_query( $qs, $mc );
 
-echo( "Success" );
-
-?>
+/* Return success */ ?>
+<div class="alert alert-success">
+  The user <?php echo( $username ); ?> was successfully removed.
+  <button type="button" class="btn btn-success" onclick="parent.hide();">OK</button>
+</div>

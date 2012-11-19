@@ -125,13 +125,13 @@ $( document ).ready(function() {
       }
     },
     errorPlacement: function( error, element ) {
-      error.appendTo( $( "#form-invalid" ) );
-      $( "#form-invalid" ).show();
+      error.appendTo( $( "#edit-contact-form-status" ) );
+      $( "#edit-contact-form-status" ).show();
     },
     success: function() {
       if( v.numberOfInvalids() == 0 ) {
-        $( "#form-invalid" ).hide();
-        $( "#form-invalid" ).html( "" );
+        $( "#edit-contact-form-status" ).hide();
+        $( "#edit-contact-form-status" ).html( "" );
       }
     }
   });
@@ -141,87 +141,39 @@ $( document ).ready(function() {
     if( !v.form() ) {
       return false;
     }
+    
+    $( "#edit-contact-form-status" ).html( "" );
+    $( "#edit-contact-form-status" ).removeClass( "alert alert-error alert-success" );
 
     $.post(
-      "contact_form_action.php",
+      "action_contact_form.php",
       $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
-      function( data, s, jqXHR ) {
-        var response = jqXHR.responseText;
+      function( data, textStatus, jqXHR ) {
+        $( "#edit-contact-form-status" ).html( jqXHR.responseText );
+        $( "#edit-contact-form-status" ).show();
+        $( "#update" ).hide();
+        $( "#search" ).fadeToggle( "slow" );
 
-        if( response == "Success" ) {
-          $( "#response" ).removeClass( "alert-error" );
-          $( "#response" ).addClass( "alert-success" );
-          $( "#response" ).html( "The entry for "
-            + $( "input[name=firstName]" ).val()
-            + " "
-            + $( "input[name=lastName]" ).val()
-            + " was successfully changed." );
-
-          $( "#update" ).hide();
-          $( "#search" ).fadeToggle( "slow" );
-
-          $( "#update" ).each(function () {
-            this.reset();
-          });
-        } else {
-          $( "#response" ).removeClass( "alert-success" );
-          $( "#response" ).addClass( "alert-error" );
-
-          if( response == "Invalid Name" ) {
-            $( "#response" ).html( "First Name and Last Name are required fields." );
-          } else if( response == "Invalid State" ) {
-            $( "#response" ).html( "State field is invalid." );
-          } else if( response == "Invalid Zipcode" ) {
-            $( "#response" ).html( "Zipcode field is invalid." );
-          } else if( response == "Invalid Phone" ) {
-            $( "#response" ).html( "Phone field is invalid." );
-          } else if( response == "Invalid Cell" ) {
-            $( "#response" ).html( "Cell field is invalid." );
-          } else if( response == "Invalid Email" ) {
-            $( "#response" ).html( "Email field is invalid." );
-          } else if( response == "Invalid Dollars" ) {
-            $( "#response" ).html( "Dollars field is invalid." );
-          } else if( response == "Invalid Cents" ) {
-            $( "#response" ).html( "Cents field is invalid." );
-          } else if( response == "Invalid School Year" ) {
-            $( "#response" ).html( "School year field is invalid." );
-          } else if( response.substring( 0, 9 ) == "SQL Error" ) {
-            $( "#response" ).html( "There was an error with the database. "
-              + "If you get this response more than once, "
-              + "please try again later or contact jalhaj@mc-ed.org. "
-              + "ERROR: "
-              + response.substring( 10 ) + "." );
-          } else if( response == "Permission Denied" ) {
-            $( "#response" ).html( "You do not have the required privilege level to add a contact." );
-          } else if( response == "Unauthorized" ) {
-            alert( "You must be logged in to add a contact." );
-            window.location = "login.php";
-          } else {
-            $( "#response" ).html( "The server received the request but returned an unknown response. "
-              + "If you get this response more than once, "
-              + "please try again later or contact jalhaj@mc-ed.org." );
-          }
-        }
-        
-        $( "#response" ).show();
+        $( "#update" ).each(function () {
+          this.reset();
+        });
       }
-    ).fail(function( data, s, jqXHR ) {
-      $( "#response" ).removeClass( "alert-success" );
-      $( "#response" ).addClass( "alert-error" );
-      $( "#response" ).html( "There was an unknown error in the server. "
-        + "If you get this error more than once, "
-        + "please try again later or contact jalhaj@mc-ed.org." );
-      $( "#response" ).show();
-    }
-    ).always(function( data, s, jqXHR ) {
-      /* Debug */
-      console.log( "Sent     --> "
-                   + $( "#update" ).serialize()
-                   + "&contactType="
-                   + $( "#contactType" ).val().toLowerCase()
-                   + "&id="
-                   + $( "#updateButton" ).attr( "data-id" ) );
-      console.log( "Received --> " + jqXHR.responseText );
+      ).fail(function( data, textStatus, jqXHR ) {
+        $( "#edit-contact-form-status" ).addClass( "alert alert-error" );
+        $( "#edit-contact-form-status" ).html( "There was an unknown error in the server. "
+          + "If you get this error more than once, "
+          + "please try again later or contact jalhaj@mc-ed.org." );
+        $( "#edit-contact-form-status" ).show();
+      }
+      ).always(function( data, textStatus, jqXHR ) {
+        /* Debug */
+        console.log( "Sent     --> "
+                     + $( "#update" ).serialize()
+                     + "&contactType="
+                     + $( "#contactType" ).val().toLowerCase()
+                     + "&id="
+                     + $( "#updateButton" ).attr( "data-id" ) );
+        console.log( "Received --> " + jqXHR.responseText );
     });
     
     return false;

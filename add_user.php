@@ -78,7 +78,7 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
                   </div>
                 </div>
 
-                <div id="form-invalid" class="alert hide"></div>
+                <div id="add-user-form-status" class="alert hide"></div>
               </div>
 
               <div class="span5 well">
@@ -113,11 +113,6 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
               </div>
             </div>
           </form>
-
-          <div class="row-fluid">
-            <div id="response" class="alert hide">
-            </div>
-          </div>
         </div><!--/.span9-->
 
         <!-- Sidebar -->

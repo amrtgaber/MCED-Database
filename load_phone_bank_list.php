@@ -55,15 +55,12 @@ if( $_GET[ 'other' ] ) {
   }
 }
 
-if( $contactType == "" ) { ?>
-  <div class="alert alert-error">No groups selected.</div>
-  <?php
-  exit;
+if( $contactType == "" ) {
+  alert_error( "No groups selected." );
 }
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
 /* Select desired information */
 $qs = "SELECT contacts.first_name, contacts.last_name, contact_phone.phone, contact_phone.cell, workers.employer, students.school "
@@ -73,12 +70,8 @@ $qs = "SELECT contacts.first_name, contacts.last_name, contact_phone.phone, cont
       . "LEFT JOIN students      ON contacts.id = students.cid "
       . "WHERE " . $contactType . " "
       . "ORDER BY contacts.last_name";
-$qr = mysql_query( $qs, $mc );
 
-if( !$qr ) {
-  echo( database_error_alert( mysql_error() ) );
-  exit;
-}
+$qr = execute_query( $qs, $mc );
 
 if( $_GET[ 'print' ] ) { ?>
   <link href="css/load_phone_bank_list.css" rel="stylesheet">

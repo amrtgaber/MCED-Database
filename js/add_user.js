@@ -35,8 +35,8 @@ $( document ).ready(function() {
   });
 
   $( 'button[type="reset"]' ).click(function() {
-    $( "#form-invalid" ).hide();
-    $( "#form-invalid" ).html( "" );
+    $( "#add-user-form-status" ).hide();
+    $( "#add-user-form-status" ).html( "" );
   });
 
   var v = $( "form" ).validate({
@@ -67,13 +67,13 @@ $( document ).ready(function() {
       }
     },
     errorPlacement: function( error, element ) {
-      error.appendTo( $( "#form-invalid" ) );
-      $( "#form-invalid" ).show();
+      error.appendTo( $( "#add-user-form-status" ) );
+      $( "#add-user-form-status" ).show();
     },
     success: function() {
       if( v.numberOfInvalids() == 0 ) {
-        $( "#form-invalid" ).hide();
-        $( "#form-invalid" ).html( "" );
+        $( "#add-user-form-status" ).hide();
+        $( "#add-user-form-status" ).html( "" );
       }
     }
   });
@@ -82,69 +82,32 @@ $( document ).ready(function() {
     if( !v.form() ) {
       return false;
     }
+    
+    $( "#add-user-form-status" ).html( "" );
+    $( "#add-user-form-status" ).removeClass( "alert alert-error alert-success" );
 
     $.post(
-      "add_user_action.php",
+      "action_add_user.php",
       $( "form" ).serialize() + "&privilegeLevel=" + $( "#slider" ).slider( "value" ),
-      function( data, s, jqXHR ) {
-        var response = jqXHR.responseText.trim();
-
-        if( response == "Success" ) {
-          $( "#response" ).removeClass( "alert-error" );
-          $( "#response" ).addClass( "alert-success" );
-          $( "#response" ).html( $( "input[name=username]" ).val() + " is now a user and can login immediately." );
-
-          $( "form" ).each(function () {
-            this.reset();
-          });
-        } else {
-          $( "#response" ).removeClass( "alert-success" );
-          $( "#response" ).addClass( "alert-error" );
-
-          if( response == "Invalid Username" ) {
-            $( "#response" ).html( "Username is a required field.");
-          } else if( response == "Invalid Username Length" ) {
-            $( "#response" ).html( "Username must be at least 4 characters long.");
-          } else if( response == "Invalid Password" ) {
-            $( "#response" ).html( "Password is a required field." );
-          } else if( response == "Invalid Confirm Password" ) {
-            $( "#response" ).html( "Passwords must match." );
-          } else if( response == "Invalid Privilege Level" ) {
-            $( "#response" ).html( "Privilege level is invalid." );
-          } else if( response == "Duplicate Entry" ) {
-            $( "#response" ).html( "That user already exists in the database. Please choose a different username." );
-          } else if( response.substring( 0, 9 ) == "SQL Error" ) {
-            $( "#response" ).html( "There was an error with the database. "
-              + "If you get this response more than once, "
-              + "please try again later or contact jalhaj@mc-ed.org. "
-              + "ERROR: "
-              + response.substring( 10 ) + "." );
-          } else if( response == "Permission Denied" ) {
-            $( "#response" ).html( "You do not have the required privilege level to add a user." );
-          } else if( response == "Unauthorized" ) {
-            alert( "You must be logged in to add a user." );
-            window.location = "login.php";
-          } else {
-            $( "#response" ).html( "The server received the request but returned an unknown response. If you get this response more than once, "
-              + "please try again later or contact jalhaj@mc-ed.org." );
-          }
-        }
-
-        $( "#response" ).show();
+      function( data, textStatus, jqXHR ) {
+        $( "#add-user-form-status" ).html( jqXHR.responseText );
+        $( "#add-user-form-status" ).show();
+        $( "form" ).each(function () {
+          this.reset();
+        });
       }
-    ).fail(function( data, s, jqXHR ) {
-      $( "#response" ).removeClass( "alert-success" );
-      $( "#response" ).addClass( "alert-error" );
-      $( "#response" ).html( "There was an unknown error in the server. "
-        + "If you get this error more than once, "
-        + "please try again later or contact jalhaj@mc-ed.org." );
-      $( "#response" ).show();
-    }
-    ).always(function( data, s, jqXHR ) {
-      /* Debug */
-      console.log( "Sent     --> " + $( "form" ).serialize() + "&privilegeLevel=" + $( "#slider" ).slider( "value" ) );
-      console.log( "Received --> " + jqXHR.responseText );
-    });
+      ).fail(function( data, textStatus, jqXHR ) {
+        $( "#add-user-form-status" ).addClass( "alert alert-error" );
+        $( "#add-user-form-status" ).html( "There was an unknown error in the server. "
+          + "If you get this error more than once, "
+          + "please try again later or contact jalhaj@mc-ed.org." );
+        $( "#add-user-form-status" ).show();
+      }
+      ).always(function( data, textStatus, jqXHR ) {
+        /* Debug */
+        console.log( "Sent     --> " + $( "form" ).serialize() + "&privilegeLevel=" + $( "#slider" ).slider( "value" ) );
+        console.log( "Received --> " + jqXHR.responseText );
+      });
 
     return false;
   });

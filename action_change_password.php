@@ -13,36 +13,26 @@ if( !$_SESSION[ 'username' ] ) {
   exit;
 }
 
+include( "common.php" );
+
 /* Parse and sanitize $_POST[] input */
-if( !isset( $_POST[ 'newPassword' ] ) || $_POST[ 'newPassword' ] == "" || !isset( $_POST[ 'confirmNewPassword' ] ) || $_POST[ 'confirmNewPassword' ] == "" ) { ?>
-  <div class="alert alert-error">
-    New Password and Confirm Password are required fields.
-  </div> <?php
-  exit;
-} else if( strcmp( $_POST[ 'newPassword' ], $_POST[ 'confirmNewPassword' ] ) != 0 ) { ?>
-  <div class="alert alert-error">
-    Passwords must match.
-  </div> <?php
-  exit;
+if( !isset( $_POST[ 'newPassword' ] ) || $_POST[ 'newPassword' ] == "" || !isset( $_POST[ 'confirmNewPassword' ] ) || $_POST[ 'confirmNewPassword' ] == "" ) {
+  alert_error( "New Password and Confirm Password are required fields." );
+} else if( strcmp( $_POST[ 'newPassword' ], $_POST[ 'confirmNewPassword' ] ) != 0 ) {
+  alert_error( "Passwords must match." );
 } else {
   $new_password = mysql_real_escape_string( $_POST[ 'newPassword' ] );
   $new_password = hash( "sha256", $new_password );
 }
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
 $qs = "UPDATE users
        SET password = '" . $new_password . "'
        WHERE username = '" . $_SESSION[ 'username' ] . "'";
 
-$qr = mysql_query( $qs, $mc );
-
-if( !$qr ) {
-  mysql_error();
-  exit;
-}
+$qr = execute_query( $qs, $mc );
 
 ?>
 

@@ -17,15 +17,13 @@ if( !$_SESSION[ 'username' ] ) {
 include( "common.php" );
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
 /* If id is present, populate form. */
 if( $_GET[ 'id' ] ) {
   /* Must have privilege level of 2 or greater to modify a contact */
-  if( $_SESSION[ 'privilege_level' ] < 2 ) { ?>
-    <div class="alert alert-error">You do not have the required privilege level to modify a contact.</div>
-    <?php exit;
+  if( $_SESSION[ 'privilege_level' ] < 2 ) {
+    alert_error( "You do not have the required privilege level to modify a contact." );
   }
 
   $id = mysql_real_escape_string( $_GET[ 'id' ] );
@@ -49,19 +47,14 @@ if( $_GET[ 'id' ] ) {
                    WHERE contacts.id = contact_organizer.oid
                    ) assigned_organizers ON contacts.id = assigned_organizers.cid
          WHERE contacts.id = " . $id;
-  $qr = mysql_query( $qs, $mc );
-
-  if( !$qr ) {
-    echo( database_error_alert( mysql_error() ) );
-    exit;
-  }
+  
+  $qr = execute_query( $qs, $mc );
 
   $contact_info = mysql_fetch_array( $qr );
 } else {
   /* Must have privilege level of 1 or greater to add a contact */
-  if( $_SESSION[ 'privilege_level' ] < 1 ) { ?>
-    <div class="alert alert-error">You do not have the required privilege level to add a contact.</div>
-    <?php exit;
+  if( $_SESSION[ 'privilege_level' ] < 1 ) {
+    alert_error( "You do not have the required privilege level to add a contact." );
   }
 
   $contact_info = Array();

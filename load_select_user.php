@@ -13,28 +13,22 @@ if( !$_SESSION[ 'username' ] ) {
   exit;
 }
 
-/* Must have privilege level of 4 or greater to access this page */
-if( $_SESSION[ 'privilege_level' ] < 4 ) { ?>
-  <div class="alert alert-error">You do not have the required privilege level to manage users.</div>
-  <?php exit;
-}
-
 include( "common.php" );
 
+/* Must have privilege level of 4 or greater to access this page */
+if( $_SESSION[ 'privilege_level' ] < 4 ) {
+  alert_error( "You do not have the required privilege level to manage users." );
+}
+
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
 /* Get users */
 $qs = "SELECT username, privilege_level
        FROM users";
 
-$qr = mysql_query( $qs, $mc );
+$qr = execute_query( $qs, $mc );
 
-if( !$qr ) {
-  echo( database_error_alert( mysql_error() ) );
-  exit;
-}
 ?>
 
 <table class="table table-bordered table-striped table-condensed">

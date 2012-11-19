@@ -6,7 +6,7 @@ $( document ).ready(function() {
 
   $( "form" ).submit(function() {
     $.post(
-      "login_action.php", 
+      "action_login.php", 
       $( "form" ).serialize(),
       function( data, s, jqXHR ) { 
         window.location = "home.php";  

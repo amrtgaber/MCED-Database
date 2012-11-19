@@ -38,8 +38,7 @@ if( $_GET[ 'lastName' ] ) {
 }
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
 /* Get contact info */
 $qs = "SELECT contacts.*,
@@ -52,12 +51,8 @@ $qs = "SELECT contacts.*,
        LEFT JOIN workers       ON contacts.id = workers.cid "
        . $whereString
        . " ORDER BY contacts.last_name";
-$qr = mysql_query( $qs, $mc );
 
-if( !$qr ) {
-  echo( database_error_alert( mysql_error() ) );
-  exit;
-}
+$qr = execute_query( $qs, $mc );
 
 if( mysql_num_rows( $qr ) > 0 ) { ?>
   <table class="table table-bordered table-striped table-condensed">
@@ -110,6 +105,6 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       </tbody>
     </table>
 <?php
-} else { ?>
-  <div class="alert alert-error">No results found for <?php echo( ucwords( $firstname . " " . $lastname ) ); ?>.</div>
-<?php } ?>
+} else {
+  alert_error( "No results found for " . ucwords( $firstname . " " . $lastname ) . "." );
+}

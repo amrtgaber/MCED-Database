@@ -10,31 +10,38 @@ session_start();
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
-  echo( "Unauthorized" );
-  exit;
+  alert_error( "You must be logged in to remove a contact." );
 }
 
 /* Must have privilege level of 3 or greater to access this page */
 if( $_SESSION[ 'privilege_level' ] < 3 ) {
-  echo( "Permission Denied" );
-  exit;
+  alert_error( "You do not have the required privilege level to remove a contact." );
 }
 
 /* Parse and sanitize $_POST[] input */
 
 /* Get ID */
 if( !isset( $_POST[ 'id' ] ) ) {
-  echo( "Invalid ID" );
-  exit;
+  alert_error( "ID is invalid." );
 }
 
 $id = mysql_real_escape_string( $_POST[ 'id' ] );
 
 /* Connect to database */
-$mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-mysql_select_db( "kc99_data" );
+$mc = connect_to_database();
 
-/* Search for entry */
+$qs = "SELECT contacts.first_name
+              contacts.last_name
+       FROM contacts
+       WHERE contacts.id = " . $id;
+
+$qr = execute_query( $qs, $mc );
+
+$contact_info = mysql_fetch_array( $qr );
+
+$name = ucwords( $contact_info[ 'first_name' ] . " " . $contact_info[ 'last_name' ] );
+
+/* delete entry */
 $qs = "DELETE contacts.*,
               contact_phone.*,
               contact_email.*,
@@ -48,13 +55,10 @@ $qs = "DELETE contacts.*,
        LEFT JOIN students          ON contacts.id = students.cid
        LEFT JOIN contact_organizer ON contacts.id = contact_organizer.cid 
        WHERE contacts.id = " . $id;
-$qr = mysql_query( $qs, $mc );
+$qr = execute_query( $qs, $mc );
 
-if( !$qr ) {
-  echo( "SQL Error " . mysql_error() );
-  exit;
-}
-
-echo( "Success" );
-
-?>
+/* Return success */ ?>
+<div class="alert alert-success">
+  The contact <?php echo( $name ); ?> was successfully removed.
+  <button type="button" class="btn btn-success" onclick="parent.hide();">OK</button>
+</div>

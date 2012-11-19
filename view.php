@@ -12,6 +12,8 @@ if( !$_SESSION[ 'username' ] ) {
   header( 'Location: login.php' );
   exit;
 }
+
+include( "common.php" );
 ?>
 
 <!DOCTYPE html>
@@ -73,37 +75,36 @@ if( !$_SESSION[ 'username' ] ) {
             </ul>
 
             <?php
-              $mc = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-              mysql_select_db( "kc99_data" );
+              $mc = connect_to_database();
               
               $qs = "SELECT *
                      FROM contacts
                      WHERE contact_type='worker'";
-              $qr = mysql_query( $qs, $mc );
+              $qr = execute_query( $qs, $mc );
               $numWorkers = mysql_num_rows( $qr );
               
               $qs = "SELECT *
                      FROM contacts
                      WHERE contact_type='student'";
-              $qr = mysql_query( $qs, $mc );
+              $qr = execute_query( $qs, $mc );
               $numStudents = mysql_num_rows( $qr );
               
               $qs = "SELECT *
                      FROM contacts
                      WHERE contact_type='supporter'";
-              $qr = mysql_query( $qs, $mc );
+              $qr = execute_query( $qs, $mc );
               $numSupporters = mysql_num_rows( $qr );
               
               $qs = "SELECT *
                      FROM contacts
                      WHERE contact_type='organizer'";
-              $qr = mysql_query( $qs, $mc );
+              $qr = execute_query( $qs, $mc );
               $numOrganizers = mysql_num_rows( $qr );
               
               $qs = "SELECT *
                      FROM contacts
                      WHERE contact_type='other'";
-              $qr = mysql_query( $qs, $mc );
+              $qr = execute_query( $qs, $mc );
               $numOther = mysql_num_rows( $qr );
             ?>
 

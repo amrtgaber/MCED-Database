@@ -73,7 +73,7 @@ if( $_SESSION[ 'privilege_level' ] < 3 ) {
           </form>
 
           <div class="row-fluid">
-            <div id="response" class="alert hide">
+            <div id="remove-contact-form-status" class="alert hide">
             </div>
           </div>
 

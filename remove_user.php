@@ -56,7 +56,7 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
             </div>
 
           <div class="row-fluid">
-            <div id ="form-invalid" class="span4 alert alert-error hide">
+            <div id ="remove-user-form-status" class="span4 alert alert-error hide">
             </div>
           </div>
 
@@ -64,11 +64,6 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
               <button type="submit" class="btn btn-primary btn-large btn-danger">Remove</button>
             </div>
           </form>
-
-          <div class="row-fluid">
-            <div id="response" class="alert hide">
-            </div>
-          </div>
         </div><!--/.span9-->
           
         <div id="modal" class="modal hide fade">
