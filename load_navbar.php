@@ -68,30 +68,24 @@ if( !$_SESSION[ 'username' ] ) {
   <form id="change-password-form" class="form-horizontal">
     <div class="modal-body">
         <div class="control-group">
-          <label class="control-label">New password</label>
+          <label class="control-label" for="newPassword">New password</label>
           <div class="controls">
             <input type="password" id="newPassword" name="newPassword" placeholder="Type new password here">
           </div>
         </div>
 
         <div class="control-group">
-          <label class="control-label">Confirm new password</label>
+          <label class="control-label" for="confirmNewPassword">Confirm new password</label>
           <div class="controls">
-            <input type="password" name="confirmNewPassword" placeholder="Retype new password here">
+            <input type="password" id="confirmNewPassword" name="confirmNewPassword" placeholder="Retype new password here">
           </div>
     </div>
     
     <div class="modal-footer">
-      <span id="change-password-form-invalid" class="alert hide pull-left">
+      <span id="change-password-form-status" class="alert hide pull-left">
       </span>
-
-      <span id="change-password-form-response" class="pull-left">
-      </span>
-
       <button type="submit" id="change-password-button" class="btn btn-primary">Submit</button>
       <button type="button" class="btn" data-dismiss="modal">Cancel</button>
     </div>
   </form>
 </div>
-
-<script src="js/jquery.validate.min.js"></script>

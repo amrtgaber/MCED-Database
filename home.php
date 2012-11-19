@@ -120,6 +120,14 @@ if( !$_SESSION[ 'username' ] ) {
           <div class="well sidebar-nav">
             <div id="sidebar">
             </div>
+
+            <br>
+
+            <div id="quick-search">
+              <input type="text" id="firstName" name="firstName" class="span6" placeholder="First name">
+              <input type="text" id="lastName" name="lastName" class="span6" placeholder="Last name">
+              <button type="button" id="quick-search-button" class="btn btn-small">Search</button>
+            </div>
           </div>
         </div>
       </div><!--/.row-fluid-->
@@ -132,6 +140,7 @@ if( !$_SESSION[ 'username' ] ) {
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/home.js"></script>
   </body>

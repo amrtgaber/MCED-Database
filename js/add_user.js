@@ -84,7 +84,9 @@ $( document ).ready(function() {
     }
     
     $( "#add-user-form-status" ).html( "" );
-    $( "#add-user-form-status" ).removeClass( "alert alert-error alert-success" );
+    $( "#add-user-form-status" ).removeClass( "alert" );
+    $( "#add-user-form-status" ).removeClass( "alert-error" );
+    $( "#add-user-form-status" ).removeClass( "alert-success" );
 
     $.post(
       "action_add_user.php",

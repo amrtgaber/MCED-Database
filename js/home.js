@@ -18,4 +18,8 @@ $(document).ready(function() {
   $( "#manage-users" ).click(function() {
     window.location = "manage_users.php";
   });
+
+  $( "#quick-search-button" ).click(function() {
+    window.location = "search_contact.php?firstName=" + $( "#firstName" ).val() + "&lastName=" + $( "#lastName" ).val();
+  });
 });

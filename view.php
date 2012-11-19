@@ -62,8 +62,21 @@ include( "common.php" );
               <button class="btn btn-large btn-primary" type="button" id="view-shop-profile">View Shop Profile &raquo;</button>
             </div>
           </div><!--./row-fluid-->
-        </div><!--/.span9-->
         
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>Search</h2>
+              <p>Select this option if you'd like to search for a contact.</p>
+            </div>
+          </div><!--/.row-fluid-->
+
+          <div class="row-fluid">
+            <div class="span6">
+              <button class="btn btn-large btn-primary" type="button" id="search-contact">Search &raquo;</button>
+            </div>
+          </div><!--./row-fluid-->
+        </div><!--/.span9-->
+
         <!-- Sidebar -->
         <div class="span3">
           <div class="well sidebar-nav">
@@ -160,6 +173,7 @@ include( "common.php" );
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/view.js"></script>
   </body>

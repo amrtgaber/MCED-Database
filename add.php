@@ -85,6 +85,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/add.js"></script>
   </body>

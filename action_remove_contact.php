@@ -5,6 +5,8 @@
  * Description: Handles removing a contact from the KC99 database.
  */
 
+include( "common.php" );
+
 /* Start a new session or continue an existing one */
 session_start();
 
@@ -30,7 +32,7 @@ $id = mysql_real_escape_string( $_POST[ 'id' ] );
 /* Connect to database */
 $mc = connect_to_database();
 
-$qs = "SELECT contacts.first_name
+$qs = "SELECT contacts.first_name,
               contacts.last_name
        FROM contacts
        WHERE contacts.id = " . $id;
@@ -60,5 +62,5 @@ $qr = execute_query( $qs, $mc );
 /* Return success */ ?>
 <div class="alert alert-success">
   The contact <?php echo( $name ); ?> was successfully removed.
-  <button type="button" class="btn btn-success" onclick="parent.hide();">OK</button>
+  <button type="button" class="btn btn-success" onclick="$( this ).parent().hide();">OK</button>
 </div>

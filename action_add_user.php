@@ -68,5 +68,5 @@ $qr = execute_query( $qs, $mc );
 /* Return success */ ?>
 <div class="alert alert-success">
   <?php echo( $username ); ?> is now a user and can login immediately.
-  <button type="button" class="btn btn-success" onclick="parent.hide();">OK</button>
+  <button type="button" class="btn btn-success" onclick="$( this ).parent().hide();">OK</button>
 </div>

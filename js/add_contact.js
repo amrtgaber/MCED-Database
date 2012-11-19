@@ -116,7 +116,9 @@ $( document ).ready(function() {
     }
 
     $( "#add-contact-form-status" ).html( "" );
-    $( "#add-contact-form-status" ).removeClass( "alert alert-error alert-success" );
+    $( "#add-contact-form-status" ).removeClass( "alert" );
+    $( "#add-contact-form-status" ).removeClass( "alert-error" );
+    $( "#add-contact-form-status" ).removeClass( "alert-success" );
 
     $.post(
       "action_contact_form.php",

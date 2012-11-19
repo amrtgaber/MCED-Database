@@ -490,7 +490,7 @@ if( $_POST[ 'syear' ] ) {
 if( $_POST[ 'id' ] ) { ?>
   <div class="alert alert-success">
     The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully modified.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal">OK</button>
+    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
   </div>
 <?php } else { ?>
   <div class="alert alert-success">

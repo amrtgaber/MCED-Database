@@ -1,8 +1,8 @@
 <?php
-/* File: modify_contact.php
+/* File: search_contact.php
  * Author: Amr Gaber
- * Created: 9/27/2012
- * Description: Handles modifying a contact for KC99 database.
+ * Created: 18/11/2012
+ * Description: Handles searching for a contact for KC99 database.
  */
 
 /* Must be logged in to access this page */
@@ -13,16 +13,10 @@ if( !$_SESSION[ 'username' ] ) {
   exit;
 }
 
-/* Must have privilege level of 2 or greater to access this page */
-if( $_SESSION[ 'privilege_level' ] < 2 ) {
-  header( 'Location: home.php' );
-  exit;
-}
-
-if( isset( $_GET[ 'id' ] ) ) { ?>
-  <script type="text/javascript">var quickSelect = true; var quickId = <?php echo( $_GET[ 'id' ] ); ?>;</script>
+if( isset( $_GET[ 'firstName' ] ) || isset( $_GET[ 'lastName' ] ) ) { ?>
+  <script type="text/javascript">var quickSearch = true;</script>
 <?php } else { ?>
-  <script type="text/javascript">var quickSelect = false;</script>
+  <script type="text/javascript">var quickSearch = false;</script>
 <?php }
 
 ?>
@@ -33,12 +27,12 @@ if( isset( $_GET[ 'id' ] ) ) { ?>
 
   <head>
     <meta charset="utf-8">
-    <title>KC99 - Database Modify</title>
+    <title>KC99 - Database Search for Contact</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
-    <link href="css/modify_contact.css" rel="stylesheet">
+    <link href="css/search_contact.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -54,21 +48,21 @@ if( isset( $_GET[ 'id' ] ) ) { ?>
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-        <legend>Modify Contact</legend>
+        <legend>Search Contact</legend>
 
           <form id="search">
-            <h4>Which contact would you like to modify?</h4>
+            <h4>Which contact would you like to search?</h4>
 
             <div class="well"> 
               <div class="row-fluid">
                 <div class="span1">First Name</div>
                 <div class="span5">
-                  <input type="text" name="firstName" class="span12" placeholder="Type first name here">
+                  <input type="text" name="firstName" class="span12" placeholder="Type first name here" value="<?php echo( $_GET[ 'firstName' ] ); ?>">
                 </div>
                 
                 <div class="span1">Last Name</div>
                 <div class="span5">
-                  <input type="text" name="lastName" class="span12" placeholder="Type last name here">
+                  <input type="text" name="lastName" class="span12" placeholder="Type last name here" value="<?php echo( $_GET[ 'lastName' ] ); ?>">
                 </div>
               </div>
             </div>
@@ -92,22 +86,17 @@ if( isset( $_GET[ 'id' ] ) ) { ?>
             </div>
           </div>
 
-          <form id="update" class="hide">
-            <div id="formFields">
+          <div id="view" class="hide">
+            <div id="contactInfo">
             </div>
 
             <div class="row-fluid">
-              <div id="edit-contact-form-status" class="alert alert-error hide">
-              </div>
-            </div>
-            
-            <div class="row-fluid">
-              <div class="span3">
-                <button type="submit" id="updateButton" class="btn btn-primary btn-large">Save Changes</button>
+              <div class="span5">
+                <button type="submit" id="updateButton" class="btn btn-primary btn-large">Modify this contact &raquo;</button>
                 <button type="button" id="backToSelect" class="btn btn-large">Back</button>
               </div>
             </div>
-          </form>
+          </div>
         </div><!--/.span9-->
         
         <!-- Sidebar -->
@@ -129,7 +118,7 @@ if( isset( $_GET[ 'id' ] ) ) { ?>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/modify_contact.js"></script>
+    <script src="js/search_contact.js"></script>
   </body>
 
 </html>

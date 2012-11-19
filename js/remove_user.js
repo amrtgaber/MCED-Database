@@ -20,7 +20,9 @@ $( document ).ready(function() {
   
   $( "#removeConfirm" ).click(function() {
     $( "#remove-user-form-status" ).html( "" );
-    $( "#remove-user-form-status" ).removeClass( "alert alert-error alert-success" );
+    $( "#remove-user-form-status" ).removeClass( "alert" );
+    $( "#remove-user-form-status" ).removeClass( "alert-error" );
+    $( "#remove-user-form-status" ).removeClass( "alert-success" );
 
     $.post(
       "action_remove_user.php",

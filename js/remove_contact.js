@@ -34,6 +34,12 @@ $( document ).ready(function() {
   /* Remove confirmed */
   $( "#removeConfirm" ).click(function() {
     var id = $( "#removeConfirm" ).attr( "data-id" );
+        
+    $( "#remove-contact-form-status" ).html( "" );
+    $( "#remove-contact-form-status" ).removeClass( "alert" );
+    $( "#remove-contact-form-status" ).removeClass( "alert-error" );
+    $( "#remove-contact-form-status" ).removeClass( "alert-success" );
+
     $.post(
       "action_remove_contact.php",
       "id=" + id,

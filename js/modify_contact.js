@@ -1,4 +1,12 @@
 $( document ).ready(function() {
+  if( quickSelect ) {
+    $( "#search" ).hide();
+
+    $( "#formFields" ).load( "load_contact_form.php?id=" + quickId );
+    $( "#updateButton" ).attr( "data-id", quickId );
+    $( "#update" ).fadeToggle( "slow" );
+  }
+
   /* Search button */
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
@@ -143,7 +151,9 @@ $( document ).ready(function() {
     }
     
     $( "#edit-contact-form-status" ).html( "" );
-    $( "#edit-contact-form-status" ).removeClass( "alert alert-error alert-success" );
+    $( "#edit-contact-form-status" ).removeClass( "alert" );
+    $( "#edit-contact-form-status" ).removeClass( "alert-error" );
+    $( "#edit-contact-form-status" ).removeClass( "alert-success" );
 
     $.post(
       "action_contact_form.php",
@@ -151,12 +161,6 @@ $( document ).ready(function() {
       function( data, textStatus, jqXHR ) {
         $( "#edit-contact-form-status" ).html( jqXHR.responseText );
         $( "#edit-contact-form-status" ).show();
-        $( "#update" ).hide();
-        $( "#search" ).fadeToggle( "slow" );
-
-        $( "#update" ).each(function () {
-          this.reset();
-        });
       }
       ).fail(function( data, textStatus, jqXHR ) {
         $( "#edit-contact-form-status" ).addClass( "alert alert-error" );
