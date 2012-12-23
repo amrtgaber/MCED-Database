@@ -278,7 +278,7 @@ $qr = execute_query( $qs, $mc );
           <?php } ?>
 
           <?php if( $_GET[ 'schoolYear' ] ) { ?>
-            <td>20<?php echo( $contact_info[ 'syear' ] ); ?></td>
+            <td><?php if( isset( $contact_info[ 'syear' ] ) ) { echo( "20" . $contact_info[ 'syear' ] ); } ?></td>
           <?php } ?>
 
           <?php if( $_GET[ 'assignedOrganizer' ] ) { ?>
