@@ -9,11 +9,14 @@ $( document ).ready(function() {
       "action_login.php", 
       $( "form" ).serialize(),
       function( data, s, jqXHR ) { 
-        window.location = "home.php";  
+        window.location = "home.php";
       }
     ).fail(function( data, s, jqXHR ) {
       $( "#error" ).html( "Incorrect username or password" );
       $( "#error" ).show();
+    }).always( function( data, s, jqXHR ) {
+      console.log( "Sent-->      " + $( "form" ).serialize() );
+      console.log( "Received-->  " + jqXHR.responseText );
     });
     
     return false;
