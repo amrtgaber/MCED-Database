@@ -8,6 +8,8 @@
 /* Start a new session or continue an existing one */
 session_start();
 
+include( "common.php" );
+
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
   alert_error( "You must be logged in to remove a user." );
