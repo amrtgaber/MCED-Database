@@ -5,6 +5,7 @@
  * Description: Handles removing a contact from the KC99 database.
  */
 
+include( "db_credentials.php" );
 include( "common.php" );
 
 /* Start a new session or continue an existing one */

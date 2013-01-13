@@ -13,6 +13,7 @@ if( !$_SESSION[ 'username' ] ) {
   exit;
 }
 
+include( "db_credentials.php" );
 include( "common.php" );
 
 /* Must have privilege level of 4 or greater to access this page */

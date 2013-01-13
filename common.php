@@ -5,13 +5,6 @@
  * Description: Common functions and data for kc99 database.
  */
 
-/* connect to database */
-function connect_to_database() {
-  $mysql_connection = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
-  mysql_select_db( "kc99_data" );
-  return $mysql_connection;
-}
-
 /* execute_query */
 function execute_query( $query_string, $mysql_connection ) {
   $query_resource = mysql_query( $query_string, $mysql_connection );

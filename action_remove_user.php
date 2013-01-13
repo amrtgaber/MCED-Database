@@ -8,6 +8,7 @@
 /* Start a new session or continue an existing one */
 session_start();
 
+include( "db_credentials.php" );
 include( "common.php" );
 
 /* Must be logged in for this to work */
