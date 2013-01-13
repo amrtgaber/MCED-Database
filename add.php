@@ -66,6 +66,19 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
               <button class="btn btn-large btn-primary" type="button" id="add-shop-profile">Add Shop Profile &raquo;</button>
             </div>
           </div><!--./row-fluid-->
+          
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>Add Contact Sheet</h2>
+              <p>Select this option if you'd like to add a contact sheet.</p>
+            </div>
+          </div><!--/.row-fluid-->
+
+          <div class="row-fluid">
+            <div class="span6">
+              <button class="btn btn-large btn-primary" type="button" id="add-contact-sheet">Add Contact Sheet &raquo;</button>
+            </div>
+          </div><!--./row-fluid-->
         </div><!--/.span9-->
 
         <!-- Sidebar -->
