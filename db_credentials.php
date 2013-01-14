@@ -7,7 +7,7 @@
 
 /* connect to database */
 function connect_to_database() {
-  $mysql_connection = mysql_connect( "localhost", "root", "w1ldc4t5" ) or die( mysql_error() );
+  $mysql_connection = mysql_connect( "localhost", "root", "mceddb" ) or die( mysql_error() );
   mysql_select_db( "kc99_data" );
   return $mysql_connection;
 }
