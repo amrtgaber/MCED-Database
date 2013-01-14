@@ -50,13 +50,15 @@ $qs = "DELETE contacts.*,
               contact_email.*,
               workers.*,
               students.*,
-              contact_organizer.*
+              contact_organizer.*,
+              contact_sheet.*
        FROM contacts
        LEFT JOIN contact_phone     ON contacts.id = contact_phone.cid
        LEFT JOIN contact_email     ON contacts.id = contact_email.cid
        LEFT JOIN workers           ON contacts.id = workers.cid
        LEFT JOIN students          ON contacts.id = students.cid
-       LEFT JOIN contact_organizer ON contacts.id = contact_organizer.cid 
+       LEFT JOIN contact_organizer ON contacts.id = contact_organizer.cid
+       LEFT JOIN contact_sheet     ON contacts.id = contact_sheet.cid  
        WHERE contacts.id = " . $id;
 $qr = execute_query( $qs, $mc );
 

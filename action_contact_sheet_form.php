@@ -24,7 +24,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
 /* Check for required fields */
 
 /* if no id is present first and last name must exist */
-if( !isset( $_POST[ "id" ] ) ) {
+if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
   if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_POST[ 'lastName' ] ) || $_POST[ 'lastName' ] == "" ) {
     alert_error( "First and Last name are required fields." );
   }
@@ -61,10 +61,10 @@ $mc = connect_to_database();
 /* Insert new contact sheet */
 
 /* If id is not present, need to insert new contact. */
-if( !isset( $_POST[ "id" ] ) ) {
+if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
   /* Insert new contact */
-  $firstname = mysql_real_escape_string( strtolower( $_POST[ 'firstName' ] ) );
-  $lastname  = mysql_real_escape_string( strtolower( $_POST[ 'lastName' ] ) );
+  $firstname = mysql_real_escape_string( $_POST[ 'firstName' ] );
+  $lastname  = mysql_real_escape_string( $_POST[ 'lastName' ] );
   
   $qs = "INSERT INTO contacts
         ( first_name, last_name )

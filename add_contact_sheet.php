@@ -83,6 +83,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
             <div class="row-fluid">
               <button type="button" id="selectButton" class="btn btn-primary btn-large">Select</button>
               <button type="button" id="backToSearch" class="btn btn-large">Back</button>
+              <button type="button" id="blank-contact-sheet" class="btn btn-warning btn-large pull-right">Use blank contact sheet</button>
             </div>
           </div>
           

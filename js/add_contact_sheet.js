@@ -13,37 +13,51 @@ $( document ).ready(function() {
     $( "#select" ).hide();
     $( "#search" ).fadeToggle( "slow" );
   });
+  
+  /* set up form handlers */
+  function form_handlers() {
+    /* show/hide potential legal issues textarea */
+    $( "#pliCheck" ).click( function() {
+      if( $( "#pliCheck" ).attr( "checked" ) ) {
+        $( "#pliText" ).show();;
+      } else {
+        $( "#pliText" ).hide();
+      }
+    });
+    
+    /* show/hide other contact type text box */
+    $( ".contact-type" ).click( function() {
+      if( $( "#cto" ).attr( "checked" ) ) {
+        $( "#ctoText" ).css( "opacity", 1 );
+      } else {
+        $( "#ctoText" ).css( "opacity", 0 );
+      }
+    });
+    
+    /* activate datepicker */
+    $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
+    $( "#date" ).datepicker( "setDate", new Date());
+  }
 
   /* Select button */
   $( "#selectButton" ).click(function() {
     $( "#select" ).hide();
 
-    /* Load form fields */
-    $( "#form-fields" ).load( "load_contact_sheet_form.php?id=" + $( "input[type=radio]:checked" ).val(), function() {
-      
-      /* show/hide potential legal issues textarea */
-      $( "#pliCheck" ).click( function() {
-        if( $( "#pliCheck" ).attr( "checked" ) ) {
-          $( "#pliText" ).show();;
-        } else {
-          $( "#pliText" ).hide();
-        }
-      });
-      
-      /* show/hide other contact type text box */
-      $( ".contact-type" ).click( function() {
-        if( $( "#cto" ).attr( "checked" ) ) {
-          $( "#ctoText" ).css( "opacity", 1 );
-        } else {
-          $( "#ctoText" ).css( "opacity", 0 );
-        }
-      });
-      
-      /* activate datepicker */
-      $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
-      $( "#date" ).datepicker( "setDate", new Date());
-    });
+    /* Load form fields and attach handlers*/
+    $( "#form-fields" ).load( "load_contact_sheet_form.php?id=" + $( "input[type=radio]:checked" ).val(), form_handlers );
+    
     $( "#add-contact-sheet-button" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
+    $( "#view" ).fadeToggle( "slow" );
+  });
+  
+  /* blank sheet button */
+  $( "#blank-contact-sheet" ).click(function() {
+    $( "#select" ).hide();
+
+    /* Load form fields and attach handlers */
+    $( "#form-fields" ).load( "load_contact_sheet_form.php", form_handlers );
+    
+    $( "#add-contact-sheet-button" ).attr( "data-id", "" );
     $( "#view" ).fadeToggle( "slow" );
   });
 
