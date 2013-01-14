@@ -1,2 +1,5 @@
 # ignore vim recovery files
 *.swp
+
+# ignore database credentials
+db_credentials.php
