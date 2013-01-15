@@ -93,31 +93,25 @@ include( "common.php" );
               
               $qs = "SELECT *
                      FROM contacts
-                     WHERE contact_type='worker'";
+                     WHERE contact_type = 1";
               $qr = execute_query( $qs, $mc );
               $numWorkers = mysql_num_rows( $qr );
               
               $qs = "SELECT *
                      FROM contacts
-                     WHERE contact_type='student'";
+                     WHERE contact_type = 2";
               $qr = execute_query( $qs, $mc );
               $numStudents = mysql_num_rows( $qr );
               
               $qs = "SELECT *
                      FROM contacts
-                     WHERE contact_type='supporter'";
+                     WHERE contact_type= 3";
               $qr = execute_query( $qs, $mc );
               $numSupporters = mysql_num_rows( $qr );
               
               $qs = "SELECT *
                      FROM contacts
-                     WHERE contact_type='organizer'";
-              $qr = execute_query( $qs, $mc );
-              $numOrganizers = mysql_num_rows( $qr );
-              
-              $qs = "SELECT *
-                     FROM contacts
-                     WHERE contact_type='other'";
+                     WHERE contact_type = 0";
               $qr = execute_query( $qs, $mc );
               $numOther = mysql_num_rows( $qr );
             ?>
@@ -147,18 +141,13 @@ include( "common.php" );
                 </tr>
                 
                 <tr>
-                  <td>Organizers</td>
-                  <td><?php echo( $numOrganizers ); ?></td>
-                </tr>
-                
-                <tr>
                   <td>Other</td>
                   <td><?php echo( $numOther ); ?></td>
                 </tr>
                 
                 <tr>
                   <td><em>Total</em></td>
-                  <td><em><?php echo( $numWorkers + $numStudents + $numSupporters + $numOrganizers + $numOther ); ?></em></td>
+                  <td><em><?php echo( $numWorkers + $numStudents + $numSupporters + $numOther ); ?></em></td>
                 </tr>
               </tbody>
             </table>

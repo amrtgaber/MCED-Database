@@ -78,7 +78,20 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
             <td><input type="radio" name="id" value="<?php echo( $contact_info[ 'id' ] ); ?>"></td>
             <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
             <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
-            <td><?php echo( $contact_info[ 'contact_type' ] ); ?></td>
+            <?php
+              $contact_type = $contact_info[ "contact_type" ];
+              
+              if( $contact_type == 1 ) {
+                $contact_type = "worker";
+              } else if ( $contact_type == 2 ) {
+                $contact_type = "student";
+              } else if ( $contact_type == 3 ) {
+                $contact_type = "supporter";
+              } else {
+                $contact_type = "other";
+              }
+            ?>
+            <td><?php echo( $contact_type ); ?></td>
             <td><?php
               if( $contact_info[ 'street_no' ] ) {
                 $address = ucwords( $contact_info[ 'street_no' ] );

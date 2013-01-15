@@ -93,9 +93,20 @@ if( $_POST[ 'id' ] ) {
 }
 
 /* Contact type */
-$contactType = mysql_real_escape_string( strtolower( $_POST[ 'contactType' ] ) );
+$contactType = mysql_real_escape_string( $_POST[ 'contactType' ] );
+
+if( $contactType == "Worker" ) {
+  $contactType = 1;
+} else if ( $contactType == "Student" ) {
+  $contactType = 2;
+} else if ( $contactType == "Supporter" ) {
+  $contactType = 3;
+} else {
+  $contactType = 0;
+}
+
 $qs = "UPDATE contacts
-       SET contact_type = '" . $contactType . "'
+       SET contact_type = " . $contactType . "
        WHERE id = " . $id;
 
 $qr = execute_query( $qs, $mc );

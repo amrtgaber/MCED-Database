@@ -21,38 +21,30 @@ include( "common.php" );
 $contactType = "";
 
 if( $_GET[ 'workers' ] ) {
-  $contactType = "contacts.contact_type = 'worker'";
+  $contactType = "contacts.contact_type = 1";
 }
 
 if( $_GET[ 'students' ] ) {
   if( $contactType == "" ) {
-    $contactType = "contacts.contact_type = 'student'";
+    $contactType = "contacts.contact_type = 2";
   } else {
-    $contactType .= " OR contacts.contact_type = 'student'";
+    $contactType .= " OR contacts.contact_type = 2";
   }
 }
 
 if( $_GET[ 'supporters' ] ) {
   if( $contactType == "" ) {
-    $contactType = "contacts.contact_type = 'supporter'";
+    $contactType = "contacts.contact_type = 3";
   } else {
-    $contactType .= " OR contacts.contact_type = 'supporter'";
-  }
-}
-
-if( $_GET[ 'organizers' ] ) {
-  if( $contactType == "" ) {
-    $contactType = "contacts.contact_type = 'organizer'";
-  } else {
-    $contactType .= " OR contacts.contact_type = 'organizer'";
+    $contactType .= " OR contacts.contact_type = 3";
   }
 }
 
 if( $_GET[ 'other' ] ) {
   if( $contactType == "" ) {
-    $contactType = "contacts.contact_type = 'other'";
+    $contactType = "contacts.contact_type = 0";
   } else {
-    $contactType .= " OR contacts.contact_type = 'other'";
+    $contactType .= " OR contacts.contact_type = 0";
   }
 }
 
@@ -201,8 +193,20 @@ $qr = execute_query( $qs, $mc );
           <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
           <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
 
-          <?php if( $_GET[ 'contactType' ] ) { ?>
-            <td><?php echo( $contact_info[ 'contact_type' ] ); ?></td>
+          <?php if( $_GET[ 'contactType' ] ) {
+            $contact_type = $contact_info[ "contact_type" ];
+            
+            if( $contact_type == 1 ) {
+              $contact_type = "worker";
+            } else if ( $contact_type == 2 ) {
+              $contact_type = "student";
+            } else if ( $contact_type == 3 ) {
+              $contact_type = "supporter";
+            } else {
+              $contact_type = "other";
+            } ?>
+            
+            <td><?php echo( $contact_type ); ?></td>
           <?php } ?>
 
           <?php if( $_GET[ 'assessment' ] ) { ?>

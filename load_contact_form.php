@@ -219,31 +219,12 @@ $cents = $wage[ 1 ];
     
     <div class="span2">
       <select id="contactType">
-        <option id="optionWorker"
-                <?php if( strcmp( $contact_info[ 'contact_type' ], 'worker' ) == 0 ) { ?>
-                  selected="selected"
-                <?php } ?>
-                >Worker</option>
-        <option id="optionStudent" 
-                <?php if( strcmp( $contact_info[ 'contact_type' ], 'student' ) == 0 ) { ?>
-                  selected="selected"
-                <?php } ?>
-                >Student</option>
-        <option id="optionSupporter"
-                <?php if( strcmp( $contact_info[ 'contact_type' ], 'supporter' ) == 0 ) { ?>
-                  selected="selected"
-                <?php } ?>
-                >Supporter</option>
-        <option id="optionOrganizer"
-                <?php if( strcmp( $contact_info[ 'contact_type' ], 'organizer' ) == 0 ) { ?>
-                  selected="selected"
-                <?php } ?>
-                >Organizer</option>
-        <option id="optionOther"
-                <?php if( strcmp( $contact_info[ 'contact_type' ], 'other' ) == 0 ) { ?>
-                  selected="selected"
-                <?php } ?>
-                >Other</option>
+        <?php $contact_type = $contact_info[ "contact_type" ]; ?>
+        
+        <option <?php if( $contact_type == 1 ) { echo( "selected" ); } ?>>Worker</option>
+        <option <?php if( $contact_type == 2 ) { echo( "selected" ); } ?>>Student</option>
+        <option <?php if( $contact_type == 3 ) { echo( "selected" ); } ?>>Supporter</option>
+        <option <?php if( $contact_type == 0 ) { echo( "selected" ); } ?>>Other</option>
       </select>
     </div>
   </div>
