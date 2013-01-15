@@ -162,19 +162,18 @@ $contact_info = mysql_fetch_array( $qr );
   <tr>
     <td width="300" style="text-align: right;">Contact Type</td>
     <td>
-      <?php if( strcmp( $contact_info[ 'contact_type' ], 'worker' ) == 0 ) {
-        echo( "Worker" );
-      } else if ( strcmp( $contact_info[ 'contact_type' ], 'student' ) == 0 ) {
-        echo( "Student" );
-      } else if ( strcmp( $contact_info[ 'contact_type' ], 'supporter' ) == 0 ) {
-        echo( "Supporter" );
-      } else if ( strcmp( $contact_info[ 'contact_type' ], 'organizer' ) == 0 ) {
-        echo( "Organizer" );
-      } else if ( strcmp( $contact_info[ 'contact_type' ], 'other' ) == 0 ) {
-        echo( "Other" );
-      } else {
-        echo( "Unknown" );
-      } ?>
+      <?php $contact_type = $contact_info[ "contact_type" ];
+      
+        if( $contact_type == 1 ) {
+          echo( "Worker" );
+        } else if ( $contact_type == 2 ) {
+          echo( "Student" );
+        } else if ( $contact_type == 3 ) {
+          echo( "Supporter" );
+        } else {
+          echo( "Other" );
+        }
+      ?>
     </td>
   </tr>
 </table>
