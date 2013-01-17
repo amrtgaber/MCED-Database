@@ -68,8 +68,9 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
             </div>
             
             <div class="row-fluid">
-              <div class="span3">
+              <div class="span12">
                 <button type="button" id="search-button" class="btn btn-primary btn-large">Search</button>
+                <button type="button" class="btn btn-warning btn-large pull-right blank-contact-sheet-button">Use blank contact sheet</button>
               </div>
             </div>
           </form>
@@ -83,7 +84,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
             <div class="row-fluid">
               <button type="button" id="selectButton" class="btn btn-primary btn-large">Select</button>
               <button type="button" id="backToSearch" class="btn btn-large">Back</button>
-              <button type="button" id="blank-contact-sheet" class="btn btn-warning btn-large pull-right">Use blank contact sheet</button>
+              <button type="button" class="btn btn-warning btn-large pull-right blank-contact-sheet-button">Use blank contact sheet</button>
             </div>
           </div>
           

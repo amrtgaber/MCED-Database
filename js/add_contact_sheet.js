@@ -51,7 +51,8 @@ $( document ).ready(function() {
   });
   
   /* blank sheet button */
-  $( "#blank-contact-sheet" ).click(function() {
+  $( ".blank-contact-sheet-button" ).click(function() {
+    $( "#search" ).hide();
     $( "#select" ).hide();
 
     /* Load form fields and attach handlers */

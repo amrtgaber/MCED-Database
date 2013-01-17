@@ -75,9 +75,9 @@ if( !isset( $_GET[ 'id' ] ) ) {
         <input type="text" name="lastName" class="span12" placeholder="Type last name here">
       </div>
     <?php } else { ?>
-      <div class="span4" style="font-size:2em"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></div>
+      <div class="span4" style="font-size:2em"><?php echo( $contact_info[ 'first_name' ] ); ?></div>
       
-      <div class="span4" style="font-size:2em"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></div>
+      <div class="span4" style="font-size:2em"><?php echo( $contact_info[ 'last_name' ] ); ?></div>
     <?php } ?>
     
     <div class="span1">Workplace</div>
