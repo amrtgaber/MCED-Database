@@ -33,6 +33,7 @@ if( isset( $_GET[ 'firstName' ] ) || isset( $_GET[ 'lastName' ] ) ) { ?>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/search_contact.css" rel="stylesheet">
+    <link href="css/load_contact_profile.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>

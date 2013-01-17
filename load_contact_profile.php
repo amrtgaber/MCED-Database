@@ -57,17 +57,17 @@ $contact_info = mysql_fetch_array( $qr );
 
 <table class="table table-hover">
   <tr>
-    <td width="300" style="text-align: right;">Makes less than $10 an hour</td>
+    <td class="info-label">Makes less than $10 an hour</td>
     <td><?php if( isset( $contact_info[ 'wage_below_10' ] ) ) { echo( "Yes" ); } else { echo( "No" ); } ?></td>
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Employer</td>
+    <td class="info-label">Employer</td>
     <td><?php echo( ucwords( $contact_info[ 'employer' ] ) ); ?></td>
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Address</td>
+    <td class="info-label">Address</td>
     <td><?php
       if( $contact_info[ 'street_no' ] ) {
         $address = ucwords( $contact_info[ 'street_no' ] );
@@ -91,7 +91,7 @@ $contact_info = mysql_fetch_array( $qr );
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Phone</td>
+    <td class="info-label">Phone</td>
     <td><?php
       if( $contact_info[ 'phone' ] != 0 ) {
         if( strlen( $contact_info[ 'phone' ] ) == 10 ) {
@@ -109,7 +109,7 @@ $contact_info = mysql_fetch_array( $qr );
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Cell</td>
+    <td class="info-label">Cell</td>
     <td><?php
       if( $contact_info[ 'cell' ] != 0 ) {
         if( strlen( $contact_info[ 'cell' ] ) == 10 ) {
@@ -127,7 +127,7 @@ $contact_info = mysql_fetch_array( $qr );
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Send text updates</td>
+    <td class="info-label">Send text updates</td>
     <td>
        <?php
          if( isset( $contact_info[ 'text_updates' ] ) ) {
@@ -140,27 +140,27 @@ $contact_info = mysql_fetch_array( $qr );
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Email</td>
+    <td class="info-label">Email</td>
     <td><?php echo( $contact_info[ 'email' ] ); ?></td>
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Wage</td>
+    <td class="info-label">Wage</td>
     <td>$<?php echo( $contact_info[ 'wage' ] ); ?></td>
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">School</td>
+    <td class="info-label">School</td>
     <td><?php echo( strtoupper( $contact_info[ 'school' ] ) ); ?></td>
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Expected graduation year</td>
+    <td class="info-label">Expected graduation year</td>
     <td><?php echo( $contact_info[ 'syear' ] ); ?></td>
   </tr>
 
   <tr>
-    <td width="300" style="text-align: right;">Contact Type</td>
+    <td class="info-label">Contact Type</td>
     <td>
       <?php $contact_type = $contact_info[ "contact_type" ];
       
@@ -172,6 +172,28 @@ $contact_info = mysql_fetch_array( $qr );
           echo( "Supporter" );
         } else {
           echo( "Other" );
+        }
+      ?>
+    </td>
+  </tr>
+  
+  <tr>
+    <td class="info-label">Contact Sheets</td>
+    <td>
+      <?php
+        $qs = "SELECT id,
+                      cs_date
+               FROM contact_sheet
+               WHERE contact_sheet.cid = " . $id . "
+               ORDER BY cs_date DESC";
+               
+        $csqr = execute_query( $qs, $mc );
+        
+        if( mysql_num_rows( $csqr ) > 0 ) {
+          while( $cs_info = mysql_fetch_array( $csqr ) ) { ?>
+            <a href="view_contact_sheet.php?id=<?php echo( $cs_info[ 'id' ] ); ?>" target="_blank"><?php echo( $cs_info[ "cs_date" ] ); ?></a>
+            <br>
+          <?php }
         }
       ?>
     </td>
