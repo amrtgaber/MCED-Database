@@ -12,4 +12,13 @@ function connect_to_database() {
   return $mysql_connection;
 }
 
+/* filename for csv export */
+$csvfn = "result"
+         .time()
+         .".csv";
+
+/* output file directory for csv files */
+ $of = "'/home/quickstart/data.kc99.org/tmp/"
+       .$csvfn ."'";
+
 ?>

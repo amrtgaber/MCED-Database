@@ -153,6 +153,7 @@ if( !$_SESSION[ 'username' ] ) {
                   <div class="span12">
                     <button type="submit" id="basic-submit" class="btn btn-primary btn-large">Generate</button>
                     <button type="reset" class="btn btn-large">Clear</button>
+                    <button type="button" id="basic-csv-export" class="btn pull-right">CSV Export</button>
                   </div>
                 </div>
               </form>

@@ -61,7 +61,7 @@ if( $contactType == "" ) {
 }
 
 /* Build query string to retrieve contact information */
-$selection  = "contacts.id, contacts.first_name, contacts.last_name";
+$selection  = "contacts.first_name, contacts.last_name";
 $joinString = "";
 
 if( $_GET[ 'contactType' ] ) {
@@ -127,15 +127,49 @@ if( $_GET[ 'assignedOrganizer' ] ) {
 $mc = connect_to_database();
 
 /* Select desired information */
-$qs = "SELECT " . $selection . " "
+/*If it's a csv export, manipulate query to include outfile syntax*/
+if( $_GET[ 'csv' ] ) {
+  $qs = "SELECT " 
+      . $selection . " "
+      . "INTO OUTFILE "
+      . $of . " "
+      . "FIELDS TERMINATED BY ',' OPTIONALLY ENCLOSED BY '\"' "
+      . "ESCAPED BY '\\\\' LINES TERMINATED BY '\\\n' "
       . "FROM contacts "
       . $joinString . " "
       . "WHERE " . $contactType . " "
       . "ORDER BY contacts.last_name";
+}
+/*else compose the query as usual*/
+else {
+  $qs = "SELECT " . $selection . " "
+      . "FROM contacts "
+      . $joinString . " "
+      . "WHERE " . $contactType . " "
+      . "ORDER BY contacts.last_name";
+}
 
 $qr = execute_query( $qs, $mc );
 
 ?>
+
+<?php if( $_GET[ 'csv' ] ) {
+  $trimof = str_replace( "'", '', $of );
+  if( file_exists( $trimof ) ) {
+    header( "Content-type: text/csv" );
+    header( "Content-description: File Transfer" );
+    header( "Content-disposition: attachment; filename=" . $csvfn );
+    header( "Pragma: public" );
+    header( "Cache-control: max-age=0" );
+    header( "Expires: 0" );
+    header( "Content-Length:" . filesize( $trimof ) );
+    ob_clean();
+    flush();
+    readfile( $trimof );
+  } else {
+    alert_error ( "File not found" );
+  }
+} else { ?>
           
 <table class="table table-bordered table-striped table-condensed">
   <thead>
@@ -307,3 +341,4 @@ $qr = execute_query( $qs, $mc );
       <?php } ?>
     </tbody>
   </table>
+<?php } ?>

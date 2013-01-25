@@ -38,6 +38,11 @@ $(document).ready(function() {
     return false;
   });
   
+  /* basic csv export */
+  $( "#basic-csv-export" ).click( function() {
+    window.open( "load_basic_list.php?" + $( "#basic-form" ).serialize() + "&csv=true" );
+  });
+  
   /* Phone Bank form */
   $( "#phone-bank-form" ).submit(function() {
     $( "#list" ).load( "load_phone_bank_list.php?" + $( "#phone-bank-form" ).serialize() );
