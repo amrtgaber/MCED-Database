@@ -4,7 +4,7 @@ $(document).ready(function() {
   });
   
   $("#add-shop-profile").click(function() {
-    //window.location = "add_shop_profile.php";
+    window.location = "add_shop_profile.php";
   });
   
   $("#add-contact-sheet").click(function() {
