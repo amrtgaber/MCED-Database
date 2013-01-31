@@ -13,7 +13,7 @@ function execute_query( $query_string, $mysql_connection ) {
     <div class="alert alert-error">There was an error with the database. 
        If you get this response more than once,
        please try again later or contact jalhaj@mc-ed.org.
-       ERROR: <?php echo( $mysql_error ); ?>. <?php echo( $query_string ); ?></div>
+       ERROR: <?php echo( mysql_error( $mysql_connection ) ); ?>. <?php echo( $query_string ); ?></div>
   <?php
     exit;
   } else {
