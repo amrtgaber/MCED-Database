@@ -1,4 +1,14 @@
 $( document ).ready(function() {
+
+  /*Load with id passed from view page*/
+  if( quickSelect ) {
+    $( "#search" ).hide();
+
+    $( "#formFields" ).load( "load_shop_profile_form.php?id=" + quickId );
+    $( "#updateButton" ).attr( "data-id", quickId );
+    $( "#update" ).fadeToggle( "slow" );
+  }
+  
   /* Search button */
   $( "#search" ).submit(function() {
     $( "#search" ).hide();

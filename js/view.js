@@ -4,7 +4,7 @@ $( document ).ready(function() {
   });
 
   $( "#view-shop-profile" ).click(function() {
-    //window.location = "view_shop_profile.php";
+    window.location = "search_shop_profile.php";
   });
   
   $( "#search-contact" ).click(function() {
