@@ -68,17 +68,7 @@ $shop_info = mysql_fetch_array( $qr );
     <td class="info-label">Zip Code</td>
     <td><?php echo( ucwords( $shop_info[ 'zipcode' ] ) ); ?></td>
   </tr>
-
-  <tr>
-    <td class="info-label">Ceo</td>
-    <td><?php echo( ucwords( $shop_info[ 'ceo' ] ) ); ?></td>
-  </tr>
-
-  <tr>
-    <td class="info-label">Parent Company</td>
-    <td><?php echo( ucwords( $shop_info[ 'parent_company' ] ) ); ?></td>
-  </tr>
-
+  
   <tr>
     <td class="info-label">Phone</td>
     <td><?php
@@ -95,6 +85,16 @@ $shop_info = mysql_fetch_array( $qr );
         }
       } ?></td>
   </tr>
+
+  <tr>
+    <td class="info-label">Ceo</td>
+    <td><?php echo( ucwords( $shop_info[ 'ceo' ] ) ); ?></td>
+  </tr>
+
+  <tr>
+    <td class="info-label">Parent Company</td>
+    <td><?php echo( ucwords( $shop_info[ 'parent_company' ] ) ); ?></td>
+  </tr>  
 
   <tr>
     <td class="info-label">Number of Workers</td>

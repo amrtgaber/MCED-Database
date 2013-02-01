@@ -1,5 +1,5 @@
 <?php
-/* File: search_contact.php
+/* File: search_shop_profile.php
  * Author: Bryan Dorsey
  * Created: 1/31/2013
  * Description: Handles searching for a shop profile in the KC99 database.
