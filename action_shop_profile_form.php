@@ -69,7 +69,7 @@ if( !ctype_digit( $_POST[ 'phone' ] ) || strlen( $_POST[ 'phone' ] ) != 10 ) {
 }
 
 /* If num workers exist ensure that it is a digit */
-if( isset( $_POST[ 'numWorkers' ] ) && !ctype_digit( $_POST[ 'numWorkers' ] ) ) {
+if( $_POST[ 'numWorkers' ] != "" && !ctype_digit( $_POST[ 'numWorkers' ] ) ) {
   alert_error( "Total Workers can only contain digits." );
 }
 
