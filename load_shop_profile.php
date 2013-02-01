@@ -46,27 +46,27 @@ $shop_info = mysql_fetch_array( $qr );
 
 ?>
 
-<h2><?php echo( ucwords( $shop_info[ 'wname' ] ) ); ?></h2>
+<h2><?php echo( $shop_info[ 'wname' ] ); ?></h2>
 
 <table class="table table-hover">
   <tr>
     <td class="info-label">Address</td>
-    <td><?php echo( ucwords( $shop_info[ 'street_no' ] ) ); ?></td>
+    <td><?php echo( $shop_info[ 'street_no' ] ); ?></td>
   </tr>
 
   <tr>
     <td class="info-label">City</td>
-    <td><?php echo( ucwords( $shop_info[ 'city' ] ) ); ?></td>
+    <td><?php echo( $shop_info[ 'city' ] ); ?></td>
   </tr>
 
   <tr>
     <td class="info-label">State</td>
-    <td><?php echo( ucwords( $shop_info[ 'state' ] ) ); ?></td>
+    <td><?php echo( $shop_info[ 'state' ] ); ?></td>
   </tr>
 
   <tr>
     <td class="info-label">Zip Code</td>
-    <td><?php echo( ucwords( $shop_info[ 'zipcode' ] ) ); ?></td>
+    <td><?php echo( $shop_info[ 'zipcode' ] ); ?></td>
   </tr>
   
   <tr>
@@ -88,12 +88,12 @@ $shop_info = mysql_fetch_array( $qr );
 
   <tr>
     <td class="info-label">Ceo</td>
-    <td><?php echo( ucwords( $shop_info[ 'ceo' ] ) ); ?></td>
+    <td><?php echo( $shop_info[ 'ceo' ] ); ?></td>
   </tr>
 
   <tr>
     <td class="info-label">Parent Company</td>
-    <td><?php echo( ucwords( $shop_info[ 'parent_company' ] ) ); ?></td>
+    <td><?php echo( $shop_info[ 'parent_company' ] ); ?></td>
   </tr>  
 
   <tr>
