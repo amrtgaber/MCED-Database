@@ -157,7 +157,7 @@ $( document ).ready(function() {
 
     $.post(
       "action_contact_form.php",
-      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val().toLowerCase() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
+      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
       function( data, textStatus, jqXHR ) {
         $( "#edit-contact-form-status" ).html( jqXHR.responseText );
         $( "#edit-contact-form-status" ).show();
@@ -174,7 +174,7 @@ $( document ).ready(function() {
         console.log( "Sent     --> "
                      + $( "#update" ).serialize()
                      + "&contactType="
-                     + $( "#contactType" ).val().toLowerCase()
+                     + $( "#contactType" ).val()
                      + "&id="
                      + $( "#updateButton" ).attr( "data-id" ) );
         console.log( "Received --> " + jqXHR.responseText );
