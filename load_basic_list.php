@@ -53,7 +53,7 @@ if( $contactType == "" ) {
 }
 
 /* Build query string to retrieve contact information */
-$selection  = "contacts.first_name, contacts.last_name";
+$selection  = "contacts.id, contacts.first_name, contacts.last_name";
 $joinString = "";
 
 if( $_GET[ 'contactType' ] ) {
