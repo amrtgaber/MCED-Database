@@ -120,9 +120,11 @@ $( document ).ready(function() {
     $( "#add-contact-form-status" ).removeClass( "alert-error" );
     $( "#add-contact-form-status" ).removeClass( "alert-success" );
 
+    var postString = $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val();
+
     $.post(
       "action_contact_form.php",
-      $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val(),
+      postString,
       function( data, textStatus, jqXHR ) {
         $( "#add-contact-form-status" ).html( jqXHR.responseText );
         $( "#add-contact-form-status" ).show();
@@ -139,7 +141,7 @@ $( document ).ready(function() {
       }
       ).always(function( data, textStatus, jqXHR ) {
         /* Debug */
-        console.log( "Sent     --> " + $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val() );
+        console.log( "Sent     --> " + postString );
         console.log( "Received --> " + jqXHR.responseText );
       });
     
