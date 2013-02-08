@@ -24,8 +24,8 @@ if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_
   alert_error( "First and Last name are required fields." );
 }
   
-$firstname = mysql_real_escape_string( strtolower( $_POST[ 'firstName' ] ) );
-$lastname  = mysql_real_escape_string( strtolower( $_POST[ 'lastName' ] ) );
+$firstname = mysql_real_escape_string( $_POST[ 'firstName' ] );
+$lastname  = mysql_real_escape_string( $_POST[ 'lastName' ] );
 
 /* If id is present, update existing contact. Otherwise insert new contact. */
 if( $_POST[ 'id' ] ) {
@@ -113,7 +113,7 @@ $qr = execute_query( $qs, $mc );
 
 /* Street No */
 if( $_POST[ 'address' ] ) {
-  $streetno = mysql_real_escape_string( strtolower( $_POST[ 'address' ] ) );
+  $streetno = mysql_real_escape_string( $_POST[ 'address' ] );
   
   $qs = "UPDATE contacts
          SET street_no = '" . $streetno . "'
@@ -133,7 +133,7 @@ if( $_POST[ 'address' ] ) {
 
 /* City */
 if( $_POST[ 'city' ] ) {
-  $city = mysql_real_escape_string( strtolower( $_POST[ 'city' ] ) );
+  $city = mysql_real_escape_string( $_POST[ 'city' ] );
   
   $qs = "UPDATE contacts
          SET city = '" . $city . "'
@@ -155,7 +155,7 @@ if( $_POST[ 'state' ] ) {
   if( strlen( $_POST[ 'state' ] ) != 2 ) {
     alert_error( "State field is invalid." );
   } else {
-    $state = mysql_real_escape_string( strtolower( $_POST[ 'state' ] ) );
+    $state = mysql_real_escape_string( strtoupper( $_POST[ 'state' ] ) );
     
     $qs = "UPDATE contacts
            SET state = '" . $state . "'
@@ -198,7 +198,7 @@ if( $_POST[ 'zipcode' ] ) {
 
 /* Apt No */
 if( $_POST[ 'aptNo' ] ) {
-  $aptno = mysql_real_escape_string( strtolower( $_POST[ 'aptNo' ] ) );
+  $aptno = mysql_real_escape_string( $_POST[ 'aptNo' ] );
   
   $qs = "UPDATE contacts
          SET apt_no = '" . $aptno . "'
@@ -310,7 +310,7 @@ if( $_POST[ 'email' ] ) {
   if( !strpos( $_POST[ 'email' ], '@' ) || !strpos( $_POST[ 'email' ], '.' ) ) {
     alert_error( "Email field is invalid." );
   } else {
-    $email = mysql_real_escape_string( strtolower( $_POST[ 'email' ] ) );
+    $email = mysql_real_escape_string( $_POST[ 'email' ] );
     
     if( !is_null( $contact_info[ 'email' ] ) ) {
       $qs = "UPDATE contact_email
@@ -341,7 +341,7 @@ $hasWorkerInfo      = false;
 
 /* Employer */
 if( $_POST[ 'employer' ] ) {
-  $employer = mysql_real_escape_string( strtolower( $_POST[ 'employer' ] ) );
+  $employer = mysql_real_escape_string( $_POST[ 'employer' ] );
 
   if( $hasWorkerInfo || !is_null( $contact_info[ 'employer' ] ) ) {
     $qs = "UPDATE workers
@@ -448,7 +448,7 @@ $hasStudentInfo = false;
 
 /* School */
 if( $_POST[ 'school' ] ) {
-  $school = mysql_real_escape_string( strtolower( $_POST[ 'school' ] ) );
+  $school = mysql_real_escape_string( $_POST[ 'school' ] );
 
   if( $hasStudentInfo  || !is_null( $contact_info[ 'school' ] ) ) {
     $qs = "UPDATE students

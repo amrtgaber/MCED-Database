@@ -96,14 +96,14 @@ if( $_GET[ 'print' ] ) { ?>
           continue;
         } ?>
         <tr>
-          <td width="120"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
-          <td width="120"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
+          <td width="120"><?php echo( $contact_info[ 'last_name' ] ); ?></td>
+          <td width="120"><?php echo( $contact_info[ 'first_name' ] ); ?></td>
           <?php if( $_GET[ 'workers' ] ) { ?>
-            <td width="150"><?php echo( ucwords( $contact_info[ 'employer' ] ) ); ?></td>
+            <td width="150"><?php echo( $contact_info[ 'employer' ] ); ?></td>
           <?php } ?>
 
           <?php if( $_GET[ 'students' ] ) { ?>
-            <td width="60"><?php echo( strtoupper( $contact_info[ 'school' ] ) ); ?></td>
+            <td width="60"><?php echo( $contact_info[ 'school' ] ); ?></td>
           <?php } ?>
 
           <td width="100">

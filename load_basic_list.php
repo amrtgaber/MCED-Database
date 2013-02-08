@@ -224,8 +224,8 @@ $qr = execute_query( $qs, $mc );
     <?php
       while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
         <tr>
-          <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
-          <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
+          <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></td>
+          <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></td>
 
           <?php if( $_GET[ 'contactType' ] ) {
             $contact_type = $contact_info[ "contact_type" ];
@@ -249,16 +249,16 @@ $qr = execute_query( $qs, $mc );
 
           <?php if( $_GET[ 'address' ] ) { 
             if( $contact_info[ 'street_no' ] ) {
-              $address = ucwords( $contact_info[ 'street_no' ] );
+              $address = $contact_info[ 'street_no' ];
               
               if( $contact_info[ 'apt_no' ] ) {
-                $address .= " Apt. " . strtoupper( $contact_info[ 'apt_no' ] );
+                $address .= " Apt. " . $contact_info[ 'apt_no' ];
               }
 
               $address .= ", "
-                          . ucwords( $contact_info[ 'city' ] )
+                          . $contact_info[ 'city' ]
                           . ", "
-                          . strtoupper( $contact_info[ 'state' ] )
+                          . $contact_info[ 'state' ]
                           . " "
                           . $contact_info[ 'zipcode' ];
             } else {
@@ -309,11 +309,11 @@ $qr = execute_query( $qs, $mc );
           <?php } ?>
 
           <?php if( $_GET[ 'workplace' ] ) { ?>
-            <td><?php echo( ucwords( $contact_info[ 'employer' ] ) ); ?></td>
+            <td><?php echo( $contact_info[ 'employer' ] ); ?></td>
           <?php } ?>
 
           <?php if( $_GET[ 'school' ] ) { ?>
-            <td><?php echo( strtoupper( $contact_info[ 'school' ] ) ); ?></td>
+            <td><?php echo( $contact_info[ 'school' ] ); ?></td>
           <?php } ?>
 
           <?php if( $_GET[ 'schoolYear' ] ) { ?>
@@ -321,7 +321,7 @@ $qr = execute_query( $qs, $mc );
           <?php } ?>
 
           <?php if( $_GET[ 'assignedOrganizer' ] ) { ?>
-            <td><?php echo( ucwords( $contact_info[ 'assigned_organizer' ] ) ); ?></td>
+            <td><?php echo( $contact_info[ 'assigned_organizer' ] ); ?></td>
           <?php } ?>
 
           <?php if( $_SESSION[ 'privilege_level' ] > 1 ) { ?>

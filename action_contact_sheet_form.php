@@ -87,7 +87,7 @@ if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
   
   /* address */
   if( $_POST[ 'address' ] ) {
-    $streetno = mysql_real_escape_string( strtolower( $_POST[ 'address' ] ) );
+    $streetno = mysql_real_escape_string( $_POST[ 'address' ] );
     
     $qs = "UPDATE contacts
            SET street_no = '" . $streetno . "'
@@ -98,7 +98,7 @@ if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
   
   /* City */
   if( $_POST[ 'city' ] ) {
-    $city = mysql_real_escape_string( strtolower( $_POST[ 'city' ] ) );
+    $city = mysql_real_escape_string( $_POST[ 'city' ] );
     
     $qs = "UPDATE contacts
            SET city = '" . $city . "'

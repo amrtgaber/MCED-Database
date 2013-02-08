@@ -76,8 +76,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
           <tr>
             <td><input type="radio" name="id" value="<?php echo( $contact_info[ 'id' ] ); ?>"></td>
-            <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?></td>
-            <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?></td>
+            <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></td>
+            <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></td>
             <?php
               $contact_type = $contact_info[ "contact_type" ];
               
@@ -94,16 +94,16 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
             <td><?php echo( $contact_type ); ?></td>
             <td><?php
               if( $contact_info[ 'street_no' ] ) {
-                $address = ucwords( $contact_info[ 'street_no' ] );
+                $address = $contact_info[ 'street_no' ];
     
                 if( $contact_info[ 'apt_no' ] ) {
-                  $address .= " Apt. " . strtoupper( $contact_info[ 'apt_no' ] );
+                  $address .= " Apt. " . $contact_info[ 'apt_no' ];
                 }
     
                 $address .= ", "
-                            . ucwords( $contact_info[ 'city' ] )
+                            . $contact_info[ 'city' ]
                             . ", "
-                            . strtoupper( $contact_info[ 'state' ] )
+                            . $contact_info[ 'state' ]
                             . " "
                             . $contact_info[ 'zipcode' ];
 
@@ -113,12 +113,12 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
             <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
             <td><?php if( $contact_info[ 'cell' ] != 0 ) { echo( $contact_info[ 'cell' ] ); } ?></td>
             <td><?php echo( $contact_info[ 'email' ] ); ?></td>
-            <td><?php echo( ucwords( $contact_info[ 'employer' ] ) ); ?></td>
+            <td><?php echo( $contact_info[ 'employer' ] ); ?></td>
           </tr>
         <?php } ?>
       </tbody>
     </table>
 <?php
 } else {
-  alert_error( "No results found for " . ucwords( $firstname . " " . $lastname ) . "." );
+  alert_error( "No results found for " . $firstname . " " . $lastname . "." );
 }

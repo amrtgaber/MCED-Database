@@ -68,14 +68,14 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">First Name</div>
     <div class="span5">
       <input type="text" name="firstName" class="span12"
-             value="<?php echo( ucwords( $contact_info[ 'first_name' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'first_name' ] ); ?>"
              placeholder="Type first name here">
     </div>
     
     <div class="span1">Last Name</div>
     <div class="span5">
       <input type="text" name="lastName" class="span12"
-             value="<?php echo( ucwords( $contact_info[ 'last_name' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'last_name' ] ); ?>"
              placeholder="Type last name here">
     </div>
   </div>
@@ -94,7 +94,7 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">Employer</div>
     <div class="span8">
       <input type="text" name="employer" class="span12"
-             value="<?php echo( ucwords( $contact_info[ 'employer' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'employer' ] ); ?>"
              placeholder="Type employer here">
     </div>
   </div>
@@ -103,14 +103,14 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">Address</div>
     <div class="span8">
       <input type="text" name="address" class="span12"
-             value="<?php echo( ucwords( $contact_info[ 'street_no' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'street_no' ] ); ?>"
              placeholder="Type address here">
     </div>
 
     <div class="span1">Apt. no.</div>
     <div class="span2">
       <input type="text" name="aptNo" class="span12"
-             value="<?php echo( strtoupper( $contact_info[ 'apt_no' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'apt_no' ] ); ?>"
              placeholder="Type Apt. no. here">
     </div>
   </div>
@@ -119,14 +119,14 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">City</div>
     <div class="span6">
       <input type="text" name="city" class="span12"
-             value="<?php echo( ucwords( $contact_info[ 'city' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'city' ] ); ?>"
              placeholder="Type city here">
     </div>
 
     <div class="span1">State</div>
     <div class="span1">
       <input type="text" name="state" class="span12"
-             value="<?php echo( strtoupper( $contact_info[ 'state' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'state' ] ); ?>"
              placeholder="State">
     </div>
     <div class="span1">Zipcode</div>
@@ -202,7 +202,7 @@ $cents = $wage[ 1 ];
     <div class="span1">School</div>
     <div class="span4">
       <input type="text" name="school" class="span12"
-             value="<?php echo( strtoupper( $contact_info[ 'school' ] ) ); ?>"
+             value="<?php echo( $contact_info[ 'school' ] ); ?>"
              placeholder="Type school here">
     </div>
 

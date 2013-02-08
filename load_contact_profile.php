@@ -53,7 +53,7 @@ $contact_info = mysql_fetch_array( $qr );
 
 ?>
 
-<h2><?php echo( ucwords( $contact_info[ 'first_name' ] . " " . $contact_info[ 'last_name' ] ) ); ?></h2>
+<h2><?php echo( $contact_info[ 'first_name' ] . " " . $contact_info[ 'last_name' ] ); ?></h2>
 
 <table class="table table-hover">
   <tr>
@@ -63,23 +63,23 @@ $contact_info = mysql_fetch_array( $qr );
 
   <tr>
     <td class="info-label">Employer</td>
-    <td><?php echo( ucwords( $contact_info[ 'employer' ] ) ); ?></td>
+    <td><?php echo( $contact_info[ 'employer' ] ); ?></td>
   </tr>
 
   <tr>
     <td class="info-label">Address</td>
     <td><?php
       if( $contact_info[ 'street_no' ] ) {
-        $address = ucwords( $contact_info[ 'street_no' ] );
+        $address = $contact_info[ 'street_no' ];
         
         if( $contact_info[ 'apt_no' ] ) {
-          $address .= " Apt. " . strtoupper( $contact_info[ 'apt_no' ] );
+          $address .= " Apt. " . $contact_info[ 'apt_no' ];
         }
 
         $address .= ", "
-          . ucwords( $contact_info[ 'city' ] )
+          . $contact_info[ 'city' ]
           . ", "
-          . strtoupper( $contact_info[ 'state' ] )
+          . $contact_info[ 'state' ]
           . " "
           . $contact_info[ 'zipcode' ];
       } else {
@@ -151,7 +151,7 @@ $contact_info = mysql_fetch_array( $qr );
 
   <tr>
     <td class="info-label">School</td>
-    <td><?php echo( strtoupper( $contact_info[ 'school' ] ) ); ?></td>
+    <td><?php echo( $contact_info[ 'school' ] ); ?></td>
   </tr>
 
   <tr>
