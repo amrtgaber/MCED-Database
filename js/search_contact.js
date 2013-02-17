@@ -6,6 +6,14 @@ $( document ).ready(function() {
     });
     $( "#select" ).fadeToggle( "slow" );
   }
+  
+  /*Shortcut to View if ContactID is provided in querystring*/
+  if(quickView){
+    $( "#search" ).hide();
+    $( "#contactInfo" ).load( "load_contact_profile.php?id=" + quickid );
+    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
+    $( "#view" ).fadeToggle( "slow" );
+  }
 
   /* Search button */
   $( "#search" ).submit(function() {

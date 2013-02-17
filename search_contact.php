@@ -2,6 +2,8 @@
 /* File: search_contact.php
  * Author: Amr Gaber
  * Created: 18/11/2012
+ * Modified: 02/17/2013
+ * Modified By: Bryan Dorsey
  * Description: Handles searching for a contact for KC99 database.
  */
 
@@ -18,6 +20,11 @@ if( isset( $_GET[ 'firstName' ] ) || isset( $_GET[ 'lastName' ] ) ) { ?>
 <?php } else { ?>
   <script type="text/javascript">var quickSearch = false;</script>
 <?php }
+
+/*Variables for shortcutting to view if contact id is provided in querystring*/
+if( isset( $_GET[ 'id' ] )) { ?>
+  <script type="text/javascript">var quickView = true; var quickid = <?php echo( $_GET[ 'id' ] ); ?>;</script>
+<?php } 
 
 ?>
 

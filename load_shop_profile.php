@@ -2,6 +2,8 @@
 /* File: load_shop_profile.php
  * Author: Bryan Dorsey
  * Created: 1/31/2013
+ * Modified: 2/17/2013
+ * Modified By: Bryan Dorsey
  * Description: Returns the shop profile for KC99 database.
  */
 
@@ -43,6 +45,23 @@ $qs = "SELECT wname,
 $qr = execute_query( $qs, $mc );
 
 $shop_info = mysql_fetch_array( $qr );
+
+/*Get corresponding workers for shop*/
+$qs = "SELECT a.cid,
+              a.wid,
+              b.first_name,
+              b.last_name,
+              b.street_no,
+              b.city,
+              b.state,
+              b.zipcode
+       FROM workers a
+            JOIN contacts b ON a.cid = b.id
+       WHERE wid = " . $id;
+
+$qr = execute_query($qs, $mc);
+
+$workers = mysql_fetch_array($qr);
 
 ?>
 
@@ -99,6 +118,17 @@ $shop_info = mysql_fetch_array( $qr );
   <tr>
     <td class="info-label">Number of Workers</td>
     <td><?php echo( $shop_info[ 'num_workers' ] ); ?></td>
+  </tr>
+  
+  <tr>
+    <td class="info-label">Contacted Workers</td>
+    <td>
+      <ul class="ulContactWorkers">
+      <?php while( $workers = mysql_fetch_array( $qr ) ) { ?>
+        <li><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ 'last_name' ] ); ?>, <?php echo( $workers[ 'first_name' ] ); ?> | <?php echo( $workers[ 'street_no' ] ); ?> <?php echo( $workers[ 'city' ] ); ?>, <?php echo( $workers[ 'state' ] ); ?></a></li>
+      <?php } ?>
+      </ul>
+    </td>
   </tr>
 
 </table>
