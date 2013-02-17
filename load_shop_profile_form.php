@@ -122,4 +122,50 @@ if( $_GET[ 'id' ] ) {
              placeholder="#">
     </div>
   </div>
+  
+  <div class="row-fluid">
+    <div class="span1">Add Worker</div>
+    <div class="span9">
+      <input type="text" class="span12" id="addWorker" name="addWorker" placeholder="Type worker name here" data-provide="typeahead" data-items="50" data-source="[
+             <?php
+             $qs = "SELECT contacts.*
+                    FROM contacts
+                    ORDER BY contacts.last_name";
+             
+             $cqr = execute_query( $qs, $mc );
+             
+             $contact_info = mysql_fetch_array( $cqr );
+             echo( '&#34;' . str_replace( '"', "'", $contact_info[ "first_name" ] . " " . $contact_info[ "last_name" ] . " | " . $contact_info[ "street_no" ] . " | " . $contact_info[ "id" ] ) . '&#34;' );
+             
+             while( $contact_info = mysql_fetch_array( $cqr ) ) {
+               echo( ', &#34;' . str_replace( '"', "'", $contact_info[ "first_name" ] . " " . $contact_info[ "last_name" ] . " | " . $contact_info[ "street_no" ] . " | " . $contact_info[ "id" ] ) . '&#34;' );
+             } ?>
+             ]">
+    </div>
+    <div class="span2">
+      <button type="button" id="add-worker-button" class="btn btn-info">Add Worker</button>
+    </div>
+  </div>
+  
+  <br>
+  
+  <div class="row-fluid" id="added-workers">
+    <?php
+      $qs = "SELECT id,
+                    first_name,
+                    last_name,
+                    street_no
+             FROM workers
+             LEFT JOIN contacts ON workers.cid = contacts.id
+             WHERE wid = " . $id;
+      
+      $wqr = execute_query( $qs, $mc );
+      
+      while( $winfo = mysql_fetch_array( $wqr ) ) { ?>
+        <div class="row-fluid worker" data-id="<?php echo( $winfo[ 'id' ] ); ?>">
+          <?php echo( $winfo[ "first_name" ] . " " . $winfo[ "last_name" ] . " | " . $winfo[ "street_no" ] ); ?>
+          <button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button>
+        </div>
+    <?php } ?>
+  </div>
 </div>

@@ -30,7 +30,21 @@ $( document ).ready(function() {
   $( "#selectButton" ).click(function() {
     $( "#select" ).hide();
 
-    $( "#formFields" ).load( "load_shop_profile_form.php?id=" + $( "input[type=radio]:checked" ).val() );
+    $( "#formFields" ).load( "load_shop_profile_form.php?id=" + $( "input[type=radio]:checked" ).val(), function() {
+  
+      /* Add worker button */
+      $( "#add-worker-button" ).click(function() {
+        var workerToAdd = $( "#addWorker" ).val();
+        
+        var workerID = workerToAdd.substring( workerToAdd.length - 5 );
+        var workerInfo = workerToAdd.substring( 0, workerToAdd.length - 7 );
+        
+        $( "#added-workers" ).append( "<div class='row-fluid worker' data-id='" + workerID + "'>" + workerInfo + "<button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button></div>" );
+        
+        $( "#addWorker" ).val( "" );
+      });
+    });
+    
     $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
     $( "#update" ).fadeToggle( "slow" );
   });
@@ -134,10 +148,21 @@ $( document ).ready(function() {
     $( "#edit-shop-profile-form-status" ).removeClass( "alert" );
     $( "#edit-shop-profile-form-status" ).removeClass( "alert-error" );
     $( "#edit-shop-profile-form-status" ).removeClass( "alert-success" );
+    
+    /* generate worker id list */
+    var addWorkers = "";    
+    $( ".worker" ).each(function() {
+      addWorkers += $( this ).attr( "data-id" ) + ",";
+    });
+    
+    /* remove trailing comma */
+    if( addWorkers.length > 0 ) {
+      addWorkers = addWorkers.substring( 0, addWorkers.length - 1 );
+    }
 
     $.post(
       "action_shop_profile_form.php",
-      $( "#update" ).serialize() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
+      $( "#update" ).serialize() + "&id=" + $( "#updateButton" ).attr( "data-id" ) + "&addWorkers=" + addWorkers,
       function( data, textStatus, jqXHR ) {
         $( "#edit-shop-profile-form-status" ).html( jqXHR.responseText );
         $( "#edit-shop-profile-form-status" ).show();
@@ -151,7 +176,7 @@ $( document ).ready(function() {
       }
       ).always(function( data, textStatus, jqXHR ) {
         /* Debug */
-        console.log( "Sent     --> " + $( "#update" ).serialize() + "&id=" + $( "#updateButton" ).attr( "data-id" ) );
+        console.log( "Sent     --> " + $( "#update" ).serialize() + "&id=" + $( "#updateButton" ).attr( "data-id" ) + "&addWorkers=" + addWorkers );
         console.log( "Received --> " + jqXHR.responseText );
       });
     

@@ -1,11 +1,28 @@
 $( document ).ready(function() {
   /* Load form fields */
-  $( "#form-fields" ).load( "load_shop_profile_form.php" );
+  $( "#form-fields" ).load( "load_shop_profile_form.php", function() {
+  
+    /* Add worker button */
+    $( "#add-worker-button" ).click(function() {
+      var workerToAdd = $( "#addWorker" ).val();
+      
+      var workerID = workerToAdd.substring( workerToAdd.length - 5 );
+      var workerInfo = workerToAdd.substring( 0, workerToAdd.length - 7 );
+      
+      $( "#added-workers" ).append( "<div class='row-fluid worker' data-id='" + workerID + "'>" + workerInfo + "<button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button></div>" );
+      
+      $( "#addWorker" ).val( "" );
+    });
+    
+  });
 
   /* Clear button */
   $( 'button[type="reset"]' ).click(function() {
     $( "#add-shop-profile-form-status" ).hide();
     $( "#add-shop-profile-form-status" ).html( "" );
+    $( ".worker" ).each(function() {
+      $( this ).remove();
+    });
   });
   
   jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
@@ -98,14 +115,29 @@ $( document ).ready(function() {
     $( "#add-shop-profile-form-status" ).removeClass( "alert-error" );
     $( "#add-shop-profile-form-status" ).removeClass( "alert-success" );
 
+    /* generate worker id list */
+    var addWorkers = "";    
+    $( ".worker" ).each(function() {
+      addWorkers += $( this ).attr( "data-id" ) + ",";
+    });
+    
+    /* remove trailing comma */
+    if( addWorkers.length > 0 ) {
+      addWorkers = addWorkers.substring( 0, addWorkers.length - 1 );
+    }
+
     $.post(
       "action_shop_profile_form.php",
-      $( "form" ).serialize(),
+      $( "form" ).serialize() + "&addWorkers=" + addWorkers,
       function( data, textStatus, jqXHR ) {
         $( "#add-shop-profile-form-status" ).html( jqXHR.responseText );
         $( "#add-shop-profile-form-status" ).show();
         $( "form" ).each(function () {
           this.reset();
+        });
+        
+        $( ".worker" ).each(function() {
+          $( this ).remove();
         });
       }
       ).fail(function( data, textStatus, jqXHR ) {
@@ -117,7 +149,7 @@ $( document ).ready(function() {
       }
       ).always(function( data, textStatus, jqXHR ) {
         /* Debug */
-        console.log( "Sent     --> " + $( "form" ).serialize() );
+        console.log( "Sent     --> " + $( "form" ).serialize() + "&addWorkers=" + addWorkers );
         console.log( "Received --> " + jqXHR.responseText );
       });
     

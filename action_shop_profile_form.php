@@ -285,6 +285,53 @@ if( $_POST[ 'numWorkers' ] ) {
   }
 }
 
+/* Add Workers to this shop */
+if( $_POST[ "addWorkers" ] ) {
+  $workerIDs = explode( ",", $_POST[ "addWorkers" ] );
+  
+  foreach( $workerIDs as $cid ) {
+    $cid = mysql_real_escape_string( $cid );
+
+    /* If cid exists don't insert */    
+    $qs = "SELECT cid
+           FROM workers
+           WHERE cid = " . $cid . " AND wid = " . $id;
+    
+    $wqr = execute_query( $qs, $mc );
+    
+    if( mysql_num_rows( $wqr ) == 0 ) {
+      $qs = "INSERT INTO workers
+          ( cid, wid )
+          VALUES ( " . $cid . "," . $id . " )";
+
+      execute_query( $qs, $mc );
+    }
+  }
+  
+  /* delete removed workers */
+  $qs = "SELECT cid
+         FROM workers
+         WHERE wid = " . $id;
+  
+  $wqr = execute_query( $qs, $mc );
+  
+  while( $winfo = mysql_fetch_array( $wqr ) ) {
+    if( !in_array( $winfo[ "cid" ], $workerIDs ) ) {
+      $qs = "DELETE
+             FROM workers
+             WHERE cid = " . $winfo[ "cid" ] . " AND wid = " . $id;
+
+      execute_query( $qs, $mc );
+    }
+  }
+} else {
+  $qs = "DELETE
+         FROM workers
+         WHERE wid = " . $id;
+  
+  execute_query( $qs, $mc );
+}
+
 /* Return success */
 if( $_POST[ 'id' ] ) { ?>
   <div class="alert alert-success">
