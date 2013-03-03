@@ -10,4 +10,8 @@ $(document).ready(function() {
   $("#add-contact-sheet").click(function() {
     window.location = "add_contact_sheet.php";
   });
+  
+  $("#add-action").click(function() {
+    window.location = "add_action.php";
+  });
 });
