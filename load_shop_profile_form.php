@@ -151,6 +151,7 @@ if( $_GET[ 'id' ] ) {
   
   <div class="row-fluid" id="added-workers">
     <?php
+      if( $_GET[ "id" ] ) {
       $qs = "SELECT id,
                     first_name,
                     last_name,
@@ -166,6 +167,7 @@ if( $_GET[ 'id' ] ) {
           <?php echo( $winfo[ "first_name" ] . " " . $winfo[ "last_name" ] . " | " . $winfo[ "street_no" ] ); ?>
           <button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button>
         </div>
-    <?php } ?>
+      <?php }
+    } ?>
   </div>
 </div>
