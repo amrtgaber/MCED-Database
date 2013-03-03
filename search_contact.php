@@ -24,7 +24,9 @@ if( isset( $_GET[ 'firstName' ] ) || isset( $_GET[ 'lastName' ] ) ) { ?>
 /*Variables for shortcutting to view if contact id is provided in querystring*/
 if( isset( $_GET[ 'id' ] )) { ?>
   <script type="text/javascript">var quickView = true; var quickid = <?php echo( $_GET[ 'id' ] ); ?>;</script>
-<?php } 
+<?php } else { ?>
+  <script type="text/javascript">var quickView = false; var quickid = "";</script>
+<?php }
 
 ?>
 
