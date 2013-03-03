@@ -14,4 +14,8 @@ $(document).ready(function() {
   $("#add-action").click(function() {
     window.location = "add_action.php";
   });
+  
+  $("#add-contact-action").click(function() {
+    window.location = "add_contact_action.php";
+  });
 });

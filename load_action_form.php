@@ -50,8 +50,8 @@ if( $_GET[ 'id' ] ) {
 
 <div class="well"> 
   <div class="row-fluid">
-    <div class="span1">Action Name</div>
-    <div class="span11">
+    <div class="span2">Action Name</div>
+    <div class="span10">
       <input type="text" name="aname" class="span12" id="aname"
              value="<?php echo( $action_info[ 'aname' ] ); ?>"
              placeholder="Type action name here"
