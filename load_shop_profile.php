@@ -47,21 +47,19 @@ $qr = execute_query( $qs, $mc );
 $shop_info = mysql_fetch_array( $qr );
 
 /*Get corresponding workers for shop*/
-$qs = "SELECT a.cid,
-              a.wid,
-              b.first_name,
-              b.last_name,
-              b.street_no,
-              b.city,
-              b.state,
-              b.zipcode
-       FROM workers a
-            JOIN contacts b ON a.cid = b.id
+$qs = "SELECT workers.cid,
+              workers.wid,
+              contacts.first_name,
+              contacts.last_name,
+              contacts.street_no,
+              contacts.city,
+              contacts.state,
+              contacts.zipcode
+       FROM workers 
+         JOIN contacts ON workers.cid = contacts.id
        WHERE wid = " . $id;
 
 $qr = execute_query($qs, $mc);
-
-$workers = mysql_fetch_array($qr);
 
 ?>
 
