@@ -66,12 +66,19 @@ include( "common.php" );
         
           <div class="row-fluid">
             <div class="span6">
+              <h2>View Actions</h2>
+              <p>Select this option if you'd like to take a look at a shop profile.</p>
+            </div>
+            <div class="span6">
               <h2>Search</h2>
               <p>Select this option if you'd like to search for a contact.</p>
             </div>
           </div><!--/.row-fluid-->
 
           <div class="row-fluid">
+            <div class="span6">
+              <button class="btn btn-large btn-primary" type="button" id="view-actions">View Actions &raquo;</button>
+            </div>
             <div class="span6">
               <button class="btn btn-large btn-primary" type="button" id="search-contact">Search &raquo;</button>
             </div>

@@ -7,6 +7,10 @@ $( document ).ready(function() {
     window.location = "search_shop_profile.php";
   });
   
+  $( "#view-actions" ).click(function() {
+    window.location = "search_actions.php";
+  });
+  
   $( "#search-contact" ).click(function() {
     window.location = "search_contact.php";
   });
