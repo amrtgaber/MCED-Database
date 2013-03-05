@@ -63,8 +63,8 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             <div class="well"> 
               <div class="row-fluid">
                 <div class="span2">Action</div>
-                <div class="span10">
-                  <select name="actionsddl" id="actionsddl">
+                <div class="span7">
+                  <select name="actionsddl" id="actionsddl" class="span12">
                     <option value="">&lt; Select an Action &gt;</option>
                     <?php 
                       $qs = "SELECT actions.* FROM 
@@ -95,24 +95,39 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
                     if ($_GET['actionsddl'] != "")
                     {
                   
-                      $qr = "SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.street_no, contacts.city, contacts.state, contacts.zipcode
+                      $qr = "SELECT contacts.id, contacts.first_name, contacts.last_name, contacts.street_no, contacts.city, contacts.state, contacts.zipcode, contact_action.date
                            FROM contacts
                             JOIN contact_action on contacts.id = contact_action.cid
                            WHERE contact_action.aid = " . $_GET['actionsddl'] . " " . "
                            ORDER BY contacts.last_name";
                            
-                      $contact_actions = execute_query($qr,$mc);
-                      
-                      echo ('<ul class="action-contact-ul">');
-                      if(mysql_num_rows($contact_actions) > 0)
+                      $contact_actions = execute_query($qr,$mc); ?>
+                      <table class="table table-bordered table-striped table-condensed">
+                        <thead>
+                          <tr>
+                            <th>Last Name</th>
+                            <th>First Name</th>
+                            <th>Address</th>
+                            <th>Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                    <?php if(mysql_num_rows($contact_actions) > 0)
                       {
-                        while( $contact_action_info = mysql_fetch_array( $contact_actions ) ) {
-                          echo('<li><a href="search_contact.php?id=' . $contact_action_info[ "id" ] . '">' . ( $contact_action_info[ "last_name" ] ) . ', ' . ( $contact_action_info[ "first_name" ] ) . ' | ' . ( $contact_action_info[ "street_no" ] ) . ' ' . ( $contact_action_info[ "city" ] ) . ', ' . ( $contact_action_info[ "state" ] ) . '</a></li>' );
+                        while( $contact_action_info = mysql_fetch_array( $contact_actions ) ) { ?>
+                          <tr>
+                            <td><a href="search_contact.php?id=<?php echo( $contact_action_info[ "id" ] ); ?>"><?php echo( $contact_action_info[ "last_name" ] ); ?></a></td>
+                            <td><a href="search_contact.php?id=<?php echo( $contact_action_info[ "id" ] ); ?>"><?php echo( $contact_action_info[ "first_name" ] ); ?></a></td>
+                            <td><?php echo( $contact_action_info[ "street_no" ] . " " . $contact_action_info[ "city" ] . ", " . $contact_action_info[ "state" ] ); ?></td>
+                            <td><?php echo( $contact_action_info[ "date" ] ); ?></td>
+                          </tr>
+                        <?php
                         }
                       }else{
-                        echo('<li>No contacts</li>');
+                        echo('No contacts');
                       }
-                      echo ('</ul>');
+                      echo( "</tbody>");
+                      echo( "</table>");
                     }                   
                   ?>
                 </div>
