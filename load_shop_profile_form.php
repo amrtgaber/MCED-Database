@@ -123,6 +123,15 @@ if( $_GET[ 'id' ] ) {
     </div>
   </div>
   
+  <br>
+  
+  <div class="row-fluid">
+    <div class="span1">Notes</div>
+    <div class="span11">
+      <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $contact_info[ 'notes' ] ); ?></textarea>
+    </div>
+  </div>
+  
   <div class="row-fluid">
     <div class="span1">Add Worker</div>
     <div class="span9">

@@ -285,6 +285,25 @@ if( $_POST[ 'numWorkers' ] ) {
   }
 }
 
+/* Notes */
+if( $_POST[ 'notes' ] ) {
+  $notes = mysql_real_escape_string( $_POST[ 'notes' ] );
+  
+  $qs = "UPDATE workplaces
+         SET wnotes = '" . $notes . "'
+         WHERE wid = " . $id;
+
+  $qr = execute_query( $qs, $mc );
+} else {
+  if( !is_null( $shop_info[ 'wnotes' ] ) ) {
+    $qs = "UPDATE workplaces
+           SET wnotes = NULL
+           WHERE wid = " . $id;
+
+    $qr = execute_query( $qs, $mc );
+  }
+}
+
 /* Add Workers to this shop */
 if( $_POST[ "addWorkers" ] ) {
   $workerIDs = explode( ",", $_POST[ "addWorkers" ] );
