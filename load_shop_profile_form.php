@@ -128,7 +128,7 @@ if( $_GET[ 'id' ] ) {
   <div class="row-fluid">
     <div class="span1">Notes</div>
     <div class="span11">
-      <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $contact_info[ 'notes' ] ); ?></textarea>
+      <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $workplace_info[ 'wnotes' ] ); ?></textarea>
     </div>
   </div>
   

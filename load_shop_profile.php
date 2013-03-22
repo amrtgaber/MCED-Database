@@ -38,7 +38,8 @@ $qs = "SELECT wname,
               ceo,
               parent_company,
               phone,
-              num_workers
+              num_workers,
+              wnotes
        FROM workplaces
        WHERE wid = " . $id;
 
@@ -116,6 +117,11 @@ $qr = execute_query($qs, $mc);
   <tr>
     <td class="info-label">Number of Workers</td>
     <td><?php echo( $shop_info[ 'num_workers' ] ); ?></td>
+  </tr>
+  
+  <tr>
+    <td class="info-label">Notes</td>
+    <td><?php echo( $shop_info[ 'wnotes' ] ); ?></td>
   </tr>
   
   <tr>
