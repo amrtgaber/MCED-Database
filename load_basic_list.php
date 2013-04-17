@@ -86,7 +86,7 @@ if( $_GET[ 'wage' ] || $_GET[ 'workplace' ] ) {
   }
 
   if( $_GET[ 'workplace' ] ) {
-    $selection  .= ", workers.employer, workplaces.wname";
+    $selection  .= ", workplaces.wname";
     $joinString .= " LEFT JOIN workplaces ON workers.wid = workplaces.wid";
   }
 }
@@ -309,7 +309,7 @@ $qr = execute_query( $qs, $mc );
           <?php } ?>
 
           <?php if( $_GET[ 'workplace' ] ) { ?>
-            <td><?php echo( $contact_info[ 'employer' ] ); ?></td>
+            <td><?php echo( $contact_info[ 'wname' ] ); ?></td>
           <?php } ?>
 
           <?php if( $_GET[ 'school' ] ) { ?>

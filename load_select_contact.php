@@ -45,11 +45,12 @@ $mc = connect_to_database();
 $qs = "SELECT contacts.*,
               contact_phone.*,
               contact_email.email,
-              workers.employer
+              workplaces.wname
        FROM contacts
        LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
-       LEFT JOIN workers       ON contacts.id = workers.cid "
+       LEFT JOIN workers       ON contacts.id = workers.cid
+       LEFT JOIN workplaces    ON workers.wid = workplaces.wid "
        . $whereString
        . " ORDER BY contacts.last_name";
 
@@ -113,7 +114,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
             <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
             <td><?php if( $contact_info[ 'cell' ] != 0 ) { echo( $contact_info[ 'cell' ] ); } ?></td>
             <td><?php echo( $contact_info[ 'email' ] ); ?></td>
-            <td><?php echo( $contact_info[ 'employer' ] ); ?></td>
+            <td><?php echo( $contact_info[ 'wname' ] ); ?></td>
           </tr>
         <?php } ?>
       </tbody>

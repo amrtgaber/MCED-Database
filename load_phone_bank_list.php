@@ -56,10 +56,11 @@ if( $contactType == "" ) {
 $mc = connect_to_database();
 
 /* Select desired information */
-$qs = "SELECT contacts.first_name, contacts.last_name, contact_phone.phone, contact_phone.cell, workers.employer, students.school "
+$qs = "SELECT contacts.first_name, contacts.last_name, contact_phone.phone, contact_phone.cell, workplaces.wname, students.school "
       . "FROM contacts "
       . "LEFT JOIN contact_phone ON contacts.id = contact_phone.cid "
       . "LEFT JOIN workers       ON contacts.id = workers.cid "
+      . "LEFT JOIN workplaces    ON workers.wid = workplaces.wid"
       . "LEFT JOIN students      ON contacts.id = students.cid "
       . "WHERE " . $contactType . " "
       . "ORDER BY contacts.last_name";
@@ -99,7 +100,7 @@ if( $_GET[ 'print' ] ) { ?>
           <td width="120"><?php echo( $contact_info[ 'last_name' ] ); ?></td>
           <td width="120"><?php echo( $contact_info[ 'first_name' ] ); ?></td>
           <?php if( $_GET[ 'workers' ] ) { ?>
-            <td width="150"><?php echo( $contact_info[ 'employer' ] ); ?></td>
+            <td width="150"><?php echo( $contact_info[ 'wname' ] ); ?></td>
           <?php } ?>
 
           <?php if( $_GET[ 'students' ] ) { ?>
