@@ -37,6 +37,7 @@ if( isset( $_GET[ 'id' ] ) ) { ?>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/jui-start-theme/jquery-ui-1.9.0.custom.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/modify_contact.css" rel="stylesheet">
       
@@ -127,6 +128,7 @@ if( isset( $_GET[ 'id' ] ) ) { ?>
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
+    <script src="js/jquery-ui-1.9.0.custom.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/modify_contact.js"></script>

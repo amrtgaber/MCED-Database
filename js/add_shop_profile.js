@@ -24,11 +24,6 @@ $( document ).ready(function() {
       $( this ).remove();
     });
   });
-  
-  jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
-        phone_number = phone_number.replace(/\s+/g, ""); 
-        return this.optional( element ) || phone_number.length == 10;
-  }, "Phone number must be 10 digits long." );
 
   /* Validate form */
   var v = $( "form" ).validate({
@@ -38,7 +33,8 @@ $( document ).ready(function() {
       },
       phone: {
         required: true,
-        phoneLength: true,
+        minlength: 10,
+        maxlength: 10,
         digits: true
       },
       address: {
@@ -68,7 +64,8 @@ $( document ).ready(function() {
       },
       phone: {
         required: "Phone is a required field.",
-        phoneLength: "Phone number must be exactly 10 digits long.",
+        minlength: "Phone number must be exactly 10 digits long.",
+        maxlength: "Phone number must be exactly 10 digits long.",
         digits: "Phone number can only contain digits."
       },
       address: {

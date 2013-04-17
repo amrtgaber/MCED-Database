@@ -19,11 +19,68 @@ if( !$_SESSION[ 'username' ] ) {
 /* connect to database */
 $mc = connect_to_database();
 
+/* Check for required fields */
+
 /* Check that First Name and Last Name exist */
 if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_POST[ 'lastName' ] ) || $_POST[ 'lastName' ] == "" ) {
   alert_error( "First and Last name are required fields." );
 }
-  
+
+/* Check that date exists */
+if( !isset( $_POST[ "date" ] ) || $_POST[ "date" ] == "" ) {
+  alert_error( "Date is a required field." );
+}
+
+/* Ensure fields have been entered correctly */
+
+/* Check that state is two characters */
+if( $_POST[ 'state' ] ) {
+  if( strlen( $_POST[ 'state' ] ) != 2 ) {
+    alert_error( "State field is must be two letter abbreviation." );
+  }
+}
+
+/* Check that zipcode is 5 digits */
+if( $_POST[ 'zipcode' ] ) {
+  if( !ctype_digit( $_POST[ 'zipcode' ] ) || strlen( $_POST[ 'zipcode' ] ) != 5 ) {
+    alert_error( "Zipcode field must be exactly 5 digits." );
+  }
+}
+
+/* Check that phone numbers is 10 digits */
+if( $_POST[ 'phone' ] ) {
+  if( !ctype_digit( $_POST[ 'phone' ] ) || strlen( $_POST[ 'phone' ] ) != 10 ) {
+    alert_error( "Phone number must be exactly 10 digits." );
+  }
+}
+
+/* Check that email is valid string */
+if( $_POST[ 'email' ] ) {
+  if( !strpos( $_POST[ 'email' ], '@' ) || !strpos( $_POST[ 'email' ], '.' ) ) {
+    alert_error( "Email field is invalid." );
+  }
+}
+
+/* Check that wage is contains only digits and is correct length */
+if( $_POST[ 'dollars' ] ) {
+  if( !ctype_digit( $_POST[ 'dollars' ] ) ) {
+    alert_error( "Dollars field can only contain digits." );
+  }
+}
+
+if( $_POST[ 'cents' ] ) {
+  if( !ctype_digit( $_POST[ 'cents' ] ) || strlen( $_POST[ 'cents' ] ) != 2 ) {
+    alert_error( "Cents field must be exactly 2 digits." );
+  }
+}
+
+/* Check syear contains only 2 digits */
+if( $_POST[ 'syear' ] ) {
+  if( !ctype_digit( $_POST[ 'syear' ] ) || strlen( $_POST[ 'syear' ] ) != 2 ) {
+    alert_error( "School Year must be exactly 2 digits." );
+  }
+}
+
 $firstname = mysql_real_escape_string( $_POST[ 'firstName' ] );
 $lastname  = mysql_real_escape_string( $_POST[ 'lastName' ] );
 
@@ -111,6 +168,24 @@ $qs = "UPDATE contacts
 
 $qr = execute_query( $qs, $mc );
 
+/* Date */
+$date = mysql_real_escape_string( $_POST[ "date" ] );
+
+$qs = "UPDATE contacts
+       SET cdate = '" . $date . "'
+       WHERE id = " . $id;
+
+$qr = execute_query( $qs, $mc );
+
+/* Notes */
+$notes = mysql_real_escape_string( $_POST[ 'notes' ] );
+  
+$qs = "UPDATE contacts
+       SET notes = '" . $notes . "'
+       WHERE id = " . $id;
+
+$qr = execute_query( $qs, $mc );
+
 /* Street No */
 if( $_POST[ 'address' ] ) {
   $streetno = mysql_real_escape_string( $_POST[ 'address' ] );
@@ -152,17 +227,13 @@ if( $_POST[ 'city' ] ) {
 
 /* State */
 if( $_POST[ 'state' ] ) {
-  if( strlen( $_POST[ 'state' ] ) != 2 ) {
-    alert_error( "State field is invalid." );
-  } else {
-    $state = mysql_real_escape_string( strtoupper( $_POST[ 'state' ] ) );
-    
-    $qs = "UPDATE contacts
-           SET state = '" . $state . "'
-           WHERE id = " . $id;
+  $state = mysql_real_escape_string( strtoupper( $_POST[ 'state' ] ) );
+  
+  $qs = "UPDATE contacts
+         SET state = '" . $state . "'
+         WHERE id = " . $id;
 
-    $qr = execute_query( $qs, $mc );
-  }
+  $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $contact_info[ 'state' ] ) ) {
     $qs = "UPDATE contacts
@@ -175,17 +246,13 @@ if( $_POST[ 'state' ] ) {
 
 /* Zipcode */
 if( $_POST[ 'zipcode' ] ) {
-  if( !ctype_digit( $_POST[ 'zipcode' ] ) || strlen( $_POST[ 'zipcode' ] ) != 5 ) {
-    alert_error( "Zipcode field is invalid." );
-  } else {
-    $zipcode = mysql_real_escape_string( $_POST[ 'zipcode' ] );
-    
-    $qs = "UPDATE contacts
-           SET zipcode = " . $zipcode . "
-           WHERE id = " . $id;
+  $zipcode = mysql_real_escape_string( $_POST[ 'zipcode' ] );
+  
+  $qs = "UPDATE contacts
+         SET zipcode = " . $zipcode . "
+         WHERE id = " . $id;
 
-    $qr = execute_query( $qs, $mc );
-  }
+  $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $contact_info[ 'zipcode' ] ) ) {
     $qs = "UPDATE contacts
@@ -215,116 +282,47 @@ if( $_POST[ 'aptNo' ] ) {
   }
 }
 
-/* Phone Information */
-$hasPhoneInfo = false;
-
 /* Phone Number */
 if( $_POST[ 'phone' ] ) {
-  if( !ctype_digit( $_POST[ 'phone' ] ) || ( strlen( $_POST[ 'phone' ] ) != 7 && strlen( $_POST[ 'phone' ] ) != 10 ) ) {
-    alert_error( "Phone field is invalid." );
-  } else {
-    $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
+  $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
 
-    if( $hasPhoneInfo || !is_null( $contact_info[ 'phone' ] ) ) {
-      $qs = "UPDATE contact_phone
-             SET phone = " . $phone . "
-             WHERE cid = " . $id;
-    } else {
-      $qs = "INSERT INTO contact_phone
-            ( cid, phone )
-            VALUES ( " . $id . ", " . $phone . " )";
-    }
-
-    $qr = execute_query( $qs, $mc );
-    
-    $hasPhoneInfo = true;
-  }
-} else {
   if( $contact_info[ 'phone' ] != 0 ) {
     $qs = "UPDATE contact_phone
-           SET phone = 0
+           SET phone = " . $phone . "
            WHERE cid = " . $id;
-
-    $qr = execute_query( $qs, $mc );
-  }
-}
-
-/* Cell Phone Number */
-if( $_POST[ 'cell' ] ) {
-  if( !ctype_digit( $_POST[ 'cell' ] ) || ( strlen( $_POST[ 'cell' ] ) != 7 && strlen( $_POST[ 'cell' ] ) != 10 ) ) {
-    alert_error( "Cell Phone field is invalid." );
   } else {
-    $cell = mysql_real_escape_string( $_POST[ 'cell' ] );
-
-    if( $hasPhoneInfo || !is_null( $contact_info[ 'cell' ] ) ) {
-      $qs = "UPDATE contact_phone
-             SET cell = " . $cell . "
-             WHERE cid = " . $id;
-    } else {
-      $qs = "INSERT INTO contact_phone
-            ( cid, cell )
-            VALUES ( " . $id . ", " . $cell . " )";
-    }
-
-    $qr = execute_query( $qs, $mc );
-      
-    $hasPhoneInfo = true;
+    $qs = "INSERT INTO contact_phone
+          ( cid, phone )
+          VALUES ( " . $id . ", " . $phone . " )";
   }
+
+  $qr = execute_query( $qs, $mc );
 } else {
-  if( $contact_info[ 'cell' ] != 0 ) {
-    $qs = "UPDATE contact_phone
-           SET cell = 0
+  if( $contact_info[ 'phone' ] != 0 ) {
+    $qs = "DELETE
+           FROM contact_phone
            WHERE cid = " . $id;
 
     $qr = execute_query( $qs, $mc );
   }
-}
-
-/* Text Message Updates */
-if( $_POST[ 'textUpdates' ] && $hasPhoneInfo ) {
-  $qs = "UPDATE contact_phone
-         SET text_updates = 1
-         WHERE cid = " . $id;
-
-  $qr = execute_query( $qs, $mc );
-} else {
-  if( $contact_info[ 'text_updates' ] == 1 ) {
-    $qs = "UPDATE contact_phone
-           SET text_updates = 0
-           WHERE cid = " . $id;
-
-    $qr = execute_query( $qs, $mc );
-  }
-}
-
-if( !$hasPhoneInfo ) {
-  $qs = "DELETE
-         FROM contact_phone
-         WHERE cid = " . $id;
-
-  $qr = execute_query( $qs, $mc );
 }
 
 /* Email */
 if( $_POST[ 'email' ] ) {
-  if( !strpos( $_POST[ 'email' ], '@' ) || !strpos( $_POST[ 'email' ], '.' ) ) {
-    alert_error( "Email field is invalid." );
-  } else {
-    $email = mysql_real_escape_string( $_POST[ 'email' ] );
+  $email = mysql_real_escape_string( $_POST[ 'email' ] );
+  
+  if( !is_null( $contact_info[ 'email' ] ) ) {
+    $qs = "UPDATE contact_email
+           SET email = '" . $email . "'
+           WHERE cid = " . $id;
     
-    if( !is_null( $contact_info[ 'email' ] ) ) {
-      $qs = "UPDATE contact_email
-             SET email = '" . $email . "'
-             WHERE cid = " . $id;
-      
-      $qr = execute_query( $qs, $mc );
-    } else {
-      $qs = "INSERT INTO contact_email
-            ( cid, email )
-            VALUES ( " . $id . ", '" . $email . "' )";
+    $qr = execute_query( $qs, $mc );
+  } else {
+    $qs = "INSERT INTO contact_email
+          ( cid, email )
+          VALUES ( " . $id . ", '" . $email . "' )";
 
-      $qr = execute_query( $qs, $mc );
-    }
+    $qr = execute_query( $qs, $mc );
   }
 } else {
   if( !is_null( $contact_info[ 'email' ] ) ) {
@@ -337,79 +335,45 @@ if( $_POST[ 'email' ] ) {
 }
 
 /* Worker information */
-$hasWorkerInfo      = false;
+$hasWorkerInfo = false;
 
-/* Employer */
-if( $_POST[ 'employer' ] ) {
-  $employer = mysql_real_escape_string( $_POST[ 'employer' ] );
+/* workplace */
+if( $_POST[ 'wid' ] ) {
+  $wid = mysql_real_escape_string( $_POST[ 'wid' ] );
 
-  if( $hasWorkerInfo || !is_null( $contact_info[ 'employer' ] ) ) {
+  if( $hasWorkerInfo || !is_null( $contact_info[ 'wid' ] ) ) {
     $qs = "UPDATE workers
-           SET employer = '" . $employer . "'
+           SET wid = " . $wid . "
            WHERE cid = " . $id;
   } else {
     $qs = "INSERT INTO workers
-          ( cid, employer )
-          VALUES ( " . $id . ", '" . $employer . "' )";
+          ( cid, wid )
+          VALUES ( " . $id . ", " . $wid . " )";
   }
 
   $qr = execute_query( $qs, $mc );
     
   $hasWorkerInfo = true;
 } else {
-  if( !is_null( $contact_info[ 'employer' ] ) ) {
+  if( $contact_info[ 'wid' ] != 0 ) {
     $qs = "UPDATE workers
-           SET employer = NULL
+           SET wid = 0
            WHERE cid = " . $id;
 
-    $qr = execute_query( $qs, $mc );
-  }
-}
-
-/* Wage below $10 / hour */
-if( $_POST[ 'wageBelow10' ] ) {
-  $wagebelow10 = 1;
-  
-  if( $hasWorkerInfo || !is_null( $contact_info[ 'wage_below_10' ] ) ) {
-    $qs = "UPDATE workers
-           SET wage_below_10 = " . $wagebelow10 . "
-           WHERE cid = " . $id;
-  } else {
-    $qs = "INSERT INTO workers
-          ( cid, wage_below_10 )
-          VALUES ( " . $id . ", " . $wagebelow10 . " )";
-  }
-
-  $qr = execute_query( $qs, $mc );
-
-  $hasWorkerInfo = true;
-} else {
-  if( $hasWorkerInfo || !is_null( $contact_info[ 'wage_below_10' ] ) ) {
-    $qs = "UPDATE workers
-           SET wage_below_10 = NULL
-           WHERE cid = " . $id;
     $qr = execute_query( $qs, $mc );
   }
 }
 
 /* Wage */
 if( $_POST[ 'dollars' ] ) {
-  if( !ctype_digit( $_POST[ 'dollars' ] ) ) {
-    alert_error( "Dollars field is invalid." );
+  if( $_POST[ 'cents' ] ) {
+    /* dollars and cents */
+    $wage = mysql_real_escape_string( $_POST[ 'dollars' ] )
+            . "."
+            . mysql_real_escape_string( $_POST[ 'cents' ] );
   } else {
-    if( $_POST[ 'cents' ] ) {
-      if( !ctype_digit( $_POST[ 'cents' ] ) || strlen( $_POST[ 'cents' ] ) != 2 ) {
-        alert_error( "Cents field is invalid." );
-      } else {
-        /* dollars and cents */
-        $wage = mysql_real_escape_string( $_POST[ 'dollars' ] )
-                . "."
-                . mysql_real_escape_string( $_POST[ 'cents' ] );
-      }
-    } else {
-      /* dollars only */
-      $wage = mysql_real_escape_string( $_POST[ 'dollars' ] );
-    }
+    /* dollars only */
+    $wage = mysql_real_escape_string( $_POST[ 'dollars' ] );
   }
 
   if( $hasWorkerInfo || !is_null( $contact_info[ 'wage' ] ) ) {
@@ -441,6 +405,32 @@ if( !$hasWorkerInfo ) {
          WHERE cid = " . $id;
 
   $qr = execute_query( $qs, $mc );
+}
+
+/* Action */
+if( $_POST[ 'aid' ] ) {
+  $aid = mysql_real_escape_string( $_POST[ 'aid' ] );
+
+  if( !is_null( $contact_info[ 'aid' ] ) ) {
+    $qs = "UPDATE contact_action
+           SET aid = " . $aid . ",
+           SET date = '" . $date. "'
+           WHERE cid = " . $id;
+  } else {
+    $qs = "INSERT INTO contact_action
+          ( cid, aid, date )
+          VALUES ( " . $id . ", " . $aid . ", '" . $date . "' )";
+  }
+
+  $qr = execute_query( $qs, $mc );
+} else {
+  if( !is_null( $contact_info[ 'aid' ] ) ) {
+    $qs = "DELETE
+           FROM contact_action
+           WHERE cid = " . $id;
+
+    $qr = execute_query( $qs, $mc );
+  }
 }
 
 /* Student information */
@@ -475,18 +465,14 @@ if( $_POST[ 'school' ] ) {
 
 /* School Year */
 if( $_POST[ 'syear' ] ) {
-  if( !ctype_digit( $_POST[ 'syear' ] ) || strlen( $_POST[ 'syear' ] ) != 2 ) {
-    alert_error( "School Year field is invalid." );
-  } else {
-    $syear = mysql_real_escape_string( $_POST[ 'syear' ] );
+  $syear = mysql_real_escape_string( $_POST[ 'syear' ] );
+
+  if( $hasStudentInfo || !is_null( $contact_info[ 'syear' ] ) ) {
+    $qs = "UPDATE students
+           SET syear = " . $syear . "
+           WHERE cid = " . $id;
   
-    if( $hasStudentInfo || !is_null( $contact_info[ 'syear' ] ) ) {
-      $qs = "UPDATE students
-             SET syear = " . $syear . "
-             WHERE cid = " . $id;
-    
-      $qr = execute_query( $qs, $mc );
-    }
+    $qr = execute_query( $qs, $mc );
   }
 } else {
   if( !is_null( $contact_info[ 'syear' ] ) ) {
@@ -507,5 +493,6 @@ if( $_POST[ 'id' ] ) { ?>
 <?php } else { ?>
   <div class="alert alert-success">
     The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully added to the database.
+    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( 'form' ).each(function () { this.reset(); });">OK</button>
   </div>
 <?php } ?>

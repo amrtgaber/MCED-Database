@@ -47,7 +47,7 @@ if( $_POST[ 'id' ] ) {
     alert_error( "You do not have the required privilege level to add an action." );
   }
 
-  /* Insert new contact */
+  /* Insert new action */
   $qs = "INSERT INTO actions
         ( aname )
         VALUES ( '" . $aname . "' )";

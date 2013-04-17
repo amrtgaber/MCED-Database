@@ -1,17 +1,19 @@
 $( document ).ready(function() {
+  /* set up form handlers */
+  function form_handlers() {
+    /* activate datepicker */
+    $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
+    $( "#date" ).datepicker( "setDate", new Date());
+  }
+  
   /* Load form fields */
-  $( "#form-fields" ).load( "load_contact_form.php" );
+  $( "#form-fields" ).load( "load_contact_form.php", form_handlers );
 
   /* Clear button */
   $( 'button[type="reset"]' ).click(function() {
     $( "#add-contact-form-status" ).hide();
     $( "#add-contact-form-status" ).html( "" );
   });
-
-  jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
-        phone_number = phone_number.replace(/\s+/g, ""); 
-        return this.optional( element ) || phone_number.length == 7 || phone_number.length == 10;
-  }, "Phone number must either be 7 digits long or 10 digits long." );
 
   /* Validate form */
   var v = $( "form" ).validate({
@@ -26,11 +28,8 @@ $( document ).ready(function() {
         email: true
       },
       phone: {
-        phoneLength: true,
-        digits: true
-      },
-      cell: {
-        phoneLength: true,
+        minlength: 10,
+        maxlength: 10,
         digits: true
       },
       state: {
@@ -54,6 +53,10 @@ $( document ).ready(function() {
         minlength: 2,
         maxlength: 2,
         digits: true
+      },
+      date: {
+        required: true,
+        date: true
       }
     },
     messages: {
@@ -67,12 +70,9 @@ $( document ).ready(function() {
         email: "Please enter a valid email."
       },
       phone: {
-        phoneLength: "Phone number must be 7 or 10 digits long.",
+        minlength: "Phone number must be exactly 10 digits long.",
+        maxlength: "Phone number must be exactly 10 digits long.",
         digits: "Phone number can only contain digits."
-      },
-      cell: {
-        phoneLength: "Cell phone number must be 7 or 10 digits long.",
-        digits: "Cell phone number can only contain digits."
       },
       state: {
         minlength: "State must be 2 letter abbreviation.",
@@ -95,6 +95,10 @@ $( document ).ready(function() {
         minlength: "School year must be exactly 2 digits long.",
         maxlength: "School year must be exactly 2 digits long.",
         digits: "School year can only contain digits."
+      },
+      date: {
+        required: "Date is a required field.",
+        date: "Date must be a valid date (yyyy-mm-dd)."
       }
     },
     errorPlacement: function( error, element ) {
@@ -120,7 +124,16 @@ $( document ).ready(function() {
     $( "#add-contact-form-status" ).removeClass( "alert-error" );
     $( "#add-contact-form-status" ).removeClass( "alert-success" );
 
-    var postString = $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val();
+    /* generate workplace id */    
+    var workplace = $( "#workplace" ).val();
+    var workplaceID = workplace.substring( workplace.length - 4 );
+    
+    /* generate action id */    
+    var action = $( "#action" ).val();
+    var actionID = action.substring( action.length - 4 );
+    
+    /* construct post request string */
+    var postString = $( "form" ).serialize() + "&contactType=" + $( "#contactType" ).val() + "&wid=" + workplaceID + "&aid=" + actionID;
 
     $.post(
       "action_contact_form.php",
@@ -128,9 +141,6 @@ $( document ).ready(function() {
       function( data, textStatus, jqXHR ) {
         $( "#add-contact-form-status" ).html( jqXHR.responseText );
         $( "#add-contact-form-status" ).show();
-        $( "form" ).each(function () {
-          this.reset();
-        });
       }
       ).fail(function( data, textStatus, jqXHR ) {
         $( "#add-contact-form-status" ).addClass( "alert alert-error" );

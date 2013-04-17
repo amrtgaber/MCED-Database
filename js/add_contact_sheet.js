@@ -19,7 +19,7 @@ $( document ).ready(function() {
     /* show/hide potential legal issues textarea */
     $( "#pliCheck" ).click( function() {
       if( $( "#pliCheck" ).attr( "checked" ) ) {
-        $( "#pliText" ).show();;
+        $( "#pliText" ).show();
       } else {
         $( "#pliText" ).hide();
       }
@@ -68,11 +68,6 @@ $( document ).ready(function() {
     $( "#add-contact-sheet-form-status" ).html( "" );
   });
   
-  jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
-        phone_number = phone_number.replace(/\s+/g, ""); 
-        return this.optional( element ) || phone_number.length == 7 || phone_number.length == 10;
-  }, "Phone number must either be 7 digits long or 10 digits long." );
-  
   /* Validate form */
   var v = $( "#add-contact-sheet-form" ).validate({
     rules: {
@@ -83,11 +78,13 @@ $( document ).ready(function() {
         required: true
       },
       phone: {
-        phoneLength: true,
+        minlength: 10,
+        maxlength: 10,
         digits: true
       },
       cell: {
-        phoneLength: true,
+        minlength: 10,
+        maxlength: 10,
         digits: true
       },
       zipcode: {
@@ -111,11 +108,13 @@ $( document ).ready(function() {
         required: "Last Name is a required field."
       },
       phone: {
-        phoneLength: "Phone number must be 7 or 10 digits long.",
+        minlength: "Phone number must be exactly 10 digits long.",
+        maxlength: "Phone number must be exactly 10 digits long.",
         digits: "Phone number can only contain digits."
       },
       cell: {
-        phoneLength: "Cell phone number must be 7 or 10 digits long.",
+        minlength: "Cell phone number must be exactly 10 digits long.",
+        maxlength: "Cell phone number must be exactly 10 digits long.",
         digits: "Cell phone number can only contain digits."
       },
       zipcode: {
@@ -128,7 +127,7 @@ $( document ).ready(function() {
       },
       date: {
         required: "Date is a required field.",
-        date: "Date must be a valid date (mm/dd/yyyy)."
+        date: "Date must be a valid date (yyyy-mm-dd)."
       }
     },
     errorPlacement: function( error, element ) {

@@ -35,13 +35,14 @@ if( $_GET[ 'id' ] ) {
                 contact_email.*,
                 workers.*,
                 students.*,
+                contact_action.*,
                 CONCAT( assigned_organizers.first_name, ' ', assigned_organizers.last_name ) AS assigned_organizer
          FROM contacts
-         LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
-         LEFT JOIN contact_email ON contacts.id = contact_email.cid
-         LEFT JOIN workers       ON contacts.id = workers.cid
-         LEFT JOIN workplaces    ON workers.wid = workplaces.wid
-         LEFT JOIN students      ON contacts.id = students.cid
+         LEFT JOIN contact_phone  ON contacts.id = contact_phone.cid
+         LEFT JOIN contact_email  ON contacts.id = contact_email.cid
+         LEFT JOIN workers        ON contacts.id = workers.cid
+         LEFT JOIN students       ON contacts.id = students.cid
+         LEFT JOIN contact_action ON contacts.id = contact_action.cid
          LEFT JOIN ( 
                    SELECT contact_organizer.cid, contacts.first_name, contacts.last_name
                    FROM contacts, contact_organizer
@@ -77,25 +78,6 @@ if( $_GET[ 'id' ] ) {
       <input type="text" name="lastName" class="span12"
              value="<?php echo( $contact_info[ 'last_name' ] ); ?>"
              placeholder="Type last name here">
-    </div>
-  </div>
-
-  <div class="row-fluid">
-    <div class="span3">
-      <input type="checkbox" name="wageBelow10" value="true"
-             <?php
-               if( isset( $contact_info[ 'wage_below_10' ] ) ) {
-                 echo( "checked" );
-               }
-             ?>>
-      I make less than $10 an hour.
-    </div>
-    
-    <div class="span1">Employer</div>
-    <div class="span8">
-      <input type="text" name="employer" class="span12"
-             value="<?php echo( $contact_info[ 'employer' ] ); ?>"
-             placeholder="Type employer here">
     </div>
   </div>
 
@@ -136,7 +118,7 @@ if( $_GET[ 'id' ] ) {
              placeholder="Type zipcode here">
     </div>
   </div>
-    
+
   <div class="row-fluid">
     <div class="span1">Phone</div>
     <div class="span5">
@@ -145,32 +127,52 @@ if( $_GET[ 'id' ] ) {
              placeholder="Type phone number here">
     </div>
     
-    <div class="span1">Cell</div>
-    <div class="span5">
-      <input type="text" name="cell" class="span12"
-             value="<?php if( $contact_info[ 'cell' ] != 0 ) { echo( $contact_info[ 'cell' ] ); } ?>"
-             placeholder="Type cell phone number here">
-    </div>
-  </div>
-    
-  <div class="row-fluid">
-    <div class="span12">
-      <input type="checkbox" name="textUpdates" value="true"
-             <?php
-               if( isset( $contact_info[ 'text_updates' ] ) ) {
-                 echo( "checked" );
-               }
-             ?>>
-      Send me text message updates.
-    </div>
-  </div>
-
-  <div class="row-fluid">
     <div class="span1">Email</div>
-    <div class="span11">
+    <div class="span5">
       <input type="text" name="email" class="span12"
              value="<?php echo( $contact_info[ 'email' ] ); ?>"
              placeholder="Type email here">
+    </div>
+  </div>
+  
+  <div class="row-fluid">
+    <div class="span1">Workplace</div>
+    <div class="span5">
+      <select id="workplace" class="span12">
+        <option></option>
+        <?php
+          $qs = "SELECT wid,
+                        wname,
+                        street_no
+                 FROM workplaces
+                 ORDER BY wname";
+          $wqr = execute_query( $qs, $mc );
+          
+          while( $workplace = mysql_fetch_array( $wqr ) ) { ?>
+            <option <?php if( $workplace[ "wid" ] == $contact_info[ "wid" ] ) { echo( "selected" ); } ?>>
+              <?php echo( $workplace[ "wname" ] . " " . $workplace[ "street_no" ] . " | " . $workplace[ "wid" ] ); ?>
+            </option>
+        <?php } ?>
+      </select>
+    </div>
+
+    <div class="span1">Action</div>
+    <div class="span5">
+      <select id="action" class="span12">
+        <option></option>
+        <?php
+          $qs = "SELECT aid,
+                        aname
+                 FROM actions
+                 ORDER BY aname";
+          $aqr = execute_query( $qs, $mc );
+          
+          while( $action = mysql_fetch_array( $aqr ) ) { ?>
+            <option <?php if( $action[ "aid" ] == $contact_info[ "aid" ] ) { echo( "selected" ); } ?>>
+              <?php echo( $action[ "aname" ] . " | " . $action[ "aid" ] ); ?>
+            </option>
+        <?php } ?>
+      </select>
     </div>
   </div>
 </div>
@@ -215,17 +217,28 @@ $cents = $wage[ 1 ];
   </div>
   
   <div class="row-fluid">
-    <div class="span1">Contact Type</div>
-    
+    <div class="span1">Notes</div>
+    <div class="span11">
+      <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $contact_info[ 'notes' ] ); ?></textarea>
+    </div>
+  </div>
+  
+  <div class="row-fluid">
+    <div class="span1">Contact Type</div>    
     <div class="span2">
-      <select id="contactType">
-        <?php $contact_type = $contact_info[ "contact_type" ]; ?>
+      <select id="contactType" class="span12">
+        <?php $contact_type = $contact_info[ "contact_type" ]; if( !$_GET[ 'id' ] ) { $contact_type = 1; } ?>
         
         <option <?php if( $contact_type == 1 ) { echo( "selected" ); } ?>>Worker</option>
         <option <?php if( $contact_type == 2 ) { echo( "selected" ); } ?>>Student</option>
         <option <?php if( $contact_type == 3 ) { echo( "selected" ); } ?>>Supporter</option>
         <option <?php if( $contact_type == 0 ) { echo( "selected" ); } ?>>Other</option>
       </select>
+    </div>
+    
+    <div class="span2">
+      <span class="span4">Date</span>
+      <input type="text" name="date" id="date" class="span8" value="<?php echo( $contact_info[ 'cdate' ] ); ?>">
     </div>
   </div>
 </div>
