@@ -154,10 +154,21 @@ $( document ).ready(function() {
     $( "#edit-contact-form-status" ).removeClass( "alert" );
     $( "#edit-contact-form-status" ).removeClass( "alert-error" );
     $( "#edit-contact-form-status" ).removeClass( "alert-success" );
+    
+    /* generate workplace id */    
+    var workplace = $( "#workplace" ).val();
+    var workplaceID = workplace.substring( workplace.length - 4 );
+    
+    /* generate action id */    
+    var action = $( "#action" ).val();
+    var actionID = action.substring( action.length - 4 );
+    
+    /* construct post request string */
+    var postString = $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val() + "&id=" + $( "#updateButton" ).attr( "data-id" ) + "&wid=" + workplaceID + "&aid=" + actionID;
 
     $.post(
       "action_contact_form.php",
-      $( "#update" ).serialize() + "&contactType=" + $( "#contactType" ).val() + "&id=" + $( "#updateButton" ).attr( "data-id" ),
+      postString,
       function( data, textStatus, jqXHR ) {
         $( "#edit-contact-form-status" ).html( jqXHR.responseText );
         $( "#edit-contact-form-status" ).show();
@@ -171,12 +182,7 @@ $( document ).ready(function() {
       }
       ).always(function( data, textStatus, jqXHR ) {
         /* Debug */
-        console.log( "Sent     --> "
-                     + $( "#update" ).serialize()
-                     + "&contactType="
-                     + $( "#contactType" ).val()
-                     + "&id="
-                     + $( "#updateButton" ).attr( "data-id" ) );
+        console.log( "Sent     --> " + postString );
         console.log( "Received --> " + jqXHR.responseText );
     });
     
