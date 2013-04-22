@@ -153,7 +153,7 @@ $qr = execute_query($qs, $mc);
             <td><?php echo( $workers[ "street_no" ] . " " . $workers[ "city" ] ); ?></td>
             <td><?php echo( $workers[ "job" ] ); ?></td>
             <td><?php echo( $workers[ "rating" ] ); ?></td>
-            <td><i class="<?php if( $workers[ 'aid' ] == 1003 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i></td>
+            <td><i class="<?php if( $workers[ 'aid' ] == 1003 ) { echo( 'icon-star' ); } ?>"></i></td>
           </tr>
         <?php } ?>
         </tbody>
