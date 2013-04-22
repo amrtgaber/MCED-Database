@@ -31,7 +31,6 @@ $( document ).ready(function() {
     $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]:checked" ).val(), function() {
       /* activate datepicker */
       $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
-      $( "#date" ).datepicker( "setDate", new Date());
     });
 
     $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
@@ -47,11 +46,6 @@ $( document ).ready(function() {
       this.reset();
     });
   });
-
-  jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
-        phone_number = phone_number.replace(/\s+/g, ""); 
-        return this.optional( element ) || phone_number.length == 7 || phone_number.length == 10;
-  }, "Phone number must either be 7 digits long or 10 digits long." );
 
   /* Validate form */
   var v = $( "#update" ).validate({
