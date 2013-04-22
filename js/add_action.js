@@ -17,9 +17,6 @@ $( document ).ready(function() {
       function( data, textStatus, jqXHR ) {
         $( "#add-action-form-status" ).html( jqXHR.responseText );
         $( "#add-action-form-status" ).show();
-        $( "form" ).each(function () {
-          this.reset();
-        });
       }
       ).fail(function( data, textStatus, jqXHR ) {
         $( "#add-action-form-status" ).addClass( "alert alert-error" );

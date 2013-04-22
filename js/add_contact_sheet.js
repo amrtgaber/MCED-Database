@@ -159,9 +159,6 @@ $( document ).ready(function() {
       function( data, textStatus, jqXHR ) {
         $( "#add-contact-sheet-form-status" ).html( jqXHR.responseText );
         $( "#add-contact-sheet-form-status" ).show();
-        /* $( "#add-contact-sheet-form" ).each(function () {
-          this.reset();
-        }); */
       }
       ).fail(function( data, textStatus, jqXHR ) {
         $( "#add-contact-sheet-form-status" ).addClass( "alert alert-error" );

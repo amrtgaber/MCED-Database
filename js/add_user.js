@@ -94,9 +94,6 @@ $( document ).ready(function() {
       function( data, textStatus, jqXHR ) {
         $( "#add-user-form-status" ).html( jqXHR.responseText );
         $( "#add-user-form-status" ).show();
-        $( "form" ).each(function () {
-          this.reset();
-        });
       }
       ).fail(function( data, textStatus, jqXHR ) {
         $( "#add-user-form-status" ).addClass( "alert alert-error" );
