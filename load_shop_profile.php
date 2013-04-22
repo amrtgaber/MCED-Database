@@ -55,10 +55,17 @@ $qs = "SELECT workers.cid,
               contacts.street_no,
               contacts.city,
               contacts.state,
-              contacts.zipcode
+              contacts.zipcode,
+              contact_sheet.job,
+              contact_sheet.rating,
+              MAX( contact_action.aid ) AS aid
        FROM workers 
-         JOIN contacts ON workers.cid = contacts.id
-       WHERE wid = " . $id;
+         LEFT JOIN contacts       ON workers.cid = contacts.id
+         LEFT JOIN contact_sheet  ON workers.cid = contact_sheet.cid
+         LEFT JOIN contact_action ON workers.cid = contact_action.cid
+       WHERE wid = " . $id . "
+       GROUP BY workers.cid
+       ORDER BY contacts.last_name";
 
 $qr = execute_query($qs, $mc);
 
@@ -127,11 +134,30 @@ $qr = execute_query($qs, $mc);
   <tr>
     <td class="info-label">Contacted Workers</td>
     <td>
-      <ul class="ulContactWorkers">
-      <?php while( $workers = mysql_fetch_array( $qr ) ) { ?>
-        <li><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ 'last_name' ] ); ?>, <?php echo( $workers[ 'first_name' ] ); ?> | <?php echo( $workers[ 'street_no' ] ); ?> <?php echo( $workers[ 'city' ] ); ?>, <?php echo( $workers[ 'state' ] ); ?></a></li>
-      <?php } ?>
-      </ul>
+      <table class="table table-bordered table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Address</th>
+            <th>Job</th>
+            <th>Rating</th>
+            <th>L&A</th>
+          </tr>
+        </thead>
+        <tbody>
+        <?php while( $workers = mysql_fetch_array( $qr ) ) { ?>
+          <tr>
+            <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ "last_name" ] ); ?></a></td>
+            <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ "first_name" ] ); ?></a></td>
+            <td><?php echo( $workers[ "street_no" ] . " " . $workers[ "city" ] ); ?></td>
+            <td><?php echo( $workers[ "job" ] ); ?></td>
+            <td><?php echo( $workers[ "rating" ] ); ?></td>
+            <td><i class="<?php if( $workers[ 'aid' ] == 1003 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i></td>
+          </tr>
+        <?php } ?>
+        </tbody>
+      </table>
     </td>
   </tr>
 
