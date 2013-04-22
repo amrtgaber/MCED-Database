@@ -28,7 +28,12 @@ $( document ).ready(function() {
   $( "#selectButton" ).click(function() {
     $( "#select" ).hide();
 
-    $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]:checked" ).val() );
+    $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]:checked" ).val(), function() {
+      /* activate datepicker */
+      $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
+      $( "#date" ).datepicker( "setDate", new Date());
+    });
+
     $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
     $( "#update" ).fadeToggle( "slow" );
   });

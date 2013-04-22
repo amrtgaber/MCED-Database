@@ -107,13 +107,15 @@ if( $_POST[ 'id' ] ) {
                 contact_email.*,
                 workers.*,
                 students.*,
+                contact_action.*,
                 CONCAT( assigned_organizers.first_name, ' ', assigned_organizers.last_name ) AS assigned_organizer
          FROM contacts
-         LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
-         LEFT JOIN contact_email ON contacts.id = contact_email.cid
-         LEFT JOIN workers       ON contacts.id = workers.cid
-         LEFT JOIN workplaces    ON workers.wid = workplaces.wid
-         LEFT JOIN students      ON contacts.id = students.cid
+         LEFT JOIN contact_phone  ON contacts.id = contact_phone.cid
+         LEFT JOIN contact_email  ON contacts.id = contact_email.cid
+         LEFT JOIN workers        ON contacts.id = workers.cid
+         LEFT JOIN workplaces     ON workers.wid = workplaces.wid
+         LEFT JOIN students       ON contacts.id = students.cid
+         LEFT JOIN contact_action ON contacts.id = contact_action.cid
          LEFT JOIN ( 
                    SELECT contact_organizer.cid, contacts.first_name, contacts.last_name
                    FROM contacts, contact_organizer
@@ -411,12 +413,7 @@ if( !$hasWorkerInfo ) {
 if( $_POST[ 'aid' ] ) {
   $aid = mysql_real_escape_string( $_POST[ 'aid' ] );
 
-  if( !is_null( $contact_info[ 'aid' ] ) ) {
-    $qs = "UPDATE contact_action
-           SET aid = " . $aid . ",
-           SET date = '" . $date. "'
-           WHERE cid = " . $id;
-  } else {
+  if( $contact_info[ 'aid' ] != $aid ) {
     $qs = "INSERT INTO contact_action
           ( cid, aid, date )
           VALUES ( " . $id . ", " . $aid . ", '" . $date . "' )";
