@@ -60,11 +60,8 @@ $( document ).ready(function() {
         email: true
       },
       phone: {
-        phoneLength: true,
-        digits: true
-      },
-      cell: {
-        phoneLength: true,
+        minlength: 10,
+        maxlength: 10,
         digits: true
       },
       state: {
@@ -101,12 +98,9 @@ $( document ).ready(function() {
         email: "Please enter a valid email."
       },
       phone: {
-        phoneLength: "Phone number must be 7 or 10 digits long.",
+        minlength: "Phone number must be exactly 10 digits long.",
+        maxlength: "Phone number must be exactly 10 digits long.",
         digits: "Phone number can only contain digits."
-      },
-      cell: {
-        phoneLength: "Cell phone number must be 7 or 10 digits long.",
-        digits: "Cell phone number can only contain digits."
       },
       state: {
         minlength: "State must be 2 letter abbreviation.",
