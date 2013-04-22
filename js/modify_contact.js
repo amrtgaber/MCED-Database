@@ -31,7 +31,6 @@ $( document ).ready(function() {
     $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]:checked" ).val(), function() {
       /* activate datepicker */
       $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
-      $( "#date" ).datepicker( "setDate", new Date());
     });
 
     $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
@@ -48,11 +47,6 @@ $( document ).ready(function() {
     });
   });
 
-  jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
-        phone_number = phone_number.replace(/\s+/g, ""); 
-        return this.optional( element ) || phone_number.length == 7 || phone_number.length == 10;
-  }, "Phone number must either be 7 digits long or 10 digits long." );
-
   /* Validate form */
   var v = $( "#update" ).validate({
     rules: {
@@ -66,11 +60,8 @@ $( document ).ready(function() {
         email: true
       },
       phone: {
-        phoneLength: true,
-        digits: true
-      },
-      cell: {
-        phoneLength: true,
+        minlength: 10,
+        maxlength: 10,
         digits: true
       },
       state: {
@@ -107,12 +98,9 @@ $( document ).ready(function() {
         email: "Please enter a valid email."
       },
       phone: {
-        phoneLength: "Phone number must be 7 or 10 digits long.",
+        minlength: "Phone number must be exactly 10 digits long.",
+        maxlength: "Phone number must be exactly 10 digits long.",
         digits: "Phone number can only contain digits."
-      },
-      cell: {
-        phoneLength: "Cell phone number must be 7 or 10 digits long.",
-        digits: "Cell phone number can only contain digits."
       },
       state: {
         minlength: "State must be 2 letter abbreviation.",
