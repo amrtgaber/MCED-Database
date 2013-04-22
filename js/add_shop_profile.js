@@ -129,13 +129,6 @@ $( document ).ready(function() {
       function( data, textStatus, jqXHR ) {
         $( "#add-shop-profile-form-status" ).html( jqXHR.responseText );
         $( "#add-shop-profile-form-status" ).show();
-        $( "form" ).each(function () {
-          this.reset();
-        });
-        
-        $( ".worker" ).each(function() {
-          $( this ).remove();
-        });
       }
       ).fail(function( data, textStatus, jqXHR ) {
         $( "#add-shop-profile-form-status" ).addClass( "alert alert-error" );
