@@ -156,27 +156,67 @@ if( $_GET[ 'id' ] ) {
     </div>
   </div>
   
-  <br>
-  
-  <div class="row-fluid" id="added-workers">
-    <?php
-      if( $_GET[ "id" ] ) {
-      $qs = "SELECT id,
-                    first_name,
-                    last_name,
-                    street_no
-             FROM workers
-             LEFT JOIN contacts ON workers.cid = contacts.id
-             WHERE wid = " . $id;
-      
-      $wqr = execute_query( $qs, $mc );
-      
-      while( $winfo = mysql_fetch_array( $wqr ) ) { ?>
-        <div class="row-fluid worker" data-id="<?php echo( $winfo[ 'id' ] ); ?>">
-          <?php echo( $winfo[ "first_name" ] . " " . $winfo[ "last_name" ] . " | " . $winfo[ "street_no" ] ); ?>
-          <button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button>
-        </div>
-      <?php }
-    } ?>
-  </div>
+</div>
+
+<div class="row-fluid" id="added-workers">
+  <?php if( $_GET[ "id" ] ) {
+    $qs = "SELECT workers.cid,
+                  workers.wid,
+                  contacts.first_name,
+                  contacts.last_name,
+                  contacts.street_no,
+                  contacts.apt_no,
+                  contacts.city,
+                  contacts.state,
+                  contacts.zipcode,
+                  contact_sheet.job,
+                  contact_sheet.rating,
+                  MAX( contact_action.aid ) AS aid
+           FROM workers 
+             LEFT JOIN contacts       ON workers.cid = contacts.id
+             LEFT JOIN contact_sheet  ON workers.cid = contact_sheet.cid
+             LEFT JOIN contact_action ON workers.cid = contact_action.cid
+           WHERE wid = " . $id . "
+           GROUP BY workers.cid
+           ORDER BY contacts.last_name";
+    
+    $wqr = execute_query( $qs, $mc );
+    
+    if( mysql_num_rows( $wqr ) > 0 ) { ?>
+      <table class="table table-bordered table-striped table-condensed">
+        <thead>
+          <tr>
+            <th>Last Name</th>
+            <th>First Name</th>
+            <th>Address</th>
+            <th>Job</th>
+            <th style="text-align: center;">Rating</th>
+            <th style="text-align: center;">L&A</th>
+            <th style="text-align: center;">Remove</th>
+          </tr>
+        </thead>
+        
+        <tbody id="worker-table-body">
+          <?php while( $workers = mysql_fetch_array( $wqr ) ) { ?>
+            <tr class="worker" data-id="<?php echo( $winfo[ 'id' ] ); ?>">
+              <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ "last_name" ] ); ?></a></td>
+              <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ "first_name" ] ); ?></a></td>
+              <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
+                  $apt_no = "#" . $workers[ "apt_no" ];
+                } else {
+                  $apt_no = "";
+                }
+              
+                echo( $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ] ); ?>
+              </td>
+              <td><?php echo( $workers[ "job" ] ); ?></td>
+              <td style="text-align: center;"><?php echo( $workers[ "rating" ] ); ?></td>
+              <td style="text-align: center;"><i class="<?php if( $workers[ 'aid' ] == 1003 ) { echo( 'icon-star' ); } ?>"></i></td>
+              <td style="text-align: center;"><button type='button' class='btn btn-small btn-danger' onclick='$( this ).parent().parent().remove();'><i class="icon-remove"></i></button></td>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    <?php } ?>
+  <?php } ?>
 </div>

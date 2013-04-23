@@ -54,8 +54,6 @@ $qs = "SELECT workers.cid,
               contacts.last_name,
               contacts.street_no,
               contacts.city,
-              contacts.state,
-              contacts.zipcode,
               contact_sheet.job,
               contact_sheet.rating,
               MAX( contact_action.aid ) AS aid

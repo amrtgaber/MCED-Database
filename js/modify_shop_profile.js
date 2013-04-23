@@ -25,7 +25,7 @@ $( document ).ready(function() {
             var workerID = workerToAdd.substring( workerToAdd.length - 5 );
             var workerInfo = workerToAdd.substring( 0, workerToAdd.length - 7 );
             
-            $( "#added-workers" ).append( "<div class='row-fluid worker' data-id='" + workerID + "'>" + workerInfo + "<button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button></div>" );
+            $( "#worker-table-body" ).append( "<tr class='worker' data-id='" + workerID + "'><td>" + workerInfo + "</td><td></td><td></td><td></td><td></td><td></td><td><button type='button' class='close' onclick='$( this ).parent().parent().remove();'>&times;</button></td></tr>" );
             
             $( "#addWorker" ).val( "" );
           }); 
