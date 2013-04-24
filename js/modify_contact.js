@@ -2,7 +2,10 @@ $( document ).ready(function() {
   if( quickSelect ) {
     $( "#search" ).hide();
 
-    $( "#formFields" ).load( "load_contact_form.php?id=" + quickId );
+    $( "#formFields" ).load( "load_contact_form.php?id=" + quickId, function() {
+      /* activate datepicker */
+      $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
+    });
     $( "#updateButton" ).attr( "data-id", quickId );
     $( "#update" ).fadeToggle( "slow" );
   }
@@ -10,9 +13,21 @@ $( document ).ready(function() {
   /* Search button */
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
+    
     $( "#selectTable" ).load( "load_select_contact.php?" + $( "#search" ).serialize(), function() {
-      $( "input[type=radio]:first" ).attr( "checked", true );
+      $( ".contact" ).click(function() {
+        $( "#select" ).hide();
+
+        $( "#formFields" ).load( "load_contact_form.php?id=" + $( this ).attr( "data-id" ), function() {
+          /* activate datepicker */
+          $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
+        });
+  
+        $( "#updateButton" ).attr( "data-id", $( this ).attr( "data-id" ) );
+        $( "#update" ).fadeToggle( "slow" );
+      });      
     });
+    
     $( "#select" ).fadeToggle( "slow" );
     
     return false;
@@ -22,19 +37,6 @@ $( document ).ready(function() {
   $( "#backToSearch" ).click(function() {
     $( "#select" ).hide();
     $( "#search" ).fadeToggle( "slow" );
-  });
-
-  /* Select button */
-  $( "#selectButton" ).click(function() {
-    $( "#select" ).hide();
-
-    $( "#formFields" ).load( "load_contact_form.php?id=" + $( "input[type=radio]:checked" ).val(), function() {
-      /* activate datepicker */
-      $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
-    });
-
-    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
-    $( "#update" ).fadeToggle( "slow" );
   });
 
   /* Back to select */

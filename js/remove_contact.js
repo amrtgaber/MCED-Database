@@ -3,7 +3,18 @@ $( document ).ready(function() {
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
     $( "#selectTable" ).load( "load_select_contact.php?" + $( "#search" ).serialize(), function() {
-      $( "input[type=radio]:first" ).attr( "checked", true );
+      $( ".contact" ).click(function() {
+        $( ".modal-body" ).html( "This action cannot be undone. Clicking remove will permanently remove "
+                                 + $( this ).parent().parent().find('td').eq(1).text()
+                                 + " "
+                                 + $( this ).parent().parent().find('td').eq(0).text()
+                                 + " from the database." );
+
+        $( "#modal" ).modal( "show" );
+        $( "#removeConfirm" ).attr( "data-id", $( this ).attr( "data-id" ) );
+
+        return false;
+      });
     });
     $( "#select" ).fadeToggle( "slow" );
     
@@ -14,21 +25,6 @@ $( document ).ready(function() {
   $( "#backToSearch" ).click(function() {
     $( "#select" ).hide();
     $( "#search" ).fadeToggle( "slow" );
-  });
-
-  /* First remove button press */
-  $( "#selectButton" ).click(function() {
-    var id = $( "input[type=radio]:checked" ).val();
-    $( ".modal-body" ).html( "This action cannot be undone. Clicking remove will permanently remove "
-                             + $( "#firstname" + id ).text()
-                             + " "
-                             + $( "#lastname" + id ).text()
-                             + " from the database." );
-
-    $( "#modal" ).modal( "show" );
-    $( "#removeConfirm" ).attr( "data-id", id );
-
-    return false;
   });
 
   /* Remove confirmed */

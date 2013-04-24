@@ -2,7 +2,13 @@ $( document ).ready(function() {
   if( quickSearch ) {
     $( "#search" ).hide();
     $( "#selectTable" ).load( "load_select_contact.php?" + $( "#search" ).serialize(), function() {
-      $( "input[type=radio]:first" ).attr( "checked", true );
+      $( ".contact" ).click(function() {
+        $( "#select" ).hide();
+
+        $( "#contactInfo" ).load( "load_contact_profile.php?id=" + $( this ).attr( "data-id" ) );
+        $( "#updateButton" ).attr( "data-id", $( this ).attr( "data-id" ) );
+        $( "#view" ).fadeToggle( "slow" );
+      });
     });
     $( "#select" ).fadeToggle( "slow" );
   }
@@ -19,7 +25,13 @@ $( document ).ready(function() {
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
     $( "#selectTable" ).load( "load_select_contact.php?" + $( "#search" ).serialize(), function() {
-      $( "input[type=radio]:first" ).attr( "checked", true );
+      $( ".contact" ).click(function() {
+        $( "#select" ).hide();
+
+        $( "#contactInfo" ).load( "load_contact_profile.php?id=" + $( this ).attr( "data-id" ) );
+        $( "#updateButton" ).attr( "data-id", $( this ).attr( "data-id" ) );
+        $( "#view" ).fadeToggle( "slow" );
+      });
     });
     $( "#select" ).fadeToggle( "slow" );
     
@@ -30,15 +42,6 @@ $( document ).ready(function() {
   $( "#backToSearch" ).click(function() {
     $( "#select" ).hide();
     $( "#search" ).fadeToggle( "slow" );
-  });
-
-  /* Select button */
-  $( "#selectButton" ).click(function() {
-    $( "#select" ).hide();
-
-    $( "#contactInfo" ).load( "load_contact_profile.php?id=" + $( "input[type=radio]:checked" ).val() );
-    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
-    $( "#view" ).fadeToggle( "slow" );
   });
 
   /* Back to select */

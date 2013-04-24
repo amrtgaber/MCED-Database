@@ -17,26 +17,9 @@ if( !$_SESSION[ 'username' ] ) {
 include( "db_credentials.php" );
 include( "common.php" );
 
-/* Build query string */
-$whereString = "";
-
 /* First Name and Last Name */
-if( $_GET[ 'firstName' ] ) {
-  $firstname = mysql_real_escape_string( strtolower( $_GET[ 'firstName' ] ) );
-  $whereString .= "WHERE contacts.first_name = '" . $firstname . "'";
-}
-
-if( $_GET[ 'lastName' ] ) {
-  $lastname = mysql_real_escape_string( strtolower( $_GET[ 'lastName' ] ) );
-
-  if( $_GET[ 'firstName' ] ) {
-    $whereString .= " AND ";
-  } else {
-    $whereString .= "WHERE ";
-  }
-
-  $whereString .= "contacts.last_name = '" . $lastname . "'";
-}
+$firstname = mysql_real_escape_string( strtolower( $_GET[ 'firstName' ] ) );
+$lastname  = mysql_real_escape_string( strtolower( $_GET[ 'lastName' ] ) );
 
 /* Connect to database */
 $mc = connect_to_database();
@@ -50,9 +33,10 @@ $qs = "SELECT contacts.*,
        LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
        LEFT JOIN workers       ON contacts.id = workers.cid
-       LEFT JOIN workplaces    ON workers.wid = workplaces.wid "
-       . $whereString
-       . " ORDER BY contacts.last_name";
+       LEFT JOIN workplaces    ON workers.wid = workplaces.wid
+       WHERE contacts.first_name LIKE '" . $firstname . "%'
+         AND contacts.last_name  LIKE '" . $lastname . "%'
+       ORDER BY contacts.last_name";
 
 $qr = execute_query( $qs, $mc );
 
@@ -60,7 +44,6 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
-        <th></th>
         <th>Last Name</th>
         <th>First Name</th>
         <th>Contact Type</th>
@@ -76,9 +59,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php
         while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><input type="radio" name="id" value="<?php echo( $contact_info[ 'id' ] ); ?>"></td>
-            <td id="lastname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></td>
-            <td id="firstname<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></td>
+            <td><a href="#" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
+            <td><a href="#" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
             <?php
               $contact_type = $contact_info[ "contact_type" ];
               

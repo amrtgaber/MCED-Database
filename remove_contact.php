@@ -84,7 +84,6 @@ if( $_SESSION[ 'privilege_level' ] < 3 ) {
             </div>
 
             <div class="row-fluid">
-              <button type="button" id="selectButton" class="btn btn-primary btn-large btn-danger">Remove</button>
               <button type="button" id="backToSearch" class="btn btn-large">Back</button>
             </div>
           </div>
