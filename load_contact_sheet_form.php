@@ -35,8 +35,9 @@ if( !isset( $_GET[ 'id' ] ) ) {
   $qs = "SELECT contacts.*,
                 contact_phone.*,
                 contact_email.*,
-                workers.*,
-                students.*,
+                workers.wid,
+                workplaces.wname,
+                workplaces.street_no AS wstreet_no,
                 contact_sheet.*,
                 CONCAT( assigned_organizers.first_name, ' ', assigned_organizers.last_name ) AS assigned_organizer
          FROM contacts
@@ -44,7 +45,6 @@ if( !isset( $_GET[ 'id' ] ) ) {
          LEFT JOIN contact_email ON contacts.id = contact_email.cid
          LEFT JOIN workers       ON contacts.id = workers.cid
          LEFT JOIN workplaces    ON workers.wid = workplaces.wid
-         LEFT JOIN students      ON contacts.id = students.cid
          LEFT JOIN contact_sheet ON contacts.id = contact_sheet.cid
          LEFT JOIN ( 
                    SELECT contact_organizer.cid, contacts.first_name, contacts.last_name
@@ -83,7 +83,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
     <div class="span1">Workplace</div>
     <div class="span3">
       <input type="text" name="workplace" class="span12"
-        value="<?php echo( $contact_info[ 'employer' ] ); ?>"
+        value="<?php echo( $contact_info[ 'wname' ] . ' ' . $contact_info[ 'wstreet_no' ] ); ?>"
         placeholder="Type workplace here">
     </div>
   </div>
@@ -120,24 +120,39 @@ if( !isset( $_GET[ 'id' ] ) ) {
   
   <div class="row-fluid">
     <div class="span1">Address</div>
-    <div class="span5">
+    <div class="span8">
       <input type="text" name="address" class="span12"
-        value="<?php echo( $contact_info[ 'street_no' ] ); ?>"
-        placeholder="Type address here">
+             value="<?php echo( $contact_info[ 'street_no' ] ); ?>"
+             placeholder="Type address here">
     </div>
-    
-    <div class="span1">City</div>
+
+    <div class="span1">Apt. no.</div>
     <div class="span2">
-      <input type="text" name="city" class="span12"
-        value="<?php echo( $contact_info[ 'city' ] ); ?>"
-        placeholder="Type city here">
+      <input type="text" name="aptNo" class="span12"
+             value="<?php echo( $contact_info[ 'apt_no' ] ); ?>"
+             placeholder="Type Apt. no. here">
     </div>
+  </div>
     
-    <div class="span1">Zip</div>
+  <div class="row-fluid">
+    <div class="span1">City</div>
+    <div class="span6">
+      <input type="text" name="city" class="span12"
+             value="<?php echo( $contact_info[ 'city' ] ); ?>"
+             placeholder="Type city here">
+    </div>
+
+    <div class="span1">State</div>
+    <div class="span1">
+      <input type="text" name="state" class="span12"
+             value="<?php echo( $contact_info[ 'state' ] ); ?>"
+             placeholder="State">
+    </div>
+    <div class="span1">Zipcode</div>
     <div class="span2">
       <input type="text" name="zipcode" class="span12"
-        value="<?php echo( $contact_info[ 'zipcode' ] ); ?>"
-        placeholder="Type zipcode here">
+             value="<?php echo( $contact_info[ 'zipcode' ] ); ?>"
+             placeholder="Type zipcode here">
     </div>
   </div>
   
@@ -147,7 +162,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
   
   <div class="row-fluid">
     <div class="span12">
-      <textarea name="issues" class="span12" placeholder="Type issues here"><?php echo( $contact_info[ 'issues' ] ); ?></textarea>
+      <textarea name="issues" class="span12" placeholder="Type issues here"></textarea>
     </div>
   </div>
   
@@ -157,16 +172,14 @@ if( !isset( $_GET[ 'id' ] ) ) {
   
   <div class="row-fluid">
     <div class="span12">
-      <textarea name="reservations" class="span12" placeholder="Type reservations here"><?php echo( $contact_info[ 'reservations' ] ); ?></textarea>
+      <textarea name="reservations" class="span12" placeholder="Type reservations here"></textarea>
     </div>
   </div>
   
   <div class="row-fluid">
     <div class="span2">Leaders Identified</div>
     <div class="span10">
-      <input type="text" name="leadersIdentified" class="span12"
-        value="<?php echo( $contact_info[ 'leaders' ] ); ?>"
-        placeholder="Type leaders identified here">
+      <input type="text" name="leadersIdentified" class="span12" placeholder="Type leaders identified here">
     </div>
   </div>
   
@@ -176,7 +189,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
   
   <div class="row-fluid">
     <div class="span12">
-      <textarea name="comments" class="span12" placeholder="Type comments here"><?php echo( $contact_info[ 'comments' ] ); ?></textarea>
+      <textarea name="comments" class="span12" placeholder="Type comments here"></textarea>
     </div>
   </div>
   
@@ -186,7 +199,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
   
   <div class="row-fluid">
     <div class="span12">
-      <textarea name="assignments" class="span12" placeholder="Type assignments and follow ups here"><?php echo( $contact_info[ 'assignments' ] ); ?></textarea>
+      <textarea name="assignments" class="span12" placeholder="Type assignments and follow ups here"></textarea>
     </div>
   </div>
   
@@ -203,13 +216,11 @@ if( !isset( $_GET[ 'id' ] ) ) {
     </div>
 
     <div class="span2">
-      <label class="checkbox inline">Story</label>
-      <input type="checkbox" name="story" value="true" <?php if( isset( $contact_info[ "story" ] ) ) { echo( "checked" ); } ?>>
     </div>
     
     <div class="span2">
-      <label class="checkbox inline">Video</label>
-      <input type="checkbox" name="video" value="true" <?php if( isset( $contact_info[ "video" ] ) ) { echo( "checked" ); } ?>>
+      <label class="checkbox inline">Placard Photo</label>
+      <input type="checkbox" name="story" value="true" <?php if( isset( $contact_info[ "placard_photo" ] ) ) { echo( "checked" ); } ?>>
     </div>
     
     <div class="span2">
@@ -219,7 +230,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
     
     <div class="span2">
       <label title="Dues Authorization Card" class="checkbox inline">DAC</label>
-      <input type="checkbox" name="dac" value="true" <?php if( isset( $contact_info[ "dues_card" ] ) ) { echo( "checked" ); } ?>>
+      <input type="checkbox" name="dac" value="true" <?php if( isset( $contact_info[ "dues_auth_card" ] ) ) { echo( "checked" ); } ?>>
     </div>
   </div>
   
@@ -253,9 +264,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
           $oqr = execute_query( $qs, $mc );
           
           while( $organizer = mysql_fetch_array( $oqr ) ) { ?>
-            <option <?php if( $organizer[ "id" ] == $contact_info[ "cs_oid" ] ) { echo( "selected" ); } ?>>
-              <?php echo( $organizer[ "username" ] ); ?>
-            </option>
+            <option><?php echo( $organizer[ "username" ] ); ?></option>
         <?php } ?>
       </select>
     </div>
@@ -265,9 +274,9 @@ if( !isset( $_GET[ 'id' ] ) ) {
     <div class="span1">Contact Type</div>
     <div class="span4 inline contact-type">
       <label class="radio inline">House</label>
-      <input type="radio" name="contactType" value="house" id="cth" <?php if( $ct == "house" || $ct == "" ) { echo( "checked" ); } ?>>
+      <input type="radio" name="contactType" value="house" id="cth" <?php if( $ct == "house" ) { echo( "checked" ); } ?>>
       <label class="radio inline">Worksite</label>
-      <input type="radio" name="contactType" value="worksite" id="ctw" <?php if( $ct == "worksite" ) { echo( "checked" ); } ?>>
+      <input type="radio" name="contactType" value="worksite" id="ctw" <?php if( $ct == "worksite" || $ct == "" ) { echo( "checked" ); } ?>>
       <label class="radio inline">Other</label>
       <input type="radio" name="contactType" value="other" id="cto" <?php if( $ct != "" && $ct != "house" && $ct != "worksite" ) { echo( "checked" ); } ?>>
     </div>
@@ -296,11 +305,11 @@ if( !isset( $_GET[ 'id' ] ) ) {
  
   <div class="row-fluid">
     <div class="span6">
-      <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $contact_info[ 'cs_notes' ] ); ?></textarea>
+      <textarea name="notes" class="span12" placeholder="Type notes here"></textarea>
     </div>
     
     <div class="span6">
-      <textarea name="improvements" class="span12" placeholder="Type things to improve on here"><?php echo( $contact_info[ 'improvements' ] ); ?></textarea>
+      <textarea name="improvements" class="span12" placeholder="Type things to improve on here"></textarea>
     </div>
   </div>
 </div>
