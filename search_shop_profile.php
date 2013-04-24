@@ -77,7 +77,6 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             </div>
 
             <div class="row-fluid">
-              <button type="button" id="selectButton" class="btn btn-primary btn-large">Select</button>
               <button type="button" id="backToSearch" class="btn btn-large">Back</button>
             </div>
           </div>

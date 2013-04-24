@@ -26,7 +26,7 @@ if( $_GET[ 'wname'] ) {
 
   $qs = "SELECT workplaces.*
          FROM workplaces
-         WHERE wname = '" . $wname . "'
+         WHERE wname LIKE '" . $wname . "%'
          ORDER BY workplaces.wname";
 } else {
   $qs = "SELECT workplaces.*
@@ -41,7 +41,6 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
-        <th></th>
         <th>Workplace Name</th>
         <th>Address</th>
         <th>Phone</th>
@@ -55,8 +54,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php
         while( $shop_info = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><input type="radio" name="id" value="<?php echo( $shop_info[ 'wid' ] ); ?>"></td>
-            <td id="wname<?php echo( $shop_info[ 'wid' ] ); ?>"><?php echo( $shop_info[ 'wname' ] ); ?></td>
+            <td><a href="#" class="shop" data-wid="<?php echo( $shop_info[ 'wid' ] ); ?>"><?php echo( $shop_info[ 'wname' ] ); ?></a></td>
             <td><?php
               $address = $shop_info[ 'street_no' ];
     

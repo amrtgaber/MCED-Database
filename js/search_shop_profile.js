@@ -2,9 +2,17 @@ $( document ).ready(function() {
   /* Search button */
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
+    
     $( "#selectTable" ).load( "load_select_shop_profile.php?" + $( "#search" ).serialize(), function() {
-      $( "input[type=radio]:first" ).attr( "checked", true );
+      $( ".shop" ).click(function() {
+        $( "#select" ).hide();
+
+        $( "#shopInfo" ).load( "load_shop_profile.php?id=" + $( this ).attr( "data-wid" ) );
+        $( "#updateButton" ).attr( "data-id", $( this ).attr( "data-wid" ) );
+        $( "#view" ).fadeToggle( "slow" );
+      });
     });
+    
     $( "#select" ).fadeToggle( "slow" );
     
     return false;
@@ -14,15 +22,6 @@ $( document ).ready(function() {
   $( "#backToSearch" ).click(function() {
     $( "#select" ).hide();
     $( "#search" ).fadeToggle( "slow" );
-  });
-
-  /* Select button */
-  $( "#selectButton" ).click(function() {
-    $( "#select" ).hide();
-
-    $( "#shopInfo" ).load( "load_shop_profile.php?id=" + $( "input[type=radio]:checked" ).val() );
-    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
-    $( "#view" ).fadeToggle( "slow" );
   });
 
   /* Back to select */

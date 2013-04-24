@@ -12,9 +12,30 @@ $( document ).ready(function() {
   /* Search button */
   $( "#search" ).submit(function() {
     $( "#search" ).hide();
-    $( "#selectTable" ).load( "load_select_shop_profile.php?" + $( "#search" ).serialize(), function() {
-      $( "input[type=radio]:first" ).attr( "checked", true );
+    
+    $( "#selectTable" ).load( "load_select_shop_profile.php?" + $( "#search" ).serialize(), function() {        
+      $( ".shop" ).click(function() {
+        $( "#select" ).hide();
+
+        $( "#formFields" ).load( "load_shop_profile_form.php?id=" + $( this ).attr( "data-wid" ) ,function() {
+          /* Add worker button */
+          $( "#add-worker-button" ).click(function() {
+            var workerToAdd = $( "#addWorker" ).val();
+            
+            var workerID = workerToAdd.substring( workerToAdd.length - 5 );
+            var workerInfo = workerToAdd.substring( 0, workerToAdd.length - 7 );
+            
+            $( "#added-workers" ).append( "<div class='row-fluid worker' data-id='" + workerID + "'>" + workerInfo + "<button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button></div>" );
+            
+            $( "#addWorker" ).val( "" );
+          }); 
+        });
+        
+        $( "#updateButton" ).attr( "data-id", $( this ).attr( "data-wid" ) );
+        $( "#update" ).fadeToggle( "slow" );
+      });
     });
+    
     $( "#select" ).fadeToggle( "slow" );
     
     return false;
@@ -24,29 +45,6 @@ $( document ).ready(function() {
   $( "#backToSearch" ).click(function() {
     $( "#select" ).hide();
     $( "#search" ).fadeToggle( "slow" );
-  });
-
-  /* Select button */
-  $( "#selectButton" ).click(function() {
-    $( "#select" ).hide();
-
-    $( "#formFields" ).load( "load_shop_profile_form.php?id=" + $( "input[type=radio]:checked" ).val(), function() {
-  
-      /* Add worker button */
-      $( "#add-worker-button" ).click(function() {
-        var workerToAdd = $( "#addWorker" ).val();
-        
-        var workerID = workerToAdd.substring( workerToAdd.length - 5 );
-        var workerInfo = workerToAdd.substring( 0, workerToAdd.length - 7 );
-        
-        $( "#added-workers" ).append( "<div class='row-fluid worker' data-id='" + workerID + "'>" + workerInfo + "<button type='button' class='close' onclick='$( this ).parent().remove();'>&times;</button></div>" );
-        
-        $( "#addWorker" ).val( "" );
-      });
-    });
-    
-    $( "#updateButton" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
-    $( "#update" ).fadeToggle( "slow" );
   });
 
   /* Back to select */
