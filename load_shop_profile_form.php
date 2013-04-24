@@ -116,11 +116,26 @@ if( $_GET[ 'id' ] ) {
   
   <div class="row-fluid">
     <div class="span1">Total Workers</div>
-    <div class="span1">
-      <input type="text" name="numWorkers" class="span12"
+    <div class="span4">
+      <input type="text" name="numWorkers" class="span2"
              value="<?php echo( $workplace_info[ 'num_workers' ] ); ?>"
              placeholder="#">
     </div>
+    
+    <?php if( $_GET[ 'id' ] ) { ?>
+      <div class="span1">Contacted Workers</div>
+      <div class="span5">
+        <?php $qs = "SELECT workers.*
+                     FROM workers
+                     WHERE wid = " . $id;
+      
+        $wqr = execute_query( $qs, $mc ); ?>
+        
+        <input type="text" name="numContactedWorkers" class="span2"
+             value="<?php echo( mysql_num_rows( $wqr ) ); ?>"
+             placeholder="#" disabled>
+      </div>
+    <?php } ?>
   </div>
   
   <br>
@@ -131,34 +146,29 @@ if( $_GET[ 'id' ] ) {
       <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $workplace_info[ 'wnotes' ] ); ?></textarea>
     </div>
   </div>
-  
-  <div class="row-fluid">
-    <div class="span1">Add Worker</div>
-    <div class="span9">
-      <input type="text" class="span12" id="addWorker" name="addWorker" placeholder="Type worker name here" data-provide="typeahead" data-items="50" data-source="[
-             <?php
-             $qs = "SELECT contacts.*
-                    FROM contacts
-                    ORDER BY contacts.last_name";
-             
-             $cqr = execute_query( $qs, $mc );
-             
-             $contact_info = mysql_fetch_array( $cqr );
-             echo( '&#34;' . str_replace( '"', "'", $contact_info[ "first_name" ] . " " . $contact_info[ "last_name" ] . " | " . $contact_info[ "street_no" ] . " | " . $contact_info[ "id" ] ) . '&#34;' );
-             
-             while( $contact_info = mysql_fetch_array( $cqr ) ) {
-               echo( ', &#34;' . str_replace( '"', "'", $contact_info[ "first_name" ] . " " . $contact_info[ "last_name" ] . " | " . $contact_info[ "street_no" ] . " | " . $contact_info[ "id" ] ) . '&#34;' );
-             } ?>
-             ]">
-    </div>
-    <div class="span2">
-      <button type="button" id="add-worker-button" class="btn btn-info">Add Worker</button>
-    </div>
-  </div>
-  
 </div>
 
-<div class="row-fluid" id="added-workers">
+<div class="well">
+  <div class="row-fluid">
+    <div class="span1">Add Worker</div>
+
+    <div class="span3">
+        <input type="text" id="firstName" name="firstName" class="span12 search-query" placeholder="First Name">
+    </div>
+    
+    <div class="span3">
+        <input type="text" id="lastName" name="lastName" class="span12 search-query" placeholder="Last Name">
+    </div>
+    
+    <button type="button" class="btn btn-info span1" id="add-worker-search-button"><i class="icon-search"></i></button>
+    <button type="button" class="btn span1" id="add-worker-clear-button">Clear</button>
+  </div>
+</div>
+  
+<div class="row-fluid" id="add-worker-search-results">
+</div>
+
+<div class="row-fluid">
   <?php if( $_GET[ "id" ] ) {
     $qs = "SELECT workers.cid,
                   workers.wid,
@@ -183,7 +193,10 @@ if( $_GET[ 'id' ] ) {
     $wqr = execute_query( $qs, $mc );
     
     if( mysql_num_rows( $wqr ) > 0 ) { ?>
-      <table class="table table-bordered table-striped table-condensed">
+      <h4>Workers</h4>
+      <hr>
+      
+      <table class="table table-bordered table-striped table-condensed" id="worker-table">
         <thead>
           <tr>
             <th>Last Name</th>
@@ -198,9 +211,9 @@ if( $_GET[ 'id' ] ) {
         
         <tbody id="worker-table-body">
           <?php while( $workers = mysql_fetch_array( $wqr ) ) { ?>
-            <tr class="worker" data-id="<?php echo( $winfo[ 'id' ] ); ?>">
-              <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ "last_name" ] ); ?></a></td>
-              <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>"><?php echo( $workers[ "first_name" ] ); ?></a></td>
+            <tr class="worker" data-id="<?php echo( $workers[ 'cid' ] ); ?>">
+              <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
+              <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
               <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
                   $apt_no = "#" . $workers[ "apt_no" ];
                 } else {
@@ -212,7 +225,7 @@ if( $_GET[ 'id' ] ) {
               <td><?php echo( $workers[ "job" ] ); ?></td>
               <td style="text-align: center;"><?php echo( $workers[ "rating" ] ); ?></td>
               <td style="text-align: center;"><i class="<?php if( $workers[ 'aid' ] == 1003 ) { echo( 'icon-star' ); } ?>"></i></td>
-              <td style="text-align: center;"><button type='button' class='btn btn-small btn-danger' onclick='$( this ).parent().parent().remove();'><i class="icon-remove"></i></button></td>
+              <td style="text-align: center;"><button type="button" class="btn btn-small btn-danger" onclick="$( this ).parent().parent().remove();"><i class="icon-minus"></i></button></td>
             </tr>
           <?php } ?>
         </tbody>

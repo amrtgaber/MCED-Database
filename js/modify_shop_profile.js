@@ -17,18 +17,30 @@ $( document ).ready(function() {
       $( ".shop" ).click(function() {
         $( "#select" ).hide();
 
-        $( "#formFields" ).load( "load_shop_profile_form.php?id=" + $( this ).attr( "data-wid" ) ,function() {
-          /* Add worker button */
-          $( "#add-worker-button" ).click(function() {
-            var workerToAdd = $( "#addWorker" ).val();
-            
-            var workerID = workerToAdd.substring( workerToAdd.length - 5 );
-            var workerInfo = workerToAdd.substring( 0, workerToAdd.length - 7 );
-            
-            $( "#worker-table-body" ).append( "<tr class='worker' data-id='" + workerID + "'><td>" + workerInfo + "</td><td></td><td></td><td></td><td></td><td></td><td><button type='button' class='close' onclick='$( this ).parent().parent().remove();'>&times;</button></td></tr>" );
-            
-            $( "#addWorker" ).val( "" );
-          }); 
+        $( "#formFields" ).load( "load_shop_profile_form.php?id=" + $( this ).attr( "data-wid" ), function() {
+          /* Add worker search button */
+          $( "#add-worker-search-button" ).click(function() {
+            $( "#add-worker-search-results" ).load( "load_add_worker_search_table.php?firstName=" + $( "#firstName" ).val() + "&lastName=" + $( "#lastName" ).val(), function() {
+              /* Add worker button */
+              $( ".add-worker-button" ).click(function() {
+                $( this ).removeClass( "btn-success" );
+                $( this ).addClass( "btn-danger" );
+                $( this ).children().removeClass( "icon-plus" );
+                $( this ).children().addClass( "icon-minus" );
+                $( this ).click(function() {
+                  $( this ).parent().parent().remove();
+                });
+                $( "#worker-table-body" ).append( $( this ).parent().parent() );
+              });
+            });
+          });
+          
+          /* Add worker clear button */
+          $( "#add-worker-clear-button" ).click(function() {
+            $( "#firstName" ).val( "" );
+            $( "#lastName" ).val( "" );
+            $( "#add-worker-search-results" ).html( "" );
+          });
         });
         
         $( "#updateButton" ).attr( "data-id", $( this ).attr( "data-wid" ) );
@@ -56,11 +68,6 @@ $( document ).ready(function() {
       this.reset();
     });
   });
-  
-    jQuery.validator.addMethod( "phoneLength", function( phone_number, element ) {
-        phone_number = phone_number.replace(/\s+/g, ""); 
-        return this.optional( element ) || phone_number.length == 10;
-  }, "Phone number must be 10 digits long." );
 
   /* Validate form */
   var v = $( "#update" ).validate({
@@ -70,7 +77,8 @@ $( document ).ready(function() {
       },
       phone: {
         required: true,
-        phoneLength: true,
+        minlength: 10,
+        maxlength: 10,
         digits: true
       },
       address: {
@@ -100,7 +108,8 @@ $( document ).ready(function() {
       },
       phone: {
         required: "Phone is a required field.",
-        phoneLength: "Phone number must be exactly 10 digits long.",
+        minlength: "Phone number must be exactly 10 digits long.",
+        maxlength: "Phone number must be exactly 10 digits long.",
         digits: "Phone number can only contain digits."
       },
       address: {
