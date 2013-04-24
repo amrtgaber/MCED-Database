@@ -186,7 +186,7 @@ if( $_GET[ 'id' ] ) {
              LEFT JOIN contacts       ON workers.cid = contacts.id
              LEFT JOIN contact_sheet  ON workers.cid = contact_sheet.cid
              LEFT JOIN contact_action ON workers.cid = contact_action.cid
-           WHERE wid = " . $id . "
+           WHERE workers.wid = " . $id . "
            GROUP BY workers.cid
            ORDER BY contacts.last_name";
     
