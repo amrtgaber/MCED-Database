@@ -1,19 +1,30 @@
 $( document ).ready(function() {
   /* Load form fields */
   $( "#form-fields" ).load( "load_shop_profile_form.php", function() {
-  
-    /* Add worker button */
-    $( "#add-worker-button" ).click(function() {
-      var workerToAdd = $( "#addWorker" ).val();
-      
-      var workerID = workerToAdd.substring( workerToAdd.length - 5 );
-      var workerInfo = workerToAdd.substring( 0, workerToAdd.length - 7 );
-      
-      $( "#worker-table-body" ).append( "<tr class='worker' data-id='" + workerID + "'><td>" + workerInfo + "</td><td></td><td></td><td></td><td></td><td></td><td><button type='button' class='close' onclick='$( this ).parent().parent().remove();'>&times;</button></td></tr>" );
-      
-      $( "#addWorker" ).val( "" );
+    /* Add worker search button */
+    $( "#add-worker-search-button" ).click(function() {
+      $( "#add-worker-search-results" ).load( "load_add_worker_search_table.php?firstName=" + $( "#firstName" ).val() + "&lastName=" + $( "#lastName" ).val(), function() {
+        /* Add worker button */
+        $( ".add-worker-button" ).click(function() {
+          $( this ).removeClass( "btn-success" );
+          $( this ).addClass( "btn-danger" );
+          $( this ).children().removeClass( "icon-plus" );
+          $( this ).children().addClass( "icon-minus" );
+          $( this ).parent().parent().addClass( "worker" );
+          $( this ).click(function() {
+            $( this ).parent().parent().remove();
+          });
+          $( "#worker-table-body" ).append( $( this ).parent().parent() );
+        });
+      });
     });
     
+    /* Add worker clear button */
+    $( "#add-worker-clear-button" ).click(function() {
+      $( "#firstName" ).val( "" );
+      $( "#lastName" ).val( "" );
+      $( "#add-worker-search-results" ).html( "" );
+    });
   });
 
   /* Clear button */

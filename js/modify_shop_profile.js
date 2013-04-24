@@ -4,7 +4,33 @@ $( document ).ready(function() {
   if( quickSelect ) {
     $( "#search" ).hide();
 
-    $( "#formFields" ).load( "load_shop_profile_form.php?id=" + quickId );
+    $( "#formFields" ).load( "load_shop_profile_form.php?id=" + quickId, function() {
+      /* Add worker search button */
+      $( "#add-worker-search-button" ).click(function() {
+        $( "#add-worker-search-results" ).load( "load_add_worker_search_table.php?firstName=" + $( "#firstName" ).val() + "&lastName=" + $( "#lastName" ).val(), function() {
+          /* Add worker button */
+          $( ".add-worker-button" ).click(function() {
+            $( this ).removeClass( "btn-success" );
+            $( this ).addClass( "btn-danger" );
+            $( this ).children().removeClass( "icon-plus" );
+            $( this ).children().addClass( "icon-minus" );
+            $( this ).parent().parent().addClass( "worker" );
+            $( this ).click(function() {
+              $( this ).parent().parent().remove();
+            });
+            $( "#worker-table-body" ).append( $( this ).parent().parent() );
+          });
+        });
+      });
+      
+      /* Add worker clear button */
+      $( "#add-worker-clear-button" ).click(function() {
+        $( "#firstName" ).val( "" );
+        $( "#lastName" ).val( "" );
+        $( "#add-worker-search-results" ).html( "" );
+      });
+    });
+
     $( "#updateButton" ).attr( "data-id", quickId );
     $( "#update" ).fadeToggle( "slow" );
   }
@@ -27,6 +53,7 @@ $( document ).ready(function() {
                 $( this ).addClass( "btn-danger" );
                 $( this ).children().removeClass( "icon-plus" );
                 $( this ).children().addClass( "icon-minus" );
+                $( this ).parent().parent().addClass( "worker" );
                 $( this ).click(function() {
                   $( this ).parent().parent().remove();
                 });

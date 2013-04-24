@@ -62,7 +62,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
     
     <tbody>
       <?php while( $workers = mysql_fetch_array( $qr ) ) { ?>
-        <tr class="worker" data-id="<?php echo( $workers[ 'id' ] ); ?>">
+        <tr data-id="<?php echo( $workers[ 'id' ] ); ?>">
           <td><a href="search_contact.php?id=<?php echo( $workers[ 'id' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
           <td><a href="search_contact.php?id=<?php echo( $workers[ 'id' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
           <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
