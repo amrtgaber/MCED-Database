@@ -30,10 +30,13 @@ $id = mysql_real_escape_string( $_GET[ 'id' ] );
 /* get contact sheet information */
 $qs = "SELECT contact_sheet.*,
               contacts.*,
-              contact_phone.*
+              contact_phone.*,
+              workplaces.wname,
+              workplaces.street_no AS wstreet_no
        FROM contact_sheet
-       LEFT JOIN contacts      ON contact_sheet.cid = contacts.id
-       LEFT JOIN contact_phone ON contact_sheet.cid = contact_phone.cid
+         LEFT JOIN contacts      ON contact_sheet.cid = contacts.id
+         LEFT JOIN contact_phone ON contact_sheet.cid = contact_phone.cid
+         LEFT JOIN workplaces    ON contact_sheet.wid = workplaces.wid
        WHERE contact_sheet.id = " . $id;
 
 $qr = execute_query( $qs, $mc );
@@ -76,7 +79,7 @@ $cs_info = mysql_fetch_array( $qr );
             <div class="span4" style="font-size: 2em;"><?php echo( $cs_info[ 'last_name' ] ); ?></div>
             
             <div class="span1 info-label">Workplace</div>
-            <div class="span3 info-content"><?php echo( $cs_info[ 'workplace' ] ); ?></div>
+            <div class="span3 info-content"><?php echo( $cs_info[ 'wname' ] . " " . $cs_info[ 'wstreet_no' ] ); ?></div>
           </div>
           
           <div class="row-fluid">
@@ -127,10 +130,18 @@ $cs_info = mysql_fetch_array( $qr );
           
           <div class="row-fluid">
             <div class="span1 info-label">Address</div>
-            <div class="span5 info-content"><?php echo( $cs_info[ "street_no" ] ); ?></div>
+            <div class="span8 info-content"><?php echo( $cs_info[ "street_no" ] ); ?></div>
             
+            <div class="span1 info-label">Apt.</div>
+            <div class="span2 info-content"><?php echo( $cs_info[ "apt_no" ] ); ?></div>
+          </div>
+          
+          <div class="row-fluid">
             <div class="span1 info-label">City</div>
-            <div class="span2 info-content"><?php echo( $cs_info[ "city" ] ); ?></div>
+            <div class="span6 info-content"><?php echo( $cs_info[ "city" ] ); ?></div>
+            
+            <div class="span1 info-label">State</div>
+            <div class="span1 info-content"><?php echo( $cs_info[ "state" ] ); ?></div>
             
             <div class="span1 info-label">Zip</div>
             <div class="span2 info-content"><?php echo( $cs_info[ "zipcode" ] ); ?></div>
@@ -181,18 +192,15 @@ $cs_info = mysql_fetch_array( $qr );
               1 <i class="<?php if( $rating == 1 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i>&nbsp; &nbsp;
               2 <i class="<?php if( $rating == 2 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i>&nbsp; &nbsp;
               3 <i class="<?php if( $rating == 3 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i>&nbsp; &nbsp;
-              4 <i class="<?php if( $rating == 4 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i>&nbsp; &nbsp;
-              5 <i class="<?php if( $rating == 5 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i>
+              4 <i class="<?php if( $rating == 4 ) { echo( 'icon-star' ); } else { echo( 'icon-star-empty' ); } ?>"></i>
             </div>
             
-            <div class="span2 info-label">
-              Story
-              <?php if( isset( $cs_info[ "story" ] ) ) { ?><i class="icon-ok"></i><?php } else { ?><i class="icon-remove"></i><?php } ?>
-            </div>
+            <div class="span2">
+          </div>
             
             <div class="span2 info-label">
-              Video
-              <?php if( isset( $cs_info[ "video" ] ) ) { ?><i class="icon-ok"></i><?php } else { ?><i class="icon-remove"></i><?php } ?>
+              Placard Photo
+              <?php if( isset( $cs_info[ "placard_photo" ] ) ) { ?><i class="icon-ok"></i><?php } else { ?><i class="icon-remove"></i><?php } ?>
             </div>
             
             <div class="span2 info-label">

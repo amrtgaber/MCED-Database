@@ -190,11 +190,11 @@ $csid = $cs_info[ 'id' ];
 /* insert values */
 
 /* workplace */
-if( $_POST[ 'workplace' ] ) {
-  $workplace = mysql_real_escape_string( $_POST[ 'workplace' ] );
+if( $_POST[ 'wid' ] ) {
+  $wid = mysql_real_escape_string( $_POST[ 'wid' ] );
   
   $qs = "UPDATE contact_sheet
-         SET workplace = '" . $workplace . "'
+         SET wid = " . $wid . "
          WHERE id = " . $csid;
 
   $qr = execute_query( $qs, $mc );
@@ -290,36 +290,45 @@ if( $_POST[ 'rating' ] ) {
 
 /* story */
 if( $_POST[ 'story' ] ) {
-  $qs = "UPDATE contact_sheet
+  $qs = "UPDATE contacts
          SET story = 1
-         WHERE id = " . $csid;
+         WHERE id = " . $id;
 
   $qr = execute_query( $qs, $mc );
 }
 
 /* video */
 if( $_POST[ 'video' ] ) {
-  $qs = "UPDATE contact_sheet
+  $qs = "UPDATE contacts
          SET video = 1
-         WHERE id = " . $csid;
+         WHERE id = " . $id;
 
   $qr = execute_query( $qs, $mc );
 }
 
 /* survey */
 if( $_POST[ 'survey' ] ) {
-  $qs = "UPDATE contact_sheet
+  $qs = "UPDATE contacts
          SET survey = 1
-         WHERE id = " . $csid;
+         WHERE id = " . $id;
 
   $qr = execute_query( $qs, $mc );
 }
 
 /* dues authorization card */
 if( $_POST[ 'dac' ] ) {
-  $qs = "UPDATE contact_sheet
-         SET dues_card = 1
-         WHERE id = " . $csid;
+  $qs = "UPDATE contacts
+         SET dues_auth_card = 1
+         WHERE id = " . $id;
+
+  $qr = execute_query( $qs, $mc );
+}
+
+/* placard photo */
+if( $_POST[ 'placard' ] ) {
+  $qs = "UPDATE contacts
+         SET placard_photo = 1
+         WHERE id = " . $id;
 
   $qr = execute_query( $qs, $mc );
 }

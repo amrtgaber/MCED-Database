@@ -151,10 +151,17 @@ $( document ).ready(function() {
     $( "#add-contact-sheet-form-status" ).removeClass( "alert" );
     $( "#add-contact-sheet-form-status" ).removeClass( "alert-error" );
     $( "#add-contact-sheet-form-status" ).removeClass( "alert-success" );
+    
+    /* generate workplace id */    
+    var workplace = $( "#workplace" ).val();
+    var workplaceID = workplace.substring( workplace.length - 4 );
+    
+    /* generate post string */
+    var postString = $( "#add-contact-sheet-form" ).serialize() + "&organizer=" + $( "#organizer" ).val() + "&id=" + $( "#add-contact-sheet-button" ).attr( "data-id" ) + "&wid=" + workplaceID;
 
     $.post(
       "action_contact_sheet_form.php",
-      $( "#add-contact-sheet-form" ).serialize() + "&organizer=" + $( "#organizer" ).val() + "&id=" + $( "#add-contact-sheet-button" ).attr( "data-id" ),
+      postString,
       function( data, textStatus, jqXHR ) {
         $( "#add-contact-sheet-form-status" ).html( jqXHR.responseText );
         $( "#add-contact-sheet-form-status" ).show();

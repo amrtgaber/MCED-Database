@@ -28,6 +28,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
 /* If id is present, populate form. */
 if( !isset( $_GET[ 'id' ] ) ) {
   $contact_info = Array();
+  $id = 0;
 } else {
   $id = mysql_real_escape_string( $_GET[ 'id' ] );
 
@@ -35,22 +36,19 @@ if( !isset( $_GET[ 'id' ] ) ) {
   $qs = "SELECT contacts.*,
                 contact_phone.*,
                 contact_email.*,
-                workers.wid,
-                workplaces.wname,
-                workplaces.street_no AS wstreet_no,
                 contact_sheet.*,
+                workers.wid,
                 CONCAT( assigned_organizers.first_name, ' ', assigned_organizers.last_name ) AS assigned_organizer
          FROM contacts
-         LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
-         LEFT JOIN contact_email ON contacts.id = contact_email.cid
-         LEFT JOIN workers       ON contacts.id = workers.cid
-         LEFT JOIN workplaces    ON workers.wid = workplaces.wid
-         LEFT JOIN contact_sheet ON contacts.id = contact_sheet.cid
-         LEFT JOIN ( 
-                   SELECT contact_organizer.cid, contacts.first_name, contacts.last_name
-                   FROM contacts, contact_organizer
-                   WHERE contacts.id = contact_organizer.oid
-                   ) assigned_organizers ON contacts.id = assigned_organizers.cid
+           LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
+           LEFT JOIN contact_email ON contacts.id = contact_email.cid
+           LEFT JOIN contact_sheet ON contacts.id = contact_sheet.cid
+           LEFT JOIN workers       ON contacts.id = workers.cid
+           LEFT JOIN ( 
+                     SELECT contact_organizer.cid, contacts.first_name, contacts.last_name
+                     FROM contacts, contact_organizer
+                     WHERE contacts.id = contact_organizer.oid
+                     ) assigned_organizers ON contacts.id = assigned_organizers.cid
          WHERE contacts.id = " . $id . "
          ORDER BY contact_sheet.cs_date DESC
          LIMIT 1";
@@ -66,25 +64,38 @@ if( !isset( $_GET[ 'id' ] ) ) {
   <div class="row-fluid">
     <?php if( !isset( $id ) ) { ?>
       <div class="span1">First Name</div>
-      <div class="span3">
+      <div class="span2">
         <input type="text" name="firstName" class="span12" placeholder="Type first name here">
       </div>
       
       <div class="span1">Last Name</div>
-      <div class="span3">
+      <div class="span2">
         <input type="text" name="lastName" class="span12" placeholder="Type last name here">
       </div>
     <?php } else { ?>
-      <div class="span4" style="font-size:2em"><?php echo( $contact_info[ 'first_name' ] ); ?></div>
+      <div class="span3" style="font-size:2em"><?php echo( $contact_info[ 'first_name' ] ); ?></div>
       
-      <div class="span4" style="font-size:2em"><?php echo( $contact_info[ 'last_name' ] ); ?></div>
+      <div class="span3" style="font-size:2em"><?php echo( $contact_info[ 'last_name' ] ); ?></div>
     <?php } ?>
     
     <div class="span1">Workplace</div>
-    <div class="span3">
-      <input type="text" name="workplace" class="span12"
-        value="<?php echo( $contact_info[ 'wname' ] . ' ' . $contact_info[ 'wstreet_no' ] ); ?>"
-        placeholder="Type workplace here">
+    <div class="span5">
+      <select id="workplace" class="span12">
+        <option></option>
+        <?php
+          $qs = "SELECT wid,
+                        wname,
+                        street_no
+                 FROM workplaces
+                 ORDER BY wname";
+          $wqr = execute_query( $qs, $mc );
+          
+          while( $workplace = mysql_fetch_array( $wqr ) ) { ?>
+            <option <?php if( $workplace[ "wid" ] == $contact_info[ "wid" ] ) { echo( "selected" ); } ?>>
+              <?php echo( $workplace[ "wname" ] . " " . $workplace[ "street_no" ] . " | " . $workplace[ "wid" ] ); ?>
+            </option>
+        <?php } ?>
+      </select>
     </div>
   </div>
   
@@ -98,9 +109,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
     
     <div class="span1">Shift</div>
     <div class="span2">
-      <input type="text" name="shift" class="span12"
-        value="<?php echo( $contact_info[ 'shift' ] ); ?>"
-        placeholder="Type shift here">
+      <input type="text" name="shift" class="span12" placeholder="Type shift here">
     </div>
     
     <div class="span1">Cell #</div>
@@ -210,9 +219,8 @@ if( !isset( $_GET[ 'id' ] ) ) {
     <div class="span3 inline">
       <label class="radio inline">1</label><input type="radio" name="rating" value="1" <?php if( $rating == 1 ) { echo( "checked" ); } ?>>
       <label class="radio inline">2</label><input type="radio" name="rating" value="2" <?php if( $rating == 2 ) { echo( "checked" ); } ?>>
-      <label class="radio inline">3</label><input type="radio" name="rating" value="3" <?php if( $rating == 3 || !isset( $rating ) ) { echo( "checked" ); } ?>>
+      <label class="radio inline">3</label><input type="radio" name="rating" value="3" <?php if( $rating != 1 && $rating != 2 && $rating != 4 ) { echo( "checked" ); } ?>>
       <label class="radio inline">4</label><input type="radio" name="rating" value="4" <?php if( $rating == 4 ) { echo( "checked" ); } ?>>
-      <label class="radio inline">5</label><input type="radio" name="rating" value="5" <?php if( $rating == 5 ) { echo( "checked" ); } ?>>
     </div>
 
     <div class="span2">
@@ -220,7 +228,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
     
     <div class="span2">
       <label class="checkbox inline">Placard Photo</label>
-      <input type="checkbox" name="story" value="true" <?php if( isset( $contact_info[ "placard_photo" ] ) ) { echo( "checked" ); } ?>>
+      <input type="checkbox" name="placard" value="true" <?php if( isset( $contact_info[ "placard_photo" ] ) ) { echo( "checked" ); } ?>>
     </div>
     
     <div class="span2">
