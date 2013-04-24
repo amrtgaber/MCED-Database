@@ -2,9 +2,19 @@ $( document ).ready(function() {
   /* Search button */
   $( "#search-button" ).click(function() {
     $( "#search" ).hide();
+    
     $( "#selectTable" ).load( "load_select_contact.php?" + $( "#search" ).serialize(), function() {
-      $( "input[type=radio]:first" ).attr( "checked", true );
+      $( ".contact" ).click(function () {
+        $( "#select" ).hide();
+
+        /* Load form fields and attach handlers*/
+        $( "#form-fields" ).load( "load_contact_sheet_form.php?id=" + $( this ).attr( "data-id" ), form_handlers );
+        
+        $( "#add-contact-sheet-button" ).attr( "data-id", $( this ).attr( "data-id" ) );
+        $( "#view" ).fadeToggle( "slow" );
+      });
     });
+    
     $( "#select" ).fadeToggle( "slow" );
   });
   
@@ -38,17 +48,6 @@ $( document ).ready(function() {
     $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
     $( "#date" ).datepicker( "setDate", new Date());
   }
-
-  /* Select button */
-  $( "#selectButton" ).click(function() {
-    $( "#select" ).hide();
-
-    /* Load form fields and attach handlers*/
-    $( "#form-fields" ).load( "load_contact_sheet_form.php?id=" + $( "input[type=radio]:checked" ).val(), form_handlers );
-    
-    $( "#add-contact-sheet-button" ).attr( "data-id", $( "input[type=radio]:checked" ).val() );
-    $( "#view" ).fadeToggle( "slow" );
-  });
   
   /* blank sheet button */
   $( ".blank-contact-sheet-button" ).click(function() {
