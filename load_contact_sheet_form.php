@@ -62,7 +62,7 @@ if( !isset( $_GET[ 'id' ] ) ) {
 
 <div class="well">
   <div class="row-fluid">
-    <?php if( !isset( $id ) ) { ?>
+    <?php if( $id == 0 ) { ?>
       <div class="span1">First Name</div>
       <div class="span2">
         <input type="text" name="firstName" class="span12" placeholder="Type first name here">
