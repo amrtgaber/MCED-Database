@@ -46,8 +46,8 @@ include( "common.php" );
         <div class="span9">
           <div class="row-fluid">
             <div class="span6">
-              <h2>Generate List</h2>
-              <p>Select this option if you'd like to generate a list of contacts, a phone bank, or any other kind of list.</p>
+              <h2>View Contact</h2>
+              <p>Select this option if you'd like to search for a contact.</p>
             </div>
             <div class="span6">
               <h2>View Shop Profile</h2>
@@ -57,7 +57,7 @@ include( "common.php" );
 
           <div class="row-fluid">
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="generate-list">Generate List &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="search-contact">View Contact &raquo;</button>
             </div>
             <div class="span6">
               <button class="btn btn-large btn-primary" type="button" id="view-shop-profile">View Shop Profile &raquo;</button>
@@ -66,21 +66,34 @@ include( "common.php" );
         
           <div class="row-fluid">
             <div class="span6">
-              <h2>View Actions</h2>
-              <p>Select this option if you'd like to take a look at a shop profile.</p>
+              <h2>View Contact Sheet</h2>
+              <p>Select this option if you'd like to view a contact sheet.</p>
             </div>
             <div class="span6">
-              <h2>Search</h2>
-              <p>Select this option if you'd like to search for a contact.</p>
+              <h2>View Actions</h2>
+              <p>Select this option if you'd like to take a look at a shop profile.</p>
             </div>
           </div><!--/.row-fluid-->
 
           <div class="row-fluid">
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="view-actions">View Actions &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="view-contact-sheet">View Contact Sheet &raquo;</button>
             </div>
             <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="search-contact">Search &raquo;</button>
+              <button class="btn btn-large btn-primary" type="button" id="view-actions">View Actions &raquo;</button>
+            </div>
+          </div><!--./row-fluid-->
+        
+        <div class="row-fluid">
+            <div class="span6">
+              <h2>Generate List</h2>
+              <p>Select this option if you'd like to generate a list of contacts, a phone bank, or any other kind of list.</p>
+            </div>
+          </div><!--/.row-fluid-->
+
+          <div class="row-fluid">
+            <div class="span6">
+              <button class="btn btn-large btn-primary" type="button" id="generate-list">Generate List &raquo;</button>
             </div>
           </div><!--./row-fluid-->
         </div><!--/.span9-->

@@ -66,6 +66,19 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
               <button class="btn btn-large btn-primary" type="button" id="modify-shop-profile">Modify Shop Profile &raquo;</button>
             </div>
           </div><!--./row-fluid-->
+          
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>Modify Contact Sheet</h2>
+              <p>Select this option if you'd like to modify a contact.</p>
+            </div>
+          </div><!--/.row-fluid-->
+
+          <div class="row-fluid">
+            <div class="span6">
+              <button class="btn btn-large btn-primary" type="button" id="modify-contact-sheet">Modify Contact Sheet &raquo;</button>
+            </div>
+          </div><!--./row-fluid-->
         </div><!--/.span9-->
         
         <!-- Sidebar -->

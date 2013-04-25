@@ -46,11 +46,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <tr>
         <th>Last Name</th>
         <th>First Name</th>
-        <th>Contact Type</th>
         <th>Address</th>
         <th>Phone</th>
-        <th>Cell</th>
-        <th>Email</th>
         <th>Employer</th>
       </tr>
     </thead>
@@ -61,41 +58,14 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
           <tr>
             <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
             <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
-            <?php
-              $contact_type = $contact_info[ "contact_type" ];
-              
-              if( $contact_type == 1 ) {
-                $contact_type = "worker";
-              } else if ( $contact_type == 2 ) {
-                $contact_type = "student";
-              } else if ( $contact_type == 3 ) {
-                $contact_type = "supporter";
+            <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
+                $apt_no = "#" . $workers[ "apt_no" ];
               } else {
-                $contact_type = "other";
+                $apt_no = "";
               }
-            ?>
-            <td><?php echo( $contact_type ); ?></td>
-            <td><?php
-              if( $contact_info[ 'street_no' ] ) {
-                $address = $contact_info[ 'street_no' ];
-    
-                if( $contact_info[ 'apt_no' ] ) {
-                  $address .= " Apt. " . $contact_info[ 'apt_no' ];
-                }
-    
-                $address .= ", "
-                            . $contact_info[ 'city' ]
-                            . ", "
-                            . $contact_info[ 'state' ]
-                            . " "
-                            . $contact_info[ 'zipcode' ];
-
-                echo( $address );
-              }
-            ?></td>
+            
+              echo( $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ] ); ?></td>
             <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
-            <td><?php if( $contact_info[ 'cell' ] != 0 ) { echo( $contact_info[ 'cell' ] ); } ?></td>
-            <td><?php echo( $contact_info[ 'email' ] ); ?></td>
             <td><?php echo( $contact_info[ 'wname' ] ); ?></td>
           </tr>
         <?php } ?>

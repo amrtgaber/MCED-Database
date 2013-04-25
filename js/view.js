@@ -14,4 +14,8 @@ $( document ).ready(function() {
   $( "#search-contact" ).click(function() {
     window.location = "search_contact.php";
   });
+  
+  $( "#view-contact-sheet" ).click(function() {
+    window.location = "view_contact_sheet.php";
+  });
 });
