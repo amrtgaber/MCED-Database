@@ -59,8 +59,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php
         while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><a href="#" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
-            <td><a href="#" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
+            <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
+            <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
             <?php
               $contact_type = $contact_info[ "contact_type" ];
               

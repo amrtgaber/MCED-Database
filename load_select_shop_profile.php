@@ -54,7 +54,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php
         while( $shop_info = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><a href="#" class="shop" data-wid="<?php echo( $shop_info[ 'wid' ] ); ?>"><?php echo( $shop_info[ 'wname' ] ); ?></a></td>
+            <td><a href="javascript:void;" class="shop" data-wid="<?php echo( $shop_info[ 'wid' ] ); ?>"><?php echo( $shop_info[ 'wname' ] ); ?></a></td>
             <td><?php
               $address = $shop_info[ 'street_no' ];
     
