@@ -58,13 +58,15 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
           <tr>
             <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
             <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
-            <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
+            <td>
+              <?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
                 $apt_no = "#" . $workers[ "apt_no" ];
               } else {
                 $apt_no = "";
               }
             
-              echo( $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ] ); ?></td>
+              echo( $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ] ); ?>
+            </td>
             <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
             <td><?php echo( $contact_info[ 'wname' ] ); ?></td>
           </tr>

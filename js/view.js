@@ -16,6 +16,6 @@ $( document ).ready(function() {
   });
   
   $( "#view-contact-sheet" ).click(function() {
-    window.location = "view_contact_sheet.php";
+    window.location = "search_contact_sheet.php";
   });
 });
