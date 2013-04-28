@@ -5,6 +5,17 @@ function contact_form_handlers() {
   /* activate datepicker */
   $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
   
+  /* on action select */
+  $( "#main" ).on( "change", ".action-select", function() {
+    if( $( this ).find( "option:selected" ).attr( "data-aid" ) == undefined ) {
+      $( this ).parent().parent().remove();
+    } else if( $( this ).attr( "data-last" ) == "true" ) {
+      var clone = $( this ).parent().parent().clone();
+      clone.appendTo( $( this ).parent().parent().parent() );
+      $( this ).attr( "data-last", "" );
+    }
+  });
+  
   /* save and cancel buttons */
   $( "#save-button" ).click( submit_contact_form );
   $( "#cancel-button" ).click( load_contact_form );
@@ -119,11 +130,30 @@ function submit_contact_form() {
   $( "#contact-form-status" ).removeClass( "alert-error" );
   $( "#contact-form-status" ).removeClass( "alert-success" );
   
+  /* generate action id list */
+  var actions = "";
+  $( ".action-select option:selected" ).each(function() {
+    if( $( this ).attr( "data-aid" ) != undefined ) {
+      actions += $( this ).attr( "data-aid" ) + ",";
+    }
+  });
+  
+  /* remove trailing comma */
+  if( actions.length > 0 ) {
+    actions = actions.substring( 0, actions.length - 1 );
+  }
+  
+  /* get valid wid */
+  var wid = "";
+  if( $( "#workplace option:selected" ).attr( "data-wid" ) != undefined ) {
+    wid = $( "#workplace option:selected" ).attr( "data-wid" );
+  }
+  
   /* construct post request string */
   var postString = $( "#contact-form" ).serialize()
                      + "&contactType=" + $( "#contactType option:selected" ).attr( "data-ctype" )
-                     + "&wid=" + $( "#workplace option:selected" ).attr( "data-wid" )
-                     + "&aid=" + $( "#action option:selected" ).attr( "data-aid" )
+                     + "&wid=" + wid
+                     + "&actions=" + actions
                      + "&id=" + id
                      + "&add=" + add;
 

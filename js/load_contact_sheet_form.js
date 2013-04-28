@@ -121,10 +121,16 @@ function submit_contact_sheet_form() {
   $( "#contact-sheet-form-status" ).removeClass( "alert-error" );
   $( "#contact-sheet-form-status" ).removeClass( "alert-success" );
   
-  /* generate post string */
+  /* get valid wid */
+  var wid = "";
+  if( $( "#workplace option:selected" ).attr( "data-wid" ) != undefined ) {
+    wid = $( "#workplace option:selected" ).attr( "data-wid" );
+  }
+  
+  /* construct post request string */
   var postString = $( "#contact-sheet-form" ).serialize()
                      + "&oid=" + $( "#organizer option:selected" ).attr( "data-oid" )
-                     + "&wid=" + $( "#workplace option:selected" ).attr( "data-wid" )
+                     + "&wid=" + wid
                      + "&id=" + id
                      + "&add=" + add;
 

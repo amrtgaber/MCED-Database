@@ -45,7 +45,7 @@ if( $_GET[ 'add' ] ) {
   $cinfo = mysql_fetch_array( $qr );
 } ?>
 
-<div class="well"> 
+<div class="well" id="main"> 
   <div class="row-fluid">
     <div class="span1">First Name</div>
     <div class="span5">
@@ -120,7 +120,7 @@ if( $_GET[ 'add' ] ) {
     <div class="span1">Workplace</div>
     <div class="span5">
       <select id="workplace" class="span12">
-        <option></option>
+        <option>&lt; select a workplace &gt;</option>
         <?php
           $qs = "SELECT wid,
                         wname,
@@ -136,12 +136,48 @@ if( $_GET[ 'add' ] ) {
         <?php } ?>
       </select>
     </div>
+  </div>
 
-    <?php /* TODO: ability to display and add multiple actions */ ?>
-    <div class="span1">Action</div>
+  <div class="row-fluid">
+    <h5>Actions</h5>
+  </div>
+  
+  <?php if( $_GET[ "id" ] ) {
+    $qs = "SELECT aid
+           FROM contact_action
+           WHERE cid = " . $id;
+   
+     $caqr = execute_query( $qs, $mc );
+     
+     while( $cainfo = mysql_fetch_array( $caqr ) ) { ?>
+      <div class="row-fluid">
+        <div class="span1"></div>
+        <div class="span5">
+          <select id="action" class="span12 action-select">
+            <option>&lt; select an action &gt;</option>
+            <?php
+              $qs = "SELECT aid,
+                            aname
+                     FROM actions
+                     ORDER BY aname";
+              $aqr = execute_query( $qs, $mc );
+              
+              while( $action = mysql_fetch_array( $aqr ) ) { ?>
+                <option data-aid="<?php echo( $action[ 'aid' ] ); ?>" <?php if( $action[ "aid" ] == $cainfo[ "aid" ] ) { echo( "selected" ); } ?>>
+                  <?php echo( $action[ "aname" ] ); ?>
+                </option>
+            <?php } ?>
+          </select>
+        </div>
+      </div>
+    <?php } ?>
+  <?php } ?>
+  
+  <div class="row-fluid">
+    <div class="span1"></div>
     <div class="span5">
-      <select id="action" class="span12">
-        <option></option>
+      <select id="action" class="span12 action-select" data-last="true">
+        <option>&lt; select an action &gt;</option>
         <?php
           $qs = "SELECT aid,
                         aname
@@ -150,7 +186,7 @@ if( $_GET[ 'add' ] ) {
           $aqr = execute_query( $qs, $mc );
           
           while( $action = mysql_fetch_array( $aqr ) ) { ?>
-            <option data-aid="<?php echo( $action[ 'aid' ] ); ?>" <?php if( $action[ "aid" ] == $cinfo[ "aid" ] ) { echo( "selected" ); } ?>>
+            <option data-aid="<?php echo( $action[ 'aid' ] ); ?>">
               <?php echo( $action[ "aname" ] ); ?>
             </option>
         <?php } ?>

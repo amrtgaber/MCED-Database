@@ -9,8 +9,10 @@ function shop_profile_form_handlers() {
       $( ".add-worker-button" ).click(function() {
         $( this ).removeClass( "btn-success" );
         $( this ).addClass( "btn-danger" );
+        
         $( this ).children().removeClass( "icon-plus" );
         $( this ).children().addClass( "icon-minus" );
+        
         $( this ).parent().parent().addClass( "worker" );
         $( this ).click(function() {
           $( this ).parent().parent().remove();

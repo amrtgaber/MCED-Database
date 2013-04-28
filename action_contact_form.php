@@ -384,24 +384,50 @@ if( !$hasWorkerInfo ) {
 }
 
 /* Action */
-if( $_POST[ 'aid' ] ) {
-  $aid = mysql_real_escape_string( $_POST[ 'aid' ] );
+if( $_POST[ 'actions' ] ) {
+  $actions = explode( ",", $_POST[ "actions" ] );
+  
+  foreach( $actions as $aid ) {
+    $aid = mysql_real_escape_string( $aid );
 
-  if( $cinfo[ 'aid' ] != $aid ) {
-    $qs = "INSERT INTO contact_action
+    /* If aid exists don't insert */    
+    $qs = "SELECT aid
+           FROM contact_action
+           WHERE aid = " . $aid . " AND cid = " . $id;
+    
+    $aqr = execute_query( $qs, $mc );
+    
+    if( mysql_num_rows( $aqr ) == 0 ) {
+      $qs = "INSERT INTO contact_action
           ( cid, aid, date )
           VALUES ( " . $id . ", " . $aid . ", '" . $date . "' )";
-  }
 
-  $qr = execute_query( $qs, $mc );
+      execute_query( $qs, $mc );
+    }
+  }
+  
+  /* delete removed workers */
+  $qs = "SELECT aid
+         FROM contact_action
+         WHERE cid = " . $id;
+  
+  $aqr = execute_query( $qs, $mc );
+  
+  while( $ainfo = mysql_fetch_array( $aqr ) ) {
+    if( !in_array( $ainfo[ "aid" ], $actions ) ) {
+      $qs = "DELETE
+             FROM contact_action
+             WHERE aid = " . $ainfo[ "aid" ] . " AND cid = " . $id;
+
+      execute_query( $qs, $mc );
+    }
+  }
 } else {
-  if( !is_null( $cinfo[ 'aid' ] ) ) {
-    $qs = "DELETE
-           FROM contact_action
-           WHERE cid = " . $id;
-
-    $qr = execute_query( $qs, $mc );
-  }
+  $qs = "DELETE
+         FROM contact_action
+         WHERE cid = " . $id;
+  
+  execute_query( $qs, $mc );
 }
 
 /* Student information */
@@ -459,7 +485,7 @@ if( $_POST[ 'syear' ] ) {
 if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success">
     The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully added to the database.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();  $( 'form' ).each(function () { this.reset(); });">OK</button>
+    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();  $( 'form' ).each(function () { this.reset(); }); $( '.action-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } });">OK</button>
   </div>
 <?php } else { ?>
   <div class="alert alert-success">
