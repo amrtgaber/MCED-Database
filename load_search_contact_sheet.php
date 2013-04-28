@@ -69,11 +69,11 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
                     
                       if( mysql_num_rows( $csqr ) > 0 ) {
                         while( $cs_info = mysql_fetch_array( $csqr ) ) { ?>
-                          <li><a href="view_contact_sheet.php?id=<?php echo( $cs_info[ 'id' ] ); ?>" target="_blank"><?php echo( $cs_info[ "cs_date" ] ); ?></a></li>
+                          <li><a href="view_contact_sheet.php?csid=<?php echo( $cs_info[ 'id' ] ); ?>" target="_blank"><?php echo( $cs_info[ "cs_date" ] ); ?></a></li>
                         <?php } ?>
-                      <?php } else { ?>
-                        <li>None found.</li>
                       <?php } ?>
+                      
+                      <li><a href="add_contact_sheet.php?id=<?php echo( $contact_info[ 'id' ] ); ?>" class="btn btn-mini btn-info">+</a></li>
                     </ul>
                   </div>
               </td>

@@ -23,7 +23,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
 
 /* Check for required fields */
 
-/* if no id is present first and last name must exist */
+/* if no id or csid is present first and last name must exist */
 if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
   if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_POST[ 'lastName' ] ) || $_POST[ 'lastName' ] == "" ) {
     alert_error( "First and Last name are required fields." );
@@ -41,7 +41,7 @@ if( !isset( $_POST[ "rating" ] ) || $_POST[ "rating" ] == "" ) {
 }
 
 /* Organizer */
-if( !isset( $_POST[ "organizer" ] ) || $_POST[ "organizer" ] == "" ) {
+if( !isset( $_POST[ "oid" ] ) || $_POST[ "oid" ] == "" ) {
   alert_Error( "Organizer is a required field." );
 }
 
@@ -164,28 +164,40 @@ if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
       $hasPhoneInfo = true;
     }
   }
-} else {
-  /* id is present */
+} elseif ( $_POST[ "add" ] ) {
+  /* new contact sheet */
   $id = mysql_real_escape_string( $_POST[ 'id' ] );
+
+  /* Insert new contact sheet */
+  $qs = "INSERT INTO contact_sheet
+        ( cid )
+        VALUES ( " . $id . " )";
+
+  $qr = execute_query( $qs, $mc );
+
+  /* Get id of the contact sheet that was just added */
+  $qs = "SELECT id
+         FROM contact_sheet
+         WHERE cid = " . $id . "
+         ORDER BY id DESC
+         LIMIT 1";
+  $qr = execute_query( $qs, $mc );
+
+  $cs_info = mysql_fetch_array( $qr );
+  $csid = $cs_info[ 'id' ];
+} else {
+  /* modifying existing contact sheet */
+  $csid = mysql_real_escape_string( $_POST[ 'id' ] );
+  
+  $qs = "SELECT cid
+         FROM contact_sheet
+         WHERE id = " . $csid;
+  
+  $qr = execute_query( $qs, $mc );
+  
+  $cinfo = mysql_fetch_array( $qr );
+  $id = $cinfo[ 'cid' ];
 }
-
-/* Insert new contact sheet */
-$qs = "INSERT INTO contact_sheet
-      ( cid )
-      VALUES ( " . $id . " )";
-
-$qr = execute_query( $qs, $mc );
-
-/* Get id of the contact sheet that was just added */
-$qs = "SELECT id
-       FROM contact_sheet
-       WHERE cid = " . $id . "
-       ORDER BY id DESC
-       LIMIT 1";
-$qr = execute_query( $qs, $mc );
-
-$cs_info = mysql_fetch_array( $qr );
-$csid = $cs_info[ 'id' ];
 
 /* insert values */
 
@@ -353,18 +365,8 @@ if( $_POST[ 'pliCheck' ] ) {
 }
 
 /* organizer */
-if( $_POST[ 'organizer' ] ) {
-  $organizer = mysql_real_escape_string( $_POST[ "organizer" ] );
-  
-  /* get oid */
-  $qs = "SELECT id
-         FROM users
-         WHERE username = '" . $organizer . "'";
-         
-  $qr = execute_query( $qs, $mc );
-
-  $organizer_info = mysql_fetch_array( $qr );
-  $oid = $organizer_info[ "id" ];
+if( $_POST[ 'oid' ] ) {
+  $oid = mysql_real_escape_string( $_POST[ "oid" ] );
   
   /* insert into contact sheet */
   $qs = "UPDATE contact_sheet
@@ -424,7 +426,7 @@ if( $_POST[ 'improvements' ] ) {
 
 /* Return success */ ?>
 <div class="alert alert-success">
-  The contact sheet was successfully added.
+  The contact sheet was successfully saved.
   <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide();">OK</button>
 </div>
 
