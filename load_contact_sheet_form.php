@@ -20,12 +20,6 @@ include( "common.php" );
 /* Connect to database */
 $mc = connect_to_database();
 
-/* Must have privilege level of 1 or greater to add a contact sheet */
-if( $_SESSION[ 'privilege_level' ] < 1 ) {
-  alert_error( "You do not have the required privilege level to add a contact." );
-}
-
-/* If id is present, populate form. */
 if( $_GET[ 'add' ] ) {
   $id = mysql_real_escape_string( $_GET[ 'id' ] );
 

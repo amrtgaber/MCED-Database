@@ -85,12 +85,25 @@ $firstname = mysql_real_escape_string( $_POST[ 'firstName' ] );
 $lastname  = mysql_real_escape_string( $_POST[ 'lastName' ] );
 
 /* If id is present, update existing contact. Otherwise insert new contact. */
-if( $_POST[ 'id' ] ) {
-  /* Must have privilege level of 2 or greater to modify a contact */
-  if( $_SESSION[ 'privilege_level' ] < 2 ) {
-    alert_error( "You do not have the required privilege level to add a contact." );
-  }
+if( $_POST[ 'add' ] ) {
+  /* Insert new contact */
+  $qs = "INSERT INTO contacts
+        ( first_name, last_name )
+        VALUES ( '" . $firstname . "', '" . $lastname . "' )";
 
+  $qr = execute_query( $qs, $mc );
+
+  /* Get id of the contact that was just added */
+  $qs = "SELECT id
+         FROM contacts
+         WHERE first_name = '" . $firstname . "' AND last_name = '" . $lastname. "'
+         ORDER BY id DESC
+         LIMIT 1";
+  $qr = execute_query( $qs, $mc );
+
+  $cinfo = mysql_fetch_array( $qr );
+  $id = $cinfo[ 'id' ];
+} else {
   $id = mysql_real_escape_string( $_POST[ 'id' ] );
 
   /* Update existing contact */
@@ -107,62 +120,23 @@ if( $_POST[ 'id' ] ) {
                 contact_email.*,
                 workers.*,
                 students.*,
-                contact_action.*,
-                CONCAT( assigned_organizers.first_name, ' ', assigned_organizers.last_name ) AS assigned_organizer
+                contact_action.*
          FROM contacts
-         LEFT JOIN contact_phone  ON contacts.id = contact_phone.cid
-         LEFT JOIN contact_email  ON contacts.id = contact_email.cid
-         LEFT JOIN workers        ON contacts.id = workers.cid
-         LEFT JOIN workplaces     ON workers.wid = workplaces.wid
-         LEFT JOIN students       ON contacts.id = students.cid
-         LEFT JOIN contact_action ON contacts.id = contact_action.cid
-         LEFT JOIN ( 
-                   SELECT contact_organizer.cid, contacts.first_name, contacts.last_name
-                   FROM contacts, contact_organizer
-                   WHERE contacts.id = contact_organizer.oid
-                   ) assigned_organizers ON contacts.id = assigned_organizers.cid
+           LEFT JOIN contact_phone  ON contacts.id = contact_phone.cid
+           LEFT JOIN contact_email  ON contacts.id = contact_email.cid
+           LEFT JOIN workers        ON contacts.id = workers.cid
+           LEFT JOIN workplaces     ON workers.wid = workplaces.wid
+           LEFT JOIN students       ON contacts.id = students.cid
+           LEFT JOIN contact_action ON contacts.id = contact_action.cid
          WHERE contacts.id = " . $id;
 
   $qr = execute_query( $qs, $mc );
 
-  $contact_info = mysql_fetch_array( $qr );
-} else {
-  /* Must have privilege level of 1 or greater to add a contact */
-  if( $_SESSION[ 'privilege_level' ] < 1 ) {
-    alert_error( "You do not have the required privilege level to add a contact." );
-  }
-
-  /* Insert new contact */
-  $qs = "INSERT INTO contacts
-        ( first_name, last_name )
-        VALUES ( '" . $firstname . "', '" . $lastname . "' )";
-
-  $qr = execute_query( $qs, $mc );
-
-  /* Get id of the contact that was just added */
-  $qs = "SELECT id
-         FROM contacts
-         WHERE first_name = '" . $firstname . "' AND last_name = '" . $lastname. "'
-         ORDER BY id DESC
-         LIMIT 1";
-  $qr = execute_query( $qs, $mc );
-
-  $contact_info = mysql_fetch_array( $qr );
-  $id = $contact_info[ 'id' ];
+  $cinfo = mysql_fetch_array( $qr );
 }
 
 /* Contact type */
 $contactType = mysql_real_escape_string( $_POST[ 'contactType' ] );
-
-if( $contactType == "Worker" ) {
-  $contactType = 1;
-} else if ( $contactType == "Student" ) {
-  $contactType = 2;
-} else if ( $contactType == "Supporter" ) {
-  $contactType = 3;
-} else {
-  $contactType = 0;
-}
 
 $qs = "UPDATE contacts
        SET contact_type = " . $contactType . "
@@ -199,7 +173,7 @@ if( $_POST[ 'address' ] ) {
   $qr = execute_query( $qs, $mc );
 
 } else {
-  if( !is_null( $contact_info[ 'street_no' ] ) ) {
+  if( !is_null( $cinfo[ 'street_no' ] ) ) {
     $qs = "UPDATE contacts
            SET street_no = NULL
            WHERE id = " . $id;
@@ -218,7 +192,7 @@ if( $_POST[ 'city' ] ) {
 
   $qr = execute_query( $qs, $mc );
 } else {
-  if( !is_null( $contact_info[ 'city' ] ) ) {
+  if( !is_null( $cinfo[ 'city' ] ) ) {
     $qs = "UPDATE contacts
            SET city = NULL
            WHERE id = " . $id;
@@ -237,7 +211,7 @@ if( $_POST[ 'state' ] ) {
 
   $qr = execute_query( $qs, $mc );
 } else {
-  if( !is_null( $contact_info[ 'state' ] ) ) {
+  if( !is_null( $cinfo[ 'state' ] ) ) {
     $qs = "UPDATE contacts
            SET state = NULL
            WHERE id = " . $id;
@@ -256,7 +230,7 @@ if( $_POST[ 'zipcode' ] ) {
 
   $qr = execute_query( $qs, $mc );
 } else {
-  if( !is_null( $contact_info[ 'zipcode' ] ) ) {
+  if( !is_null( $cinfo[ 'zipcode' ] ) ) {
     $qs = "UPDATE contacts
            SET zipcode = NULL
            WHERE id = " . $id;
@@ -275,7 +249,7 @@ if( $_POST[ 'aptNo' ] ) {
 
   $qr = execute_query( $qs, $mc );
 } else {
-  if( !is_null( $contact_info[ 'apt_no' ] ) ) {
+  if( !is_null( $cinfo[ 'apt_no' ] ) ) {
     $qs = "UPDATE contacts
            SET apt_no = NULL
            WHERE id = " . $id;
@@ -288,7 +262,7 @@ if( $_POST[ 'aptNo' ] ) {
 if( $_POST[ 'phone' ] ) {
   $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
 
-  if( $contact_info[ 'phone' ] != 0 ) {
+  if( $cinfo[ 'phone' ] != 0 ) {
     $qs = "UPDATE contact_phone
            SET phone = " . $phone . "
            WHERE cid = " . $id;
@@ -300,7 +274,7 @@ if( $_POST[ 'phone' ] ) {
 
   $qr = execute_query( $qs, $mc );
 } else {
-  if( $contact_info[ 'phone' ] != 0 ) {
+  if( $cinfo[ 'phone' ] != 0 ) {
     $qs = "DELETE
            FROM contact_phone
            WHERE cid = " . $id;
@@ -313,7 +287,7 @@ if( $_POST[ 'phone' ] ) {
 if( $_POST[ 'email' ] ) {
   $email = mysql_real_escape_string( $_POST[ 'email' ] );
   
-  if( !is_null( $contact_info[ 'email' ] ) ) {
+  if( !is_null( $cinfo[ 'email' ] ) ) {
     $qs = "UPDATE contact_email
            SET email = '" . $email . "'
            WHERE cid = " . $id;
@@ -327,7 +301,7 @@ if( $_POST[ 'email' ] ) {
     $qr = execute_query( $qs, $mc );
   }
 } else {
-  if( !is_null( $contact_info[ 'email' ] ) ) {
+  if( !is_null( $cinfo[ 'email' ] ) ) {
     $qs = "DELETE
            FROM contact_email
            WHERE cid = " . $id;
@@ -343,7 +317,7 @@ $hasWorkerInfo = false;
 if( $_POST[ 'wid' ] ) {
   $wid = mysql_real_escape_string( $_POST[ 'wid' ] );
 
-  if( $hasWorkerInfo || !is_null( $contact_info[ 'wid' ] ) ) {
+  if( $hasWorkerInfo || !is_null( $cinfo[ 'wid' ] ) ) {
     $qs = "UPDATE workers
            SET wid = " . $wid . "
            WHERE cid = " . $id;
@@ -357,7 +331,7 @@ if( $_POST[ 'wid' ] ) {
     
   $hasWorkerInfo = true;
 } else {
-  if( $contact_info[ 'wid' ] != 0 ) {
+  if( $cinfo[ 'wid' ] != 0 ) {
     $qs = "UPDATE workers
            SET wid = 0
            WHERE cid = " . $id;
@@ -378,7 +352,7 @@ if( $_POST[ 'dollars' ] ) {
     $wage = mysql_real_escape_string( $_POST[ 'dollars' ] );
   }
 
-  if( $hasWorkerInfo || !is_null( $contact_info[ 'wage' ] ) ) {
+  if( $hasWorkerInfo || !is_null( $cinfo[ 'wage' ] ) ) {
     $qs = "UPDATE workers
            SET wage = " . $wage . "
            WHERE cid = " . $id;
@@ -392,7 +366,7 @@ if( $_POST[ 'dollars' ] ) {
     
   $hasWorkerInfo = true;
 } else {
-  if( !is_null( $contact_info[ 'wage' ] ) ) {
+  if( !is_null( $cinfo[ 'wage' ] ) ) {
     $qs = "UPDATE workers
            SET wage = NULL
            WHERE cid = " . $id;
@@ -413,7 +387,7 @@ if( !$hasWorkerInfo ) {
 if( $_POST[ 'aid' ] ) {
   $aid = mysql_real_escape_string( $_POST[ 'aid' ] );
 
-  if( $contact_info[ 'aid' ] != $aid ) {
+  if( $cinfo[ 'aid' ] != $aid ) {
     $qs = "INSERT INTO contact_action
           ( cid, aid, date )
           VALUES ( " . $id . ", " . $aid . ", '" . $date . "' )";
@@ -421,7 +395,7 @@ if( $_POST[ 'aid' ] ) {
 
   $qr = execute_query( $qs, $mc );
 } else {
-  if( !is_null( $contact_info[ 'aid' ] ) ) {
+  if( !is_null( $cinfo[ 'aid' ] ) ) {
     $qs = "DELETE
            FROM contact_action
            WHERE cid = " . $id;
@@ -437,7 +411,7 @@ $hasStudentInfo = false;
 if( $_POST[ 'school' ] ) {
   $school = mysql_real_escape_string( $_POST[ 'school' ] );
 
-  if( $hasStudentInfo  || !is_null( $contact_info[ 'school' ] ) ) {
+  if( $hasStudentInfo  || !is_null( $cinfo[ 'school' ] ) ) {
     $qs = "UPDATE students
            SET school = '" . $school . "'
            WHERE cid = " . $id;
@@ -451,7 +425,7 @@ if( $_POST[ 'school' ] ) {
   
   $hasStudentInfo = true;
 } else {
-  if( !is_null( $contact_info[ 'school' ] ) ) {
+  if( !is_null( $cinfo[ 'school' ] ) ) {
     $qs = "DELETE
            FROM students
            WHERE cid = " . $id;
@@ -464,7 +438,7 @@ if( $_POST[ 'school' ] ) {
 if( $_POST[ 'syear' ] ) {
   $syear = mysql_real_escape_string( $_POST[ 'syear' ] );
 
-  if( $hasStudentInfo || !is_null( $contact_info[ 'syear' ] ) ) {
+  if( $hasStudentInfo || !is_null( $cinfo[ 'syear' ] ) ) {
     $qs = "UPDATE students
            SET syear = " . $syear . "
            WHERE cid = " . $id;
@@ -472,7 +446,7 @@ if( $_POST[ 'syear' ] ) {
     $qr = execute_query( $qs, $mc );
   }
 } else {
-  if( !is_null( $contact_info[ 'syear' ] ) ) {
+  if( !is_null( $cinfo[ 'syear' ] ) ) {
     $qs = "UPDATE students
            SET syear = NULL
            WHERE cid = " . $id;
@@ -482,14 +456,14 @@ if( $_POST[ 'syear' ] ) {
 }
 
 /* Return success */
-if( $_POST[ 'id' ] ) { ?>
+if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success">
-    The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully modified.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
+    The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully added to the database.
+    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();  $( 'form' ).each(function () { this.reset(); });">OK</button>
   </div>
 <?php } else { ?>
   <div class="alert alert-success">
-    The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully added to the database.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( 'form' ).each(function () { this.reset(); });">OK</button>
+    The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully saved.
+    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
   </div>
 <?php } ?>

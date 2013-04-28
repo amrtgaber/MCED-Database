@@ -41,17 +41,17 @@ if( !$_SESSION[ 'username' ] ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-        <legend>Search Contact Sheet</legend>
+          <legend>Search Contact Sheet</legend>
 
           <div class="well">
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
-                    <input type="text" id="firstName" name="firstName" class="span12 search-query" placeholder="First Name">
+                  <input type="text" id="firstName" name="firstName" class="span12 search-query" placeholder="First Name">
                 </div>
                 
                 <div class="span3">
-                    <input type="text" id="lastName" name="lastName" class="span12 search-query" placeholder="Last Name">
+                  <input type="text" id="lastName" name="lastName" class="span12 search-query" placeholder="Last Name">
                 </div>
                 
                 <button type="submit" class="btn btn-info span1" id="search-button"><i class="icon-search"></i></button>

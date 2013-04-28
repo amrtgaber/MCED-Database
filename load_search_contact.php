@@ -1,5 +1,5 @@
 <?php
-/* File: load_select_contact.php
+/* File: load_search_contact.php
  * Author: Amr Gaber
  * Created: 14/10/2012
  * Description: Displays a table of contacts selectable by a radio button.
@@ -54,26 +54,26 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
     
     <tbody>
       <?php
-        while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
+        while( $cinfo = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
-            <td><a href="javascript:void;" class="contact" data-id="<?php echo( $contact_info[ 'id' ] ); ?>"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
+            <td><a href="view_contact.php?id=<?php echo( $cinfo[ 'id' ] ); ?>" class="contact"><?php echo( $cinfo[ 'last_name' ] ); ?></a></td>
+            <td><a href="view_contact.php?id=<?php echo( $cinfo[ 'id' ] ); ?>" class="contact"><?php echo( $cinfo[ 'first_name' ] ); ?></a></td>
             <td>
-              <?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
-                $apt_no = "#" . $workers[ "apt_no" ];
+              <?php if( $cinfo[ "apt_no" ] != "" && !is_null( $cinfo[ "apt_no" ] ) ) {
+                $apt_no = " #" . $cinfo[ "apt_no" ];
               } else {
                 $apt_no = "";
               }
             
-              echo( $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ] ); ?>
+              echo( $cinfo[ "street_no" ] . $apt_no . ", " . $cinfo[ "city" ] . ", " . $cinfo[ "state" ] . " " . $cinfo[ "zipcode" ] ); ?>
             </td>
-            <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
-            <td><?php echo( $contact_info[ 'wname' ] ); ?></td>
+            <td><?php if( $cinfo[ 'phone' ] != 0 ) { echo( $cinfo[ 'phone' ] ); } ?></td>
+            <td><?php echo( $cinfo[ 'wname' ] ); ?></td>
           </tr>
         <?php } ?>
       </tbody>
     </table>
 <?php
 } else {
-  alert_error( "No results found for " . $firstname . " " . $lastname . "." );
+  alert_error( "No results found." );
 }

@@ -13,22 +13,7 @@ session_start();
 if( !$_SESSION[ 'username' ] ) {
   header( 'Location: login.php' );
   exit;
-}
-
-if( isset( $_GET[ 'firstName' ] ) || isset( $_GET[ 'lastName' ] ) ) { ?>
-  <script type="text/javascript">var quickSearch = true;</script>
-<?php } else { ?>
-  <script type="text/javascript">var quickSearch = false;</script>
-<?php }
-
-/*Variables for shortcutting to view if contact id is provided in querystring*/
-if( isset( $_GET[ 'id' ] )) { ?>
-  <script type="text/javascript">var quickView = true; var quickid = <?php echo( $_GET[ 'id' ] ); ?>;</script>
-<?php } else { ?>
-  <script type="text/javascript">var quickView = false; var quickid = "";</script>
-<?php }
-
-?>
+} ?>
 
 <!DOCTYPE html>
 
@@ -42,7 +27,6 @@ if( isset( $_GET[ 'id' ] )) { ?>
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/search_contact.css" rel="stylesheet">
-    <link href="css/load_contact_profile.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -60,52 +44,24 @@ if( isset( $_GET[ 'id' ] )) { ?>
         <div class="span9">
         <legend>Search Contact</legend>
 
-          <form id="search">
-            <h4>Which contact would you like to search?</h4>
-
-            <div class="well"> 
-              <div class="row-fluid">
-                <div class="span1">First Name</div>
-                <div class="span5">
-                  <input type="text" name="firstName" class="span12" placeholder="Type first name here" value="<?php echo( $_GET[ 'firstName' ] ); ?>">
+          <div class="well">
+            <div class="row-fluid">
+              <form id="search">
+                <div class="span3">
+                  <input type="text" id="firstName" name="firstName" class="span12 search-query" placeholder="First Name">
                 </div>
                 
-                <div class="span1">Last Name</div>
-                <div class="span5">
-                  <input type="text" name="lastName" class="span12" placeholder="Type last name here" value="<?php echo( $_GET[ 'lastName' ] ); ?>">
+                <div class="span3">
+                  <input type="text" id="lastName" name="lastName" class="span12 search-query" placeholder="Last Name">
                 </div>
-              </div>
-            </div>
-            
-            <div class="row-fluid">
-              <div class="span3">
-                <button type="submit" class="btn btn-primary btn-large">Search</button>
-              </div>
-            </div>
-          </form>
-
-          <div id="select" class="hide">
-            <h4>Please select from the list of results</h4>
-
-            <div id="selectTable" class="row-fluid">
-            </div>
-
-            <div class="row-fluid">
-              <button type="button" id="backToSearch" class="btn btn-large">Back</button>
+                
+                <button type="submit" class="btn btn-info span1" id="search-button"><i class="icon-search"></i></button>
+                <button type="button" class="btn span1" id="clear-button">Clear</button>
+              </form>
             </div>
           </div>
-
-          <div id="view" class="hide">
-            <div id="contactInfo">
-            </div>
-
-            <div class="row-fluid">
-              <div class="span5">
-                <button type="submit" id="updateButton" class="btn btn-primary btn-large">Modify this contact &raquo;</button>
-                <button type="button" id="backToSelect" class="btn btn-large">Back</button>
-              </div>
-            </div>
-          </div>
+          
+          <div class="accordion" id="search-results"></div>
         </div><!--/.span9-->
         
         <!-- Sidebar -->

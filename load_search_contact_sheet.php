@@ -80,7 +80,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
               <td><a href="#<?php echo( $contact_info[ 'id' ] ); ?>" class="contact accordion-toggle" data-toggle="collapse" data-parent="#search-results"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
               <td>
                 <?php if( $contact_info[ "apt_no" ] != "" && !is_null( $contact_info[ "apt_no" ] ) ) {
-                  $apt_no = "#" . $contact_info[ "apt_no" ];
+                  $apt_no = " #" . $contact_info[ "apt_no" ];
                 } else {
                   $apt_no = "";
                 }
