@@ -49,49 +49,22 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-        <legend>Search Shop Profile</legend>
+          <legend>Search Shop Profile</legend>
 
-          <form id="search">
-            <h4>Which shop would you like to search?</h4>
-
-            <div class="well"> 
-              <div class="row-fluid">
-                <div class="span2">Workplace Name</div>
-                <div class="span10">
-                  <input type="text" name="wname" class="span12" placeholder="Type workplace name here" value="<?php echo( $_GET[ 'wname' ] ); ?>">
+          <div class="well">
+            <div class="row-fluid">
+              <form id="search">
+                <div class="span3">
+                  <input type="text" id="wname" name="wname" class="span12 search-query" placeholder="Workplace">
                 </div>
-              </div>
-            </div>
-            
-            <div class="row-fluid">
-              <div class="span3">
-                <button type="submit" class="btn btn-primary btn-large">Search</button>
-              </div>
-            </div>
-          </form>
-
-          <div id="select" class="hide">
-            <h4>Please select from the list of results</h4>
-
-            <div id="selectTable" class="row-fluid">
-            </div>
-
-            <div class="row-fluid">
-              <button type="button" id="backToSearch" class="btn btn-large">Back</button>
+                
+                <button type="submit" class="btn btn-info span1" id="search-button"><i class="icon-search"></i></button>
+                <button type="button" class="btn span1" id="clear-button">Clear</button>
+              </form>
             </div>
           </div>
-
-          <div id="view" class="hide">
-            <div id="shopInfo">
-            </div>
-
-            <div class="row-fluid">
-              <div class="span5">
-                <button type="submit" id="updateButton" class="btn btn-primary btn-large">Modify this shop &raquo;</button>
-                <button type="button" id="backToSelect" class="btn btn-large">Back</button>
-              </div>
-            </div>
-          </div>
+          
+          <div class="accordion" id="search-results"></div>
         </div><!--/.span9-->
         
         <!-- Sidebar -->

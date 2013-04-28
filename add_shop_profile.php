@@ -17,8 +17,7 @@ if( !$_SESSION[ 'username' ] ) {
 if( $_SESSION[ 'privilege_level' ] < 1 ) {
   header( 'Location: home.php' );
   exit;
-}
-?>
+} ?>
 
 <!DOCTYPE html>
 
@@ -48,24 +47,8 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-          <form>
-            <legend>Add Shop Profile</legend>
-            
-            <div id="form-fields">
-            </div>
-
-            <div class="row-fluid">
-              <div id="add-shop-profile-form-status" class="alert alert-error hide">
-              </div>
-            </div>
-            
-            <div class="row-fluid">
-              <div class="span3">
-                <button type="submit" class="btn btn-primary btn-large">Add Shop Profile</button>
-                <button type="reset" class="btn btn-large">Clear</button>
-              </div>
-            </div>
-          </form>
+          <legend>Add Shop Profile</legend>
+          <form id="shop-profile-form"></form>
         </div><!--/.span9-->
 
         <!-- Sidebar -->
@@ -83,11 +66,16 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
     </div><!--/.fluid-container-->
     
     <!-- JavaScript -->
+    <script type="text/javascript">
+      var id = "";
+      var add = true;
+    </script>
     <script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery-ui-1.9.0.custom.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/load_shop_profile_form.js"></script>
     <script src="js/add_shop_profile.js"></script>
   </body>
 

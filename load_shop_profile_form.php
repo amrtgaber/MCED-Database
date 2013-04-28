@@ -20,42 +20,27 @@ include( "common.php" );
 /* Connect to database */
 $mc = connect_to_database();
 
-/* If id is present, populate form for modification. */
-if( $_GET[ 'id' ] ) {
-  /* Must have privilege level of 2 or greater to modify a contact */
-  if( $_SESSION[ 'privilege_level' ] < 2 ) {
-    alert_error( "You do not have the required privilege level to modify a shop profile." );
-  }
-
+if( $_GET[ 'add' ] ) {
+  $winfo = Array();
+} else {
   $id = mysql_real_escape_string( $_GET[ 'id' ] );
 
   /* Get shop information */
-  $qs = "SELECT workplaces.*,
-                workers.*
+  $qs = "SELECT workplaces.*
          FROM workplaces
-         LEFT JOIN workers ON workplaces.wid = workers.wid
          WHERE workplaces.wid = " . $id;
   
   $qr = execute_query( $qs, $mc );
 
-  $workplace_info = mysql_fetch_array( $qr );
-} else {
-  /* Must have privilege level of 1 or greater to add a shop profile */
-  if( $_SESSION[ 'privilege_level' ] < 1 ) {
-    alert_error( "You do not have the required privilege level to add a shop profile." );
-  }
-
-  $workplace_info = Array();
-}
-
-?>
+  $winfo = mysql_fetch_array( $qr );
+} ?>
 
 <div class="well"> 
   <div class="row-fluid">
     <div class="span2">Workplace Name</div>
     <div class="span10">
       <input type="text" name="wname" class="span12"
-             value="<?php echo( $workplace_info[ 'wname' ] ); ?>"
+             value="<?php echo( $winfo[ 'wname' ] ); ?>"
              placeholder="Type workplace name here">
     </div>
   </div>
@@ -64,27 +49,27 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">Address</div>
     <div class="span3">
       <input type="text" name="address" class="span12"
-             value="<?php echo( $workplace_info[ 'street_no' ] ); ?>"
+             value="<?php echo( $winfo[ 'street_no' ] ); ?>"
              placeholder="Type address here">
     </div>
 
     <div class="span1">City</div>
     <div class="span2">
       <input type="text" name="city" class="span12"
-             value="<?php echo( $workplace_info[ 'city' ] ); ?>"
+             value="<?php echo( $winfo[ 'city' ] ); ?>"
              placeholder="Type city here">
     </div>
 
     <div class="span1">State</div>
     <div class="span1">
       <input type="text" name="state" class="span12"
-             value="<?php echo( $workplace_info[ 'state' ] ); ?>"
+             value="<?php echo( $winfo[ 'state' ] ); ?>"
              placeholder="State">
     </div>
     <div class="span1">Zipcode</div>
     <div class="span2">
       <input type="text" name="zipcode" class="span12"
-             value="<?php echo( $workplace_info[ 'zipcode' ] ); ?>"
+             value="<?php echo( $winfo[ 'zipcode' ] ); ?>"
              placeholder="Type zipcode here">
     </div>
   </div>
@@ -93,7 +78,7 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">Phone</div>
     <div class="span5">
       <input type="text" name="phone" class="span12"
-             value="<?php echo( $workplace_info[ 'phone' ] ); ?>"
+             value="<?php echo( $winfo[ 'phone' ] ); ?>"
              placeholder="Type phone number here">
     </div>
   </div>
@@ -102,14 +87,14 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">CEO</div>
     <div class="span4">
       <input type="text" name="ceo" class="span12"
-             value="<?php echo( $workplace_info[ 'ceo' ] ); ?>"
+             value="<?php echo( $winfo[ 'ceo' ] ); ?>"
              placeholder="Type CEO's name here">
     </div>
     
     <div class="span2">Parent Company</div>
     <div class="span5">
       <input type="text" name="parentCompany" class="span12"
-             value="<?php echo( $workplace_info[ 'parent_company' ] ); ?>"
+             value="<?php echo( $winfo[ 'parent_company' ] ); ?>"
              placeholder="Type parent company here">
     </div>
   </div>
@@ -118,7 +103,7 @@ if( $_GET[ 'id' ] ) {
     <div class="span1">Total Workers</div>
     <div class="span4">
       <input type="text" name="numWorkers" class="span2"
-             value="<?php echo( $workplace_info[ 'num_workers' ] ); ?>"
+             value="<?php echo( $winfo[ 'num_workers' ] ); ?>"
              placeholder="#">
     </div>
     
@@ -143,7 +128,7 @@ if( $_GET[ 'id' ] ) {
   <div class="row-fluid">
     <div class="span1">Notes</div>
     <div class="span11">
-      <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $workplace_info[ 'wnotes' ] ); ?></textarea>
+      <textarea name="notes" class="span12" placeholder="Type notes here"><?php echo( $winfo[ 'wnotes' ] ); ?></textarea>
     </div>
   </div>
 </div>
@@ -213,8 +198,8 @@ if( $_GET[ 'id' ] ) {
       <?php if( mysql_num_rows( $wqr ) > 0 ) {
         while( $workers = mysql_fetch_array( $wqr ) ) { ?>
           <tr class="worker" data-id="<?php echo( $workers[ 'cid' ] ); ?>">
-            <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
-            <td><a href="search_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
+            <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
+            <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
             <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
                 $apt_no = "#" . $workers[ "apt_no" ];
               } else {
@@ -232,4 +217,16 @@ if( $_GET[ 'id' ] ) {
       <?php } ?>
     </tbody>
   </table>
+</div>
+
+<div class="row-fluid">
+  <div id="shop-profile-form-status" class="alert alert-error hide">
+  </div>
+</div>
+
+<div class="row-fluid">
+  <div class="span4">
+    <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
+    <button type="button" id="cancel-button" class="btn btn-danger btn-large pull-right">Cancel</button>
+  </div>
 </div>

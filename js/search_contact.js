@@ -1,5 +1,5 @@
 $( document ).ready(function() {
-    /* Search button */
+  /* Search button */
   $( "#search" ).submit(function() {
     $( "#search-results" ).load( "load_search_contact.php?" + $( "#search" ).serialize() );
     return false;

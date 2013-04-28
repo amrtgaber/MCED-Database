@@ -42,7 +42,7 @@ if( !$_SESSION[ 'username' ] ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-        <legend>Search Contact</legend>
+          <legend>Search Contact</legend>
 
           <div class="well">
             <div class="row-fluid">
