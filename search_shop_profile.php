@@ -15,7 +15,7 @@ if( !$_SESSION[ 'username' ] ) {
 
 /* Must have privilege level of 2 or greater to access this page */
 if( $_SESSION[ 'privilege_level' ] < 2 ) {
-  header( 'Location: home.php' );
+  header( 'Location: index.php' );
   exit;
 }
 
@@ -60,6 +60,10 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
                 
                 <button type="submit" class="btn btn-info span1" id="search-button"><i class="icon-search"></i></button>
                 <button type="button" class="btn span1" id="clear-button">Clear</button>
+                
+                <div class="span7">
+                  <a href="add_shop_profile.php" class="btn btn-primary span3 pull-right">Add Shop Profile</a>
+                </div>
               </form>
             </div>
           </div>

@@ -1,7 +1,7 @@
 <?php
 /* File: load_navbar.php
  * Author: Amr Gaber
- * Created: 20/10/2012
+ * Created: 2012/10/20
  * Description: Loads the navbar.
  */
 
@@ -12,48 +12,33 @@ session_start();
 if( !$_SESSION[ 'username' ] ) {
   header( "Location: login.php" );
   exit;
-}
-?>
+} ?>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-      <a class="brand" href="home.php">Database</a>
+      <span class="dropdown">
+        <a class="brand dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-align-justify icon-white"></i></a>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="index.php">Main Menu</a></li>
+          <li><a href="search_contact.php">Contacts</a></li>
+          <li><a href="search_contact_sheet.php">Contact Sheets</a></li>
+          <li><a href="search_shop_profile.php">Shop Profiles</a></li>
+        </ul>
+      </span>
 
       <ul class="nav pull-right">
         <li class="navbar-text">
           Logged in as 
-            <span class="dropdown">
+          <span class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo( $_SESSION[ 'username' ] ); ?></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="#" id="change-password-menu">change password</a></li>
             </ul>
-            </span>
+          </span>
         </li>
-
         <li class="divider-vertical"></li>
-
         <li style="padding-right: 45px;"><button type="button" id="logout" class="btn btn-small btn-inverse">Logout</button></li>
-      </ul>
-
-      <ul class="nav">
-        <li><a href="view.php">View</a></li>
-
-        <?php if( $_SESSION[ 'privilege_level' ] > 0 ) { ?>
-          <li><a href="add.php">Add</a></li>
-        <?php } ?>
-        
-        <?php if( $_SESSION[ 'privilege_level' ] > 1 ) { ?>
-          <li><a href="modify.php">Modify</a></li>
-        <?php } ?>
-
-        <?php if( $_SESSION[ 'privilege_level' ] > 2 ) { ?>
-          <li><a href="remove.php">Remove</a></li>
-        <?php } ?>
-
-        <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
-          <li><a href="manage_users.php">Manage Users</a></li>
-        <?php } ?>
       </ul>
     </div>
   </div>

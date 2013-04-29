@@ -1,8 +1,9 @@
 $( document ).ready(function() {
+  /* load navbar */
   $( "#navbar" ).load( "load_navbar.php", function() {
     $( "#logout" ).click(function() {
       $.post(
-        'logout.php', 
+        'action_logout.php', 
         function() { 
           window.location = "login.php";  
         }
@@ -83,6 +84,9 @@ $( document ).ready(function() {
     });
   });
 
+  /* load sidebar */
   $( "#sidebar" ).load( "load_sidebar.php" );
+  
+  /* load footer */
   $( "#footer" ).load( "load_footer.php" );
 });

@@ -15,7 +15,7 @@ if( !$_SESSION[ 'username' ] ) {
 
 /* Must have privilege level of 4 or greater to access this page */
 if( $_SESSION[ 'privilege_level' ] < 4 ) {
-  header( 'Location: home.php' );
+  header( 'Location: index.php' );
   exit;
 }
 ?>

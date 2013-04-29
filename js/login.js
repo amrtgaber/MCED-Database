@@ -9,7 +9,7 @@ $( document ).ready(function() {
       "action_login.php", 
       $( "form" ).serialize(),
       function( data, s, jqXHR ) { 
-        window.location = "home.php";
+        window.location = "index.php";
       }
     ).fail(function( data, s, jqXHR ) {
       $( "#error" ).html( "Incorrect username or password" );

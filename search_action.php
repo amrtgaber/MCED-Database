@@ -77,7 +77,11 @@ $mc = connect_to_database(); ?>
                       }
                       echo '</select>';
                     ?>
-                  </select>                  
+                  </select>
+                </div>
+                
+                <div class="span3">
+                  <a href="add_action.php" class="btn btn-primary span6 pull-right">Add Action</a>
                 </div>
               </div>
             </div>

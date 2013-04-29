@@ -1,7 +1,7 @@
 <?php
-/* File: logout.php
+/* File: action_logout.php
  * Author: Amr Gaber
- * Created: 9/29/2012
+ * Created: 2012/9/29
  * Description: Handles logout for KC99 database.
  */
 

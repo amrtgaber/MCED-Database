@@ -9,7 +9,7 @@
 session_start();
 
 if( $_SESSION[ 'username' ] ) {
-  header( "Location: home.php" );
+  header( "Location: index.php" );
   exit;
 }
 ?>
@@ -38,7 +38,7 @@ if( $_SESSION[ 'username' ] ) {
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="#">Database</a>
+          <a class="brand" href="#"><i class="icon-align-justify icon-white"></i></a>
 
           <div class="nav-collapse collapse">
             <p class="navbar-text pull-right">Not logged in</p>

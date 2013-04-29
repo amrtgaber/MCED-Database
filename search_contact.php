@@ -57,6 +57,10 @@ if( !$_SESSION[ 'username' ] ) {
                 
                 <button type="submit" class="btn btn-info span1" id="search-button"><i class="icon-search"></i></button>
                 <button type="button" class="btn span1" id="clear-button">Clear</button>
+                
+                <div class="span4">
+                  <a href="add_contact.php" class="btn btn-primary span4 pull-right">Add Contact</a>
+                </div>
               </form>
             </div>
           </div>
