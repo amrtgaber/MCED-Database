@@ -68,19 +68,6 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
               <button class="btn btn-large btn-primary" type="button" id="remove-user">Remove User &raquo;</button>
             </div>
           </div><!--./row-fluid-->
-        
-          <div class="row-fluid">
-            <div class="span6">
-              <h2>Change Privilege Level</h2>
-              <p>Select this option if you'd like to change a user's privilege level.</p>
-            </div>
-          </div><!--/.row-fluid-->
-
-          <div class="row-fluid">
-            <div class="span6">
-              <button class="btn btn-large btn-primary" type="button" id="change-privileges">Change Privilege Level &raquo;</button>
-            </div>
-          </div><!--./row-fluid-->
         </div><!--/.span9-->
 
         <!-- Sidebar -->
