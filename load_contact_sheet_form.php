@@ -257,7 +257,8 @@ if( $_GET[ 'add' ] ) {
         <option></option>
         <?php
           $qs = "SELECT id, username
-                 FROM users";
+                 FROM users
+                 ORDER BY username";
           $oqr = execute_query( $qs, $mc );
           
           while( $organizer = mysql_fetch_array( $oqr ) ) { ?>
