@@ -68,7 +68,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
     
     <!-- JavaScript -->
     <script type="text/javascript">
-      var id = <?php echo( mysql_real_escape_string( $_GET[ 'id' ] ) ); ?>;
+      var csid = <?php echo( mysql_real_escape_string( $_GET[ 'csid' ] ) ); ?>;
       var add = true;
     </script>
     <script src="js/jquery-1.8.2.min.js"></script>

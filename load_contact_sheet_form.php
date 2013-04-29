@@ -21,7 +21,7 @@ include( "common.php" );
 $mc = connect_to_database();
 
 if( $_GET[ 'add' ] ) {
-  $id = mysql_real_escape_string( $_GET[ 'id' ] );
+  $id = mysql_real_escape_string( $_GET[ 'csid' ] );
 
   /* Get contact information */
   $qs = "SELECT contacts.*,
@@ -42,7 +42,7 @@ if( $_GET[ 'add' ] ) {
 
   $cs_info = mysql_fetch_array( $qr );
 } else {
-  $csid = mysql_real_escape_string( $_GET[ 'id' ] );
+  $csid = mysql_real_escape_string( $_GET[ 'csid' ] );
   
   $qs = "SELECT contact_sheet.*,
                   contacts.*,
@@ -60,21 +60,9 @@ if( $_GET[ 'add' ] ) {
 
 <div class="well">
   <div class="row-fluid">
-    <?php if( $id == 0 && $csid == 0 ) { ?>
-      <div class="span1">First Name</div>
-      <div class="span2">
-        <input type="text" name="firstName" class="span12" placeholder="Type first name here">
-      </div>
-      
-      <div class="span1">Last Name</div>
-      <div class="span2">
-        <input type="text" name="lastName" class="span12" placeholder="Type last name here">
-      </div>
-    <?php } else { ?>
-      <div class="span3" style="font-size:2em"><?php echo( $cs_info[ 'first_name' ] ); ?></div>
-      
-      <div class="span3" style="font-size:2em"><?php echo( $cs_info[ 'last_name' ] ); ?></div>
-    <?php } ?>
+    <div class="span3" style="font-size:2em"><?php echo( $cs_info[ 'first_name' ] ); ?></div>
+    
+    <div class="span3" style="font-size:2em"><?php echo( $cs_info[ 'last_name' ] ); ?></div>
     
     <div class="span1">Workplace</div>
     <div class="span5">
@@ -332,6 +320,26 @@ if( $_GET[ 'add' ] ) {
 <div class="row-fluid">
   <div class="span4">
     <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
-    <button type="button" id="cancel-button" class="btn btn-danger btn-large pull-right">Cancel</button>
+    <button type="button" id="cancel-button" class="btn btn-inverse btn-large pull-right">Cancel</button>
+  </div>
+  
+  <div class="span8">
+    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right">Delete</button>
+  </div>
+</div>
+
+<div id="delete-modal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Are you sure?</h3>
+  </div>
+    
+  <div class="modal-body">
+    This action cannot be undone. Clicking delete will permanently remove this contact sheet from the database.
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" id="delete-confirm-button" class="btn btn-primary btn-danger">Delete</button>
+    <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancel</button>
   </div>
 </div>

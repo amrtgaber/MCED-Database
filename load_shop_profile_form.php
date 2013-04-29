@@ -23,12 +23,12 @@ $mc = connect_to_database();
 if( $_GET[ 'add' ] ) {
   $winfo = Array();
 } else {
-  $id = mysql_real_escape_string( $_GET[ 'id' ] );
+  $wid = mysql_real_escape_string( $_GET[ 'wid' ] );
 
   /* Get shop information */
   $qs = "SELECT workplaces.*
          FROM workplaces
-         WHERE workplaces.wid = " . $id;
+         WHERE workplaces.wid = " . $wid;
   
   $qr = execute_query( $qs, $mc );
 
@@ -112,7 +112,7 @@ if( $_GET[ 'add' ] ) {
       <div class="span5">
         <?php $qs = "SELECT workers.*
                      FROM workers
-                     WHERE wid = " . $id;
+                     WHERE wid = " . $wid;
       
         $wqr = execute_query( $qs, $mc ); ?>
         
@@ -154,7 +154,7 @@ if( $_GET[ 'add' ] ) {
 </div>
 
 <div class="row-fluid">
-  <?php if( $_GET[ "id" ] ) {
+  <?php if( $_GET[ "wid" ] ) {
     $qs = "SELECT workers.cid,
                   workers.wid,
                   contacts.first_name,
@@ -171,7 +171,7 @@ if( $_GET[ 'add' ] ) {
              LEFT JOIN contacts       ON workers.cid = contacts.id
              LEFT JOIN contact_sheet  ON workers.cid = contact_sheet.cid
              LEFT JOIN contact_action ON workers.cid = contact_action.cid
-           WHERE workers.wid = " . $id . "
+           WHERE workers.wid = " . $wid . "
            GROUP BY workers.cid
            ORDER BY contacts.last_name";
     
@@ -227,6 +227,26 @@ if( $_GET[ 'add' ] ) {
 <div class="row-fluid">
   <div class="span4">
     <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
-    <button type="button" id="cancel-button" class="btn btn-danger btn-large pull-right">Cancel</button>
+    <button type="button" id="cancel-button" class="btn btn-inverse btn-large pull-right">Cancel</button>
+  </div>
+  
+  <div class="span8">
+    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right">Delete</button>
+  </div>
+</div>
+
+<div id="delete-modal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Are you sure?</h3>
+  </div>
+    
+  <div class="modal-body">
+    This action cannot be undone. Clicking delete will permanently remove this shop profile from the database.
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" id="delete-confirm-button" class="btn btn-primary btn-danger">Delete</button>
+    <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancel</button>
   </div>
 </div>

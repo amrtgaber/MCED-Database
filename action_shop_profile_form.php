@@ -77,20 +77,20 @@ if( $_POST[ 'numWorkers' ] != "" && !ctype_digit( $_POST[ 'numWorkers' ] ) ) {
 $mc = connect_to_database();
 
 /* If id is present, update existing shop profile. Otherwise insert new shop. */
-if( $_POST[ 'id' ] ) {
+if( $_POST[ 'wid' ] ) {
   /* Must have privilege level of 2 or greater to modify a shop profile */
   if( $_SESSION[ 'privilege_level' ] < 2 ) {
     alert_error( "You do not have the required privilege level to modify a shop profile." );
   }
 
-  $id = mysql_real_escape_string( $_POST[ 'id' ] );
+  $wid = mysql_real_escape_string( $_POST[ 'wid' ] );
   
   /* Update existing shop profile */
   $wname = mysql_real_escape_string( $_POST[ "wname" ] );
   
   $qs = "UPDATE workplaces
          SET wname = '" . $wname . "'
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
   
@@ -98,7 +98,7 @@ if( $_POST[ 'id' ] ) {
   $qs = "SELECT workplaces.*
          FROM workplaces
          LEFT JOIN workers ON workplaces.wid = workers.cid
-         WHERE workplaces.wid = " . $id;
+         WHERE workplaces.wid = " . $wid;
   
   $qr = execute_query( $qs, $mc );
   
@@ -128,7 +128,7 @@ if( $_POST[ 'id' ] ) {
   $qr = execute_query( $qs, $mc );
 
   $shop_info = mysql_fetch_array( $qr );
-  $id = $shop_info[ 'wid' ];
+  $wid = $shop_info[ 'wid' ];
 }
 
 /* Insert/update values */
@@ -138,7 +138,7 @@ if( $_POST[ 'address' ] ) {
   
   $qs = "UPDATE workplaces
          SET street_no = '" . $streetno . "'
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 
@@ -146,7 +146,7 @@ if( $_POST[ 'address' ] ) {
   if( !is_null( $shop_info[ 'street_no' ] ) ) {
     $qs = "UPDATE workplaces
            SET street_no = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -158,14 +158,14 @@ if( $_POST[ 'city' ] ) {
   
   $qs = "UPDATE workplaces
          SET city = '" . $city . "'
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'city' ] ) ) {
     $qs = "UPDATE workplaces
            SET city = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -177,14 +177,14 @@ if( $_POST[ 'state' ] ) {
   
   $qs = "UPDATE workplaces
          SET state = '" . $state . "'
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'state' ] ) ) {
     $qs = "UPDATE workplaces
            SET state = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -196,14 +196,14 @@ if( $_POST[ 'zipcode' ] ) {
   
   $qs = "UPDATE workplaces
          SET zipcode = " . $zipcode . "
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'zipcode' ] ) ) {
     $qs = "UPDATE workplaces
            SET zipcode = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -215,14 +215,14 @@ if( $_POST[ 'phone' ] ) {
   
   $qs = "UPDATE workplaces
          SET phone = " . $phone . "
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'phone' ] ) ) {
     $qs = "UPDATE workplaces
            SET phone = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -234,14 +234,14 @@ if( $_POST[ 'ceo' ] ) {
   
   $qs = "UPDATE workplaces
          SET ceo = '" . $ceo . "'
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'ceo' ] ) ) {
     $qs = "UPDATE workplaces
            SET ceo = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -253,14 +253,14 @@ if( $_POST[ 'parentCompany' ] ) {
   
   $qs = "UPDATE workplaces
          SET parent_company = '" . $parent_company . "'
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'parentCompany' ] ) ) {
     $qs = "UPDATE workplaces
            SET parent_company = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -272,14 +272,14 @@ if( $_POST[ 'numWorkers' ] ) {
   
   $qs = "UPDATE workplaces
          SET num_workers = " . $num_workers . "
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'numWorkers' ] ) ) {
     $qs = "UPDATE workplaces
            SET num_workers = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -291,14 +291,14 @@ if( $_POST[ 'notes' ] ) {
   
   $qs = "UPDATE workplaces
          SET wnotes = '" . $notes . "'
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
 
   $qr = execute_query( $qs, $mc );
 } else {
   if( !is_null( $shop_info[ 'wnotes' ] ) ) {
     $qs = "UPDATE workplaces
            SET wnotes = NULL
-           WHERE wid = " . $id;
+           WHERE wid = " . $wid;
 
     $qr = execute_query( $qs, $mc );
   }
@@ -314,14 +314,14 @@ if( $_POST[ "addWorkers" ] ) {
     /* If cid exists don't insert */    
     $qs = "SELECT cid
            FROM workers
-           WHERE cid = " . $cid . " AND wid = " . $id;
+           WHERE cid = " . $cid . " AND wid = " . $wid;
     
     $wqr = execute_query( $qs, $mc );
     
     if( mysql_num_rows( $wqr ) == 0 ) {
       $qs = "INSERT INTO workers
           ( cid, wid )
-          VALUES ( " . $cid . "," . $id . " )";
+          VALUES ( " . $cid . "," . $wid . " )";
 
       execute_query( $qs, $mc );
     }
@@ -330,7 +330,7 @@ if( $_POST[ "addWorkers" ] ) {
   /* delete removed workers */
   $qs = "SELECT cid
          FROM workers
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
   
   $wqr = execute_query( $qs, $mc );
   
@@ -338,7 +338,7 @@ if( $_POST[ "addWorkers" ] ) {
     if( !in_array( $winfo[ "cid" ], $workerIDs ) ) {
       $qs = "DELETE
              FROM workers
-             WHERE cid = " . $winfo[ "cid" ] . " AND wid = " . $id;
+             WHERE cid = " . $winfo[ "cid" ] . " AND wid = " . $wid;
 
       execute_query( $qs, $mc );
     }
@@ -346,13 +346,13 @@ if( $_POST[ "addWorkers" ] ) {
 } else {
   $qs = "DELETE
          FROM workers
-         WHERE wid = " . $id;
+         WHERE wid = " . $wid;
   
   execute_query( $qs, $mc );
 }
 
 /* Return success */
-if( $_POST[ 'id' ] ) { ?>
+if( $_POST[ 'wid' ] ) { ?>
   <div class="alert alert-success">
     The workplace <?php echo( $wname );?> was successfully modified.
     <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>

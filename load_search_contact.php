@@ -36,6 +36,7 @@ $qs = "SELECT contacts.*,
        LEFT JOIN workplaces    ON workers.wid = workplaces.wid
        WHERE contacts.first_name LIKE '" . $firstname . "%'
          AND contacts.last_name  LIKE '" . $lastname . "%'
+       GROUP BY contacts.id
        ORDER BY contacts.last_name";
 
 $qr = execute_query( $qs, $mc );

@@ -29,9 +29,14 @@ function shop_profile_form_handlers() {
     $( "#add-worker-search-results" ).html( "" );
   });
   
-  /* save and cancel buttons */
+  /* action buttons */
   $( "#save-button" ).click( submit_shop_profile_form );
   $( "#cancel-button" ).click( load_shop_profile_form );
+  $( "#delete-button" ).click( function() { $( "#delete-modal" ).modal( "show" ); });
+  $( "#delete-confirm-button" ).click(function() {
+    $.post( "action_delete_shop_profile.php", "wid=" + wid );
+    window.location = "search_shop_profile.php";
+  });
 }
 
 /* Validate form */
@@ -114,7 +119,7 @@ function validate_shop_profile_form() {
 
 /* load form */
 function load_shop_profile_form() {
-  $( "#shop-profile-form" ).load( "load_shop_profile_form.php?id=" + id + "&add=" + add, shop_profile_form_handlers );
+  $( "#shop-profile-form" ).load( "load_shop_profile_form.php?wid=" + wid + "&add=" + add, shop_profile_form_handlers );
   validate_shop_profile_form();
 }
 
@@ -143,7 +148,7 @@ function submit_shop_profile_form() {
   /* construct post request string */
   var postString = $( "#shop-profile-form" ).serialize()
                      + "&addWorkers=" + addWorkers
-                     + "&id=" + id
+                     + "&wid=" + wid
                      + "&add=" + add;
 
   $.post(

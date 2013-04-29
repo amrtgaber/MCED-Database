@@ -34,6 +34,7 @@ $qs = "SELECT contacts.*,
          LEFT JOIN workplaces    ON workers.wid = workplaces.wid
        WHERE contacts.first_name LIKE '" . $firstname . "%'
          AND contacts.last_name  LIKE '" . $lastname . "%'
+       GROUP BY contacts.id
        ORDER BY contacts.last_name";
 
 $qr = execute_query( $qs, $mc );
@@ -73,7 +74,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
                         <?php } ?>
                       <?php } ?>
                       
-                      <li><a href="add_contact_sheet.php?id=<?php echo( $contact_info[ 'id' ] ); ?>" class="btn btn-mini btn-info">+</a></li>
+                      <li><a href="add_contact_sheet.php?csid=<?php echo( $contact_info[ 'id' ] ); ?>" class="btn btn-mini btn-info">+</a></li>
                     </ul>
                   </div>
               </td>

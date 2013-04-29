@@ -24,7 +24,7 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
 /* Check for required fields */
 
 /* if no id or csid is present first and last name must exist */
-if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
+if( !isset( $_POST[ "csid" ] ) || $_POST[ "csid" ] == "" ) {
   if( !isset( $_POST[ 'firstName' ] ) || $_POST[ 'firstName' ] == "" || !isset( $_POST[ 'lastName' ] ) || $_POST[ 'lastName' ] == "" ) {
     alert_error( "First and Last name are required fields." );
   }
@@ -59,114 +59,9 @@ if( !isset( $_POST[ "date" ] ) || $_POST[ "date" ] == "" ) {
 $mc = connect_to_database();
 
 /* Insert new contact sheet */
-
-/* If id is not present, need to insert new contact. */
-if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
-  /* Insert new contact */
-  $firstname = mysql_real_escape_string( $_POST[ 'firstName' ] );
-  $lastname  = mysql_real_escape_string( $_POST[ 'lastName' ] );
-  
-  $qs = "INSERT INTO contacts
-        ( first_name, last_name )
-        VALUES ( '" . $firstname . "', '" . $lastname . "' )";
-
-  $qr = execute_query( $qs, $mc );
-
-  /* Get id of the contact that was just added */
-  $qs = "SELECT id
-         FROM contacts
-         WHERE first_name = '" . $firstname . "' AND last_name = '" . $lastname. "'
-         ORDER BY id DESC
-         LIMIT 1";
-  $qr = execute_query( $qs, $mc );
-
-  $contact_info = mysql_fetch_array( $qr );
-  $id = $contact_info[ 'id' ];
-  
-  /* insert address, city, zip and phone numbers */
-  
-  /* address */
-  if( $_POST[ 'address' ] ) {
-    $streetno = mysql_real_escape_string( $_POST[ 'address' ] );
-    
-    $qs = "UPDATE contacts
-           SET street_no = '" . $streetno . "'
-           WHERE id = " . $id;
-
-    $qr = execute_query( $qs, $mc );
-  }
-  
-  /* City */
-  if( $_POST[ 'city' ] ) {
-    $city = mysql_real_escape_string( $_POST[ 'city' ] );
-    
-    $qs = "UPDATE contacts
-           SET city = '" . $city . "'
-           WHERE id = " . $id;
-
-    $qr = execute_query( $qs, $mc );
-  }
-  
-  /* Zipcode */
-  if( $_POST[ 'zipcode' ] ) {
-    if( !ctype_digit( $_POST[ 'zipcode' ] ) || strlen( $_POST[ 'zipcode' ] ) != 5 ) {
-      alert_error( "Zipcode field is invalid." );
-    } else {
-      $zipcode = mysql_real_escape_string( $_POST[ 'zipcode' ] );
-      
-      $qs = "UPDATE contacts
-             SET zipcode = " . $zipcode . "
-             WHERE id = " . $id;
-
-      $qr = execute_query( $qs, $mc );
-    }
-  }
-  
-  /* Phone Information */
-  $hasPhoneInfo = false;
-
-  /* Phone Number */
-  if( $_POST[ 'phone' ] ) {
-    if( !ctype_digit( $_POST[ 'phone' ] ) || ( strlen( $_POST[ 'phone' ] ) != 7 && strlen( $_POST[ 'phone' ] ) != 10 ) ) {
-      alert_error( "Phone field is invalid." );
-    } else {
-      $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
-
-      $qs = "INSERT INTO contact_phone
-            ( cid, phone )
-            VALUES ( " . $id . ", " . $phone . " )";
-
-      $qr = execute_query( $qs, $mc );
-      
-      $hasPhoneInfo = true;
-    }
-  }
-
-  /* Cell Phone Number */
-  if( $_POST[ 'cell' ] ) {
-    if( !ctype_digit( $_POST[ 'cell' ] ) || ( strlen( $_POST[ 'cell' ] ) != 7 && strlen( $_POST[ 'cell' ] ) != 10 ) ) {
-      alert_error( "Cell Phone field is invalid." );
-    } else {
-      $cell = mysql_real_escape_string( $_POST[ 'cell' ] );
-
-      if( $hasPhoneInfo || !is_null( $contact_info[ 'cell' ] ) ) {
-        $qs = "UPDATE contact_phone
-               SET cell = " . $cell . "
-               WHERE cid = " . $id;
-      } else {
-        $qs = "INSERT INTO contact_phone
-              ( cid, cell )
-              VALUES ( " . $id . ", " . $cell . " )";
-      }
-
-      $qr = execute_query( $qs, $mc );
-        
-      $hasPhoneInfo = true;
-    }
-  }
-} elseif ( $_POST[ "add" ] ) {
+if ( $_POST[ "add" ] ) {
   /* new contact sheet */
-  $id = mysql_real_escape_string( $_POST[ 'id' ] );
+  $id = mysql_real_escape_string( $_POST[ 'csid' ] );
 
   /* Insert new contact sheet */
   $qs = "INSERT INTO contact_sheet
@@ -187,7 +82,7 @@ if( !isset( $_POST[ "id" ] ) || $_POST[ "id" ] == "" ) {
   $csid = $cs_info[ 'id' ];
 } else {
   /* modifying existing contact sheet */
-  $csid = mysql_real_escape_string( $_POST[ 'id' ] );
+  $csid = mysql_real_escape_string( $_POST[ 'csid' ] );
   
   $qs = "SELECT cid
          FROM contact_sheet

@@ -266,6 +266,26 @@ if( $_GET[ 'add' ] ) {
 <div class="row-fluid">
   <div class="span4">
     <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
-    <button type="button" id="cancel-button" class="btn btn-danger btn-large pull-right">Cancel</button>
+    <button type="button" id="cancel-button" class="btn btn-inverse btn-large pull-right">Cancel</button>
+  </div>
+  
+  <div class="span8">
+    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right">Delete</button>
+  </div>
+</div>
+
+<div id="delete-modal" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Are you sure?</h3>
+  </div>
+    
+  <div class="modal-body">
+    This action cannot be undone. Clicking delete will permanently remove this contact from the database.
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" id="delete-confirm-button" class="btn btn-primary btn-danger">Delete</button>
+    <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancel</button>
   </div>
 </div>

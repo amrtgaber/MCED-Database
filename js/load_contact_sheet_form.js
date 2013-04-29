@@ -23,9 +23,14 @@ function contact_sheet_form_handlers() {
   /* activate datepicker */
   $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
   
-  /* save and cancel buttons */
+  /* action buttons */
   $( "#save-button" ).click( submit_contact_sheet_form );
   $( "#cancel-button" ).click( load_contact_sheet_form );
+  $( "#delete-button" ).click( function() { $( "#delete-modal" ).modal( "show" ); });
+  $( "#delete-confirm-button" ).click(function() {
+    $.post( "action_delete_contact_sheet.php", "csid=" + csid );
+    window.location = "search_contact_sheet.php";
+  });
 }
 
 /* Validate form */
@@ -106,7 +111,7 @@ function validate_contact_sheet_form() {
 
 /* load form */
 function load_contact_sheet_form() {
-  $( "#contact-sheet-form" ).load( "load_contact_sheet_form.php?id=" + id + "&add=" + add, contact_sheet_form_handlers );
+  $( "#contact-sheet-form" ).load( "load_contact_sheet_form.php?csid=" + csid + "&add=" + add, contact_sheet_form_handlers );
   validate_contact_sheet_form();
 }
 
@@ -131,7 +136,7 @@ function submit_contact_sheet_form() {
   var postString = $( "#contact-sheet-form" ).serialize()
                      + "&oid=" + $( "#organizer option:selected" ).attr( "data-oid" )
                      + "&wid=" + wid
-                     + "&id=" + id
+                     + "&csid=" + csid
                      + "&add=" + add;
 
   $.post(

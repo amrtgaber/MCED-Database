@@ -46,7 +46,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php
         while( $sinfo = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><a href="view_shop_profile.php?id=<?php echo( $sinfo[ 'wid' ] ); ?>" class="shop" data-wid="<?php echo( $sinfo[ 'wid' ] ); ?>"><?php echo( $sinfo[ 'wname' ] ); ?></a></td>
+            <td><a href="view_shop_profile.php?wid=<?php echo( $sinfo[ 'wid' ] ); ?>" class="shop" data-wid="<?php echo( $sinfo[ 'wid' ] ); ?>"><?php echo( $sinfo[ 'wname' ] ); ?></a></td>
             <td><?php
               $address = $sinfo[ 'street_no' ];
     
