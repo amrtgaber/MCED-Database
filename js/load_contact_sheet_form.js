@@ -42,21 +42,6 @@ function validate_contact_sheet_form() {
       lastName: {
         required: true
       },
-      phone: {
-        minlength: 10,
-        maxlength: 10,
-        digits: true
-      },
-      cell: {
-        minlength: 10,
-        maxlength: 10,
-        digits: true
-      },
-      zipcode: {
-        minlength: 5,
-        maxlength: 5,
-        digits: true
-      },
       issues: {
         required: true
       },
@@ -71,21 +56,6 @@ function validate_contact_sheet_form() {
       },
       lastName: {
         required: "Last Name is a required field."
-      },
-      phone: {
-        minlength: "Phone number must be exactly 10 digits long.",
-        maxlength: "Phone number must be exactly 10 digits long.",
-        digits: "Phone number can only contain digits."
-      },
-      cell: {
-        minlength: "Cell phone number must be exactly 10 digits long.",
-        maxlength: "Cell phone number must be exactly 10 digits long.",
-        digits: "Cell phone number can only contain digits."
-      },
-      zipcode: {
-        minlength: "Zipcode must be exactly 5 digits long.",
-        maxlength: "Zipcode must be exactly 5 digits long.",
-        digits: "Zipcode can only contain digits."
       },
       issues: {
         required: "Issues is a required field."
