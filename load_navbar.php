@@ -17,29 +17,32 @@ if( !$_SESSION[ 'username' ] ) {
 <div class="navbar navbar-inverse navbar-fixed-top">
   <div class="navbar-inner">
     <div class="container-fluid">
-      <span class="dropdown">
-        <a class="brand dropdown-toggle" data-toggle="dropdown" href="#"><i class="icon-align-justify icon-white"></i></a>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="index.php">Main Menu</a></li>
+      <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+      <div class="nav-collapse collapse">
+        <ul class="nav">
+          <li><a class="brand" href="index.php">Database</a></li>
           <li><a href="search_contact.php">Contacts</a></li>
           <li><a href="search_contact_sheet.php">Contact Sheets</a></li>
           <li><a href="search_shop_profile.php">Shop Profiles</a></li>
           <li><a href="search_action.php">Actions</a></li>
         </ul>
-      </span>
 
-      <ul class="nav pull-right">
-        <li class="navbar-text">
-          <span class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo( $_SESSION[ 'username' ] ); ?></a>
+        <ul class="nav pull-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo( $_SESSION[ 'username' ] ); ?> <i class="icon-chevron-down icon-white"></i></a>
             <ul class="dropdown-menu" role="menu">
               <li><a href="#" id="change-password-menu">change password</a></li>
             </ul>
-          </span>
-        </li>
-        <li class="divider-vertical"></li>
-        <li style="padding-right: 45px;"><button type="button" id="logout" class="btn btn-small btn-inverse">Logout</button></li>
-      </ul>
+          </li>
+          <li class="divider-vertical"></li>
+          <li><button type="button" id="logout" class="btn btn-small btn-inverse">Logout</button></li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

@@ -39,10 +39,20 @@ if( $_SESSION[ 'username' ] ) {
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
         <div class="container-fluid">
-          <a class="brand" href="#"><i class="icon-align-justify icon-white"></i></a>
-
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
           <div class="nav-collapse collapse">
-            <p class="navbar-text pull-right">Not logged in</p>
+            <ul class="nav">
+              <li class="brand">Database</li>
+            </ul>
+
+            <ul class="nav pull-right">
+              <li class="navbar-text">Not Logged In</li>
+            </ul>
           </div>
         </div>
       </div>
