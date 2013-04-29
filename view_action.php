@@ -1,8 +1,8 @@
 <?php
-/* File: view_contact_sheet.php
+/* File: view_action.php
  * Author: Amr Gaber
- * Created: 2013/1/16
- * Description: Shows contact sheet for KC99 database.
+ * Created: 2013/4/29
+ * Description: Shows action for KC99 database.
  */
 
 /* Start a new session or continue an existing one */
@@ -24,14 +24,14 @@ include( "common.php" ); ?>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KC99 - View Contact Sheet</title>
+    <title>KC99 - View Shop Profile</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/jui-start-theme/jquery-ui-1.9.0.custom.css" rel="stylesheet">
-    <link href="css/view_contact_sheet.css" rel="stylesheet">
+    <link href="css/view_action.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -47,9 +47,9 @@ include( "common.php" ); ?>
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-          <legend>View Contact Sheet</legend>
-          <form id="contact-sheet-form"></form>
-        </div><!-- body -->
+          <legend>View Action</legend>
+          <form id="action-form"></form>
+        </div>
         
         <!-- Sidebar -->
         <div class="span3">
@@ -58,16 +58,16 @@ include( "common.php" ); ?>
             </div>
           </div>
         </div>
-      </div><!--/.row-fluid-->
+      </div>
 
       <!-- Footer -->
       <div id="footer">
       </div>
-    </div><!--/.fluid-container-->
+    </div>
     
     <!-- JavaScript -->
     <script type="text/javascript">
-      var csid = <?php echo( mysql_real_escape_string( $_GET[ 'csid' ] ) ); ?>;
+      var aid = <?php echo( mysql_real_escape_string( $_GET[ 'aid' ] ) ); ?>;
       var add = "";
     </script>
 		<script src="js/jquery-1.8.2.min.js"></script>
@@ -75,8 +75,8 @@ include( "common.php" ); ?>
     <script src="js/jquery-ui-1.9.0.custom.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/load_contact_sheet_form.js"></script>
-    <script src="js/view_contact_sheet.js"></script>
+    <script src="js/load_action_form.js"></script>
+    <script src="js/view_action.js"></script>
   </body>
 
 </html>

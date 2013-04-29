@@ -20,11 +20,12 @@ if( $_SESSION[ 'username' ] ) {
 
   <head>
     <meta charset="utf-8">
-    <title>KC99 - Database Login</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KC99 - Database Login</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/login.css" rel="stylesheet">
       

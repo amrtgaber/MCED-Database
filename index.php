@@ -19,11 +19,12 @@ if( !$_SESSION[ 'username' ] ) {
 
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KC99 - Database Home</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/index.css" rel="stylesheet">
       
@@ -34,62 +35,50 @@ if( !$_SESSION[ 'username' ] ) {
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid">
         <!-- Main Menu -->
         <div class="span9">
-          <!-- Contacts -->
           <div class="row-fluid">
-            <h2>Contacts</h2>
-            <p>Search, add, edit, or delete contacts.</p>
-          </div>
+            <div class="span3">
+              <!-- Contacts -->
+              <h2>Contacts</h2>
+              <p>Search, add, edit, or delete contacts.</p>
+              <p><a href="search_contact.php" class="btn btn-large btn-primary">Contacts &raquo;</a></p>
+            </div>
 
-          <div class="row-fluid">
-            <a href="search_contact.php" class="btn btn-large btn-primary">Contacts &raquo;</a>
-          </div>
-          
-          <!-- Contact Sheets -->
-          <div class="row-fluid">
-            <h2>Contact Sheets</h2>
-            <p>Search, add, edit, or delete contact sheets.</p>
-          </div>
+            <div class="span3">
+              <!-- Contact Sheets -->
+              <h2>Contact Sheets</h2>
+              <p>Search, add, edit, or delete contact sheets.</p>
+              <p><a href="search_contact_sheet.php" class="btn btn-large btn-primary">Contact Sheets &raquo;</a></p>
+            </div>
 
-          <div class="row-fluid">
-            <a href="search_contact_sheet.php" class="btn btn-large btn-primary">Contact Sheets &raquo;</a>
-          </div>
-          
-          <!-- Shop Profiles -->
-          <div class="row-fluid">
-            <h2>Shop Profiles</h2>
-            <p>Search, add, edit, or delete shop profiles.</p>
-          </div>
+            <div class="span3">
+              <!-- Shop Profiles -->            
+              <h2>Shop Profiles</h2>
+              <p>Search, add, edit, or delete shop profiles.</p>
+              <p><a href="search_shop_profile.php" class="btn btn-large btn-primary">Shop Profiles &raquo;</a></p>
+            </div>
 
-          <div class="row-fluid">
-            <a href="search_shop_profile.php" class="btn btn-large btn-primary">Shop Profiles &raquo;</a>
-          </div>
-          
-          <!-- Actions -->
-          <div class="row-fluid">
-            <h2>Actions</h2>
-            <p>Search, add, edit, or delete actions.</p>
-          </div>
-
-          <div class="row-fluid">
-            <a href="search_action.php" class="btn btn-large btn-primary">Actions &raquo;</a>
+            <div class="span3">
+              <!-- Actions -->
+              <h2>Actions</h2>
+              <p>Search, add, edit, or delete actions.</p>
+              <p><a href="search_action.php" class="btn btn-large btn-primary">Actions &raquo;</a></p>
+            </div>
           </div>
           
           <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
-            <!-- Users -->
             <div class="row-fluid">
-              <h2>Users</h2>
-              <p>Search, add, edit, or delete users.</p>
-            </div>
-          
-            <div class="row-fluid">
-              <a href="manage_users.php" class="btn btn-large btn-primary">Users &raquo;</a>
+              <div class="span3">
+                <!-- Users -->
+                <h2>Users</h2>
+                <p>Search, add, edit, or delete users.</p>
+                <p><a href="manage_users.php" class="btn btn-large btn-primary">Users &raquo;</a></p>
+              </div>
             </div>
           <?php } ?>
         </div><!--Main Menu-->

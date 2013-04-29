@@ -24,12 +24,12 @@ if( !$_SESSION[ 'username' ] ) {
           <li><a href="search_contact.php">Contacts</a></li>
           <li><a href="search_contact_sheet.php">Contact Sheets</a></li>
           <li><a href="search_shop_profile.php">Shop Profiles</a></li>
+          <li><a href="search_action.php">Actions</a></li>
         </ul>
       </span>
 
       <ul class="nav pull-right">
         <li class="navbar-text">
-          Logged in as 
           <span class="dropdown">
             <a class="dropdown-toggle" data-toggle="dropdown" href="#"><?php echo( $_SESSION[ 'username' ] ); ?></a>
             <ul class="dropdown-menu" role="menu">

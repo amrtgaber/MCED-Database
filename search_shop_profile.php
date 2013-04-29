@@ -27,13 +27,14 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
 
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KC99 - Database Search for Shop</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
-    <link href="css/search_contact.css" rel="stylesheet">
-    <link href="css/load_contact_profile.css" rel="stylesheet">
+    <link href="css/search_shop_profile.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -68,8 +69,8 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             </div>
           </div>
           
-          <div class="accordion" id="search-results"></div>
-        </div><!--/.span9-->
+          <div id="search-results"></div>
+        </div>
         
         <!-- Sidebar -->
         <div class="span3">
@@ -94,4 +95,3 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
   </body>
 
 </html>
-

@@ -26,10 +26,12 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
 
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KC99 - Database Add Action</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/add_action.css" rel="stylesheet">
       
@@ -47,24 +49,8 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-          <form>
-            <legend>Add Action</legend>
-            
-            <div id="form-fields">
-            </div>
-
-            <div class="row-fluid">
-              <div id="add-action-form-status" class="alert alert-error hide">
-              </div>
-            </div>
-            
-            <div class="row-fluid">
-              <div class="span3">
-                <button type="submit" class="btn btn-primary btn-large">Add Action</button>
-                <button type="reset" class="btn btn-large">Clear</button>
-              </div>
-            </div>
-          </form>
+          <legend>Add Action</legend>
+          <form id="action-form"></form>
         </div><!--/.span9-->
 
         <!-- Sidebar -->
@@ -82,10 +68,15 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
     </div><!--/.fluid-container-->
     
     <!-- JavaScript -->
+    <script type="text/javascript">
+      var aid = "";
+      var add = true;
+    </script>
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/load_action_form.js"></script>
     <script src="js/add_action.js"></script>
   </body>
 

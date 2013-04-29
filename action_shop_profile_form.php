@@ -77,33 +77,7 @@ if( $_POST[ 'numWorkers' ] != "" && !ctype_digit( $_POST[ 'numWorkers' ] ) ) {
 $mc = connect_to_database();
 
 /* If id is present, update existing shop profile. Otherwise insert new shop. */
-if( $_POST[ 'wid' ] ) {
-  /* Must have privilege level of 2 or greater to modify a shop profile */
-  if( $_SESSION[ 'privilege_level' ] < 2 ) {
-    alert_error( "You do not have the required privilege level to modify a shop profile." );
-  }
-
-  $wid = mysql_real_escape_string( $_POST[ 'wid' ] );
-  
-  /* Update existing shop profile */
-  $wname = mysql_real_escape_string( $_POST[ "wname" ] );
-  
-  $qs = "UPDATE workplaces
-         SET wname = '" . $wname . "'
-         WHERE wid = " . $wid;
-
-  $qr = execute_query( $qs, $mc );
-  
-  /* Get existing shop profile information */
-  $qs = "SELECT workplaces.*
-         FROM workplaces
-         LEFT JOIN workers ON workplaces.wid = workers.cid
-         WHERE workplaces.wid = " . $wid;
-  
-  $qr = execute_query( $qs, $mc );
-  
-  $shop_info = mysql_fetch_array( $qr );
-} else {
+if( $_POST[ 'add' ] ) {
   /* Must have privilege level of 1 or greater to add a shop profile */
   if( $_SESSION[ 'privilege_level' ] < 1 ) {
     alert_error( "You do not have the required privilege level to add a shop profile." );
@@ -129,6 +103,32 @@ if( $_POST[ 'wid' ] ) {
 
   $shop_info = mysql_fetch_array( $qr );
   $wid = $shop_info[ 'wid' ];
+} else {
+  /* Must have privilege level of 2 or greater to modify a shop profile */
+  if( $_SESSION[ 'privilege_level' ] < 2 ) {
+    alert_error( "You do not have the required privilege level to modify a shop profile." );
+  }
+
+  $wid = mysql_real_escape_string( $_POST[ 'wid' ] );
+  
+  /* Update existing shop profile */
+  $wname = mysql_real_escape_string( $_POST[ "wname" ] );
+  
+  $qs = "UPDATE workplaces
+         SET wname = '" . $wname . "'
+         WHERE wid = " . $wid;
+
+  $qr = execute_query( $qs, $mc );
+  
+  /* Get existing shop profile information */
+  $qs = "SELECT workplaces.*
+         FROM workplaces
+         LEFT JOIN workers ON workplaces.wid = workers.cid
+         WHERE workplaces.wid = " . $wid;
+  
+  $qr = execute_query( $qs, $mc );
+  
+  $shop_info = mysql_fetch_array( $qr );
 }
 
 /* Insert/update values */
@@ -352,14 +352,14 @@ if( $_POST[ "addWorkers" ] ) {
 }
 
 /* Return success */
-if( $_POST[ 'wid' ] ) { ?>
-  <div class="alert alert-success">
-    The workplace <?php echo( $wname );?> was successfully modified.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
-  </div>
-<?php } else { ?>
+if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success">
     The workplace <?php echo( $wname );?> was successfully added to the database.
     <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( 'form' ).each(function () { this.reset(); }); $( '.worker' ).each(function() { $( this ).remove(); }); $( '#add-worker-table' ).remove();">OK</button>
+  </div>
+<?php } else { ?>
+  <div class="alert alert-success">
+    The workplace <?php echo( $wname );?> was successfully modified.
+    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
   </div>
 <?php } ?>

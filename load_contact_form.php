@@ -270,7 +270,7 @@ if( $_GET[ 'add' ] ) {
   </div>
   
   <div class="span8">
-    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right">Delete</button>
+    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
   </div>
 </div>
 

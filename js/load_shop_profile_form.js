@@ -17,6 +17,7 @@ function shop_profile_form_handlers() {
         $( this ).click(function() {
           $( this ).parent().parent().remove();
         });
+        
         $( "#worker-table-body" ).append( $( this ).parent().parent() );
       });
     });
@@ -32,7 +33,6 @@ function shop_profile_form_handlers() {
   /* action buttons */
   $( "#save-button" ).click( submit_shop_profile_form );
   $( "#cancel-button" ).click( load_shop_profile_form );
-  $( "#delete-button" ).click( function() { $( "#delete-modal" ).modal( "show" ); });
   $( "#delete-confirm-button" ).click(function() {
     $.post( "action_delete_shop_profile.php", "wid=" + wid );
     window.location = "search_shop_profile.php";

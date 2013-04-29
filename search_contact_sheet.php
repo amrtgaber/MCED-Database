@@ -19,10 +19,12 @@ if( !$_SESSION[ 'username' ] ) {
 
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KC99 - Database Search for Contact Sheet</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/search_contact.css" rel="stylesheet">
     <link href="css/search_contact_sheet.css" rel="stylesheet">

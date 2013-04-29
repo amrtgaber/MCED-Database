@@ -26,7 +26,6 @@ function contact_sheet_form_handlers() {
   /* action buttons */
   $( "#save-button" ).click( submit_contact_sheet_form );
   $( "#cancel-button" ).click( load_contact_sheet_form );
-  $( "#delete-button" ).click( function() { $( "#delete-modal" ).modal( "show" ); });
   $( "#delete-confirm-button" ).click(function() {
     $.post( "action_delete_contact_sheet.php", "csid=" + csid );
     window.location = "search_contact_sheet.php";

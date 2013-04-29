@@ -201,7 +201,7 @@ if( $_GET[ 'add' ] ) {
             <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
             <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
             <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
-                $apt_no = "#" . $workers[ "apt_no" ];
+                $apt_no = " #" . $workers[ "apt_no" ];
               } else {
                 $apt_no = "";
               }
@@ -231,7 +231,7 @@ if( $_GET[ 'add' ] ) {
   </div>
   
   <div class="span8">
-    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right">Delete</button>
+    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
   </div>
 </div>
 
