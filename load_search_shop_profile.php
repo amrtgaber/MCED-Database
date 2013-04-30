@@ -37,6 +37,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         <th>Workplace Name</th>
         <th>Address</th>
         <th>Phone</th>
+        <th>Total Workers</th>
         <th>Contacted Workers</th>
         <th>L&As</th>
       </tr>
@@ -60,8 +61,24 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
               echo( $address ); ?>
             </td>
             <td><?php echo( $sinfo[ 'phone' ] ); ?></td>
-            <td><?php /* TODO: contacted workers */ ?></td>
-            <td><?php /* TODO: L&As */ ?></td>
+            <td><?php echo( $sinfo[ 'num_workers' ] ); ?></td>
+            <td><?php $qs = "SELECT workers.cid
+                             FROM workers
+                             WHERE workers.wid = " . $sinfo[ 'wid' ];
+                
+                $nqr = execute_query( $qs, $mc );
+                
+                echo( mysql_num_rows( $nqr ) ); ?>
+            </td>
+            <td><?php $qs = "SELECT contact_action.cid
+                             FROM contact_action
+                               RIGHT JOIN workers ON contact_action.cid = workers.cid AND workers.wid = " . $sinfo[ 'wid' ] . "
+                             WHERE contact_action.aid = 1003";
+                
+                $nqr = execute_query( $qs, $mc );
+                
+                echo( mysql_num_rows( $nqr ) ); ?>
+            </td>
           </tr>
         <?php } ?>
       </tbody>
