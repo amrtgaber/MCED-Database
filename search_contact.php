@@ -37,8 +37,7 @@ if( !$_SESSION[ 'username' ] ) {
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -50,39 +49,33 @@ if( !$_SESSION[ 'username' ] ) {
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
-                  <input type="text" id="firstName" name="firstName" class="span12 search-query" placeholder="First Name">
+                  <input type="text" id="firstName" name="firstName" class="span12 search-query mobile-style" placeholder="First Name">
                 </div>
                 
                 <div class="span3">
-                  <input type="text" id="lastName" name="lastName" class="span12 search-query" placeholder="Last Name">
+                  <input type="text" id="lastName" name="lastName" class="span12 search-query mobile-style" placeholder="Last Name">
                 </div>
                 
-                <button type="submit" class="btn btn-info span1" id="search-button"><i class="icon-search"></i></button>
-                <button type="button" class="btn span1" id="clear-button">Clear</button>
+                <button type="submit" class="btn btn-info span1 mobile-style" id="search-button"><i class="icon-search"></i></button>
+                <button type="button" class="btn span1 mobile-style" id="clear-button">Clear</button>
                 
                 <div class="span4">
-                  <a href="add_contact.php" class="btn btn-primary span4 pull-right">Add Contact</a>
+                  <a href="add_contact.php" class="btn btn-primary span4 pull-right mobile-style">Add Contact</a>
                 </div>
               </form>
             </div>
           </div>
           
           <div id="search-results"></div>
-        </div><!--/.span9-->
+        </div>
         
         <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar">
-            </div>
-          </div>
-        </div>
-      </div><!--/.row-fluid-->
+        <div class="span3" id="sidebar"></div>
+      </div>
 
       <!-- Footer -->
-      <div id="footer">
-      </div>
-    </div><!--/.fluid-container-->
+      <div id="footer"></div>
+    </div>
     
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>

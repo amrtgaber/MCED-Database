@@ -42,8 +42,7 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -66,7 +65,7 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
               <button type="submit" class="btn btn-primary btn-large btn-danger">Remove</button>
             </div>
           </form>
-        </div><!--/.span9-->
+        </div>
           
         <div id="modal" class="modal hide fade">
           <div class="modal-header">
@@ -84,18 +83,12 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
         </div>
         
         <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar">
-            </div>
-          </div>
-        </div>
-      </div><!--/.row-fluid-->
+        <div class="span3" id="sidebar"></div>
+      </div>
 
       <!-- Footer -->
-      <div id="footer">
-      </div>
-    </div><!--/.fluid-container-->
+      <div id="footer"></div>
+    </div>
     
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>

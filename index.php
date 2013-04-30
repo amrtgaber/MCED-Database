@@ -38,7 +38,7 @@ if( !$_SESSION[ 'username' ] ) {
     <div id="navbar"></div>
 
     <div class="container-fluid">
-      <div class="row-fluid">
+      <div class="row-fluid" style="text-align: center;">
         <!-- Main Menu -->
         <div class="span9">
           <div class="row-fluid">
@@ -84,11 +84,7 @@ if( !$_SESSION[ 'username' ] ) {
         </div><!--Main Menu-->
         
         <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar"></div>
-          </div>
-        </div>
+        <div class="span3" id="sidebar"></div>
       </div>
 
       <!-- Footer -->

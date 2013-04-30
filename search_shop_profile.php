@@ -43,8 +43,7 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -56,14 +55,14 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
-                  <input type="text" id="wname" name="wname" class="span12 search-query" placeholder="Workplace">
+                  <input type="text" id="wname" name="wname" class="span12 search-query mobile-style" placeholder="Workplace">
                 </div>
                 
-                <button type="submit" class="btn btn-info span1" id="search-button"><i class="icon-search"></i></button>
-                <button type="button" class="btn span1" id="clear-button">Clear</button>
+                <button type="submit" class="btn btn-info span1 mobile-style" id="search-button"><i class="icon-search"></i></button>
+                <button type="button" class="btn span1 mobile-style" id="clear-button">Clear</button>
                 
                 <div class="span7">
-                  <a href="add_shop_profile.php" class="btn btn-primary span3 pull-right">Add Shop Profile</a>
+                  <a href="add_shop_profile.php" class="btn btn-primary span3 pull-right mobile-style">Add Shop Profile</a>
                 </div>
               </form>
             </div>
@@ -73,18 +72,12 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
         </div>
         
         <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar">
-            </div>
-          </div>
-        </div>
-      </div><!--/.row-fluid-->
+        <div class="span3" id="sidebar"></div>
+      </div>
 
       <!-- Footer -->
-      <div id="footer">
-      </div>
-    </div><!--/.fluid-container-->
+      <div id="footer"></div>
+    </div>
     
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>

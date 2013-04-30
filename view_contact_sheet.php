@@ -40,8 +40,7 @@ include( "common.php" ); ?>
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -49,21 +48,15 @@ include( "common.php" ); ?>
         <div class="span9">
           <legend>View Contact Sheet</legend>
           <form id="contact-sheet-form"></form>
-        </div><!-- body -->
+        </div>
         
         <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar">
-            </div>
-          </div>
-        </div>
-      </div><!--/.row-fluid-->
+        <div class="span3" id="sidebar"></div>
+      </div>
 
       <!-- Footer -->
-      <div id="footer">
-      </div>
-    </div><!--/.fluid-container-->
+      <div id="footer"></div>
+    </div>
     
     <!-- JavaScript -->
     <script type="text/javascript">

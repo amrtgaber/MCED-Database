@@ -8,6 +8,10 @@ body {
   body {
     padding-top: 0;
   }
+  
+  .mobile-style{
+    margin-bottom: 20px;
+  }
 }
 
 .sidebar-nav {

@@ -42,8 +42,7 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -58,7 +57,7 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
               <h2>Remove user</h2>
               <p>Select this option if you'd like to remove a user.</p>
             </div>
-          </div><!--/.row-fluid-->
+          </div>
 
           <div class="row-fluid">
             <div class="span6">
@@ -67,22 +66,16 @@ if( $_SESSION[ 'privilege_level' ] < 4 ) {
             <div class="span6">
               <button class="btn btn-large btn-primary" type="button" id="remove-user">Remove User &raquo;</button>
             </div>
-          </div><!--./row-fluid-->
-        </div><!--/.span9-->
-
-        <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar">
-            </div>
           </div>
         </div>
-      </div><!--/.row-fluid-->
+
+        <!-- Sidebar -->
+        <div class="span3" id="sidebar"></div>
+      </div>
 
       <!-- Footer -->
-      <div id="footer">
-      </div>
-    </div><!--/.fluid-container-->
+      <div id="footer"></div>
+    </div>
     
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>

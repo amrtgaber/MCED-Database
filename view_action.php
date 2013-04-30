@@ -40,8 +40,7 @@ include( "common.php" ); ?>
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid">
@@ -52,17 +51,11 @@ include( "common.php" ); ?>
         </div>
         
         <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar">
-            </div>
-          </div>
-        </div>
+        <div class="span3" id="sidebar"></div>
       </div>
 
       <!-- Footer -->
-      <div id="footer">
-      </div>
+      <div id="footer"></div>
     </div>
     
     <!-- JavaScript -->

@@ -34,8 +34,7 @@ if( !$_SESSION[ 'username' ] ) {
   </head>
 
   <body>
-    <div id="navbar">
-    </div>
+    <div id="navbar"></div>
 
     <div class="container-fluid">
       <div class="row-fluid"> 
@@ -207,16 +206,11 @@ if( !$_SESSION[ 'username' ] ) {
               </form>
             </div>
           </div>    
-        </div><!--/.span9-->
+        </div>
         
         <!-- Sidebar -->
-        <div class="span3">
-          <div class="well sidebar-nav">
-            <div id="sidebar">
-            </div>
-          </div>
-        </div>
-      </div><!--/.row-fluid-->
+        <div class="span3" id="sidebar"></div>
+      </div>
       
       <div class="row-fluid">
         <div id="list" class="span12">
@@ -259,9 +253,8 @@ if( !$_SESSION[ 'username' ] ) {
       </div>
 
       <!-- Footer -->
-      <div id="footer">
-      </div>
-    </div><!--/.fluid-container-->
+      <div id="footer"></div>
+    </div>
     
     <!-- JavaScript -->
 		<script src="js/jquery-1.8.2.min.js"></script>

@@ -264,14 +264,9 @@ if( $_GET[ 'add' ] ) {
 </div>
 
 <div class="row-fluid">
-  <div class="span4">
-    <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
-    <button type="button" id="cancel-button" class="btn btn-inverse btn-large pull-right">Cancel</button>
-  </div>
-  
-  <div class="span8">
-    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
-  </div>
+  <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
+  <button type="button" id="cancel-button" class="btn btn-inverse btn-large">Cancel</button>
+  <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
 </div>
 
 <div id="delete-modal" class="modal hide fade">
