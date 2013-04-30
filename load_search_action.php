@@ -44,7 +44,14 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         while( $ainfo = mysql_fetch_array( $qr ) ) { ?>
           <tr>
             <td><a href="view_action.php?aid=<?php echo( $ainfo[ 'aid' ] ); ?>" class="action" data-aid="<?php echo( $ainfo[ 'aid' ] ); ?>"><?php echo( $ainfo[ 'aname' ] ); ?></a></td>
-            <td><?php /* TODO: Number of Contacts */ ?></td>
+            <td><?php $qs = "SELECT contact_action.cid
+                             FROM contact_action
+                             WHERE aid = " . $ainfo[ 'aid' ];
+                
+                $nqr = execute_query( $qs, $mc );
+                
+                echo( mysql_num_rows( $nqr ) ); ?>
+            </td>
           </tr>
         <?php } ?>
       </tbody>
