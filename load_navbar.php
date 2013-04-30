@@ -23,9 +23,10 @@ if( !$_SESSION[ 'username' ] ) {
         <span class="icon-bar"></span>
       </button>
       
+      <a class="brand" href="index.php">Database</a>
+      
       <div class="nav-collapse collapse">
         <ul class="nav">
-          <li><a class="brand" href="index.php">Database</a></li>
           <li><a href="search_contact.php">Contacts</a></li>
           <li><a href="search_contact_sheet.php">Contact Sheets</a></li>
           <li><a href="search_shop_profile.php">Shop Profiles</a></li>

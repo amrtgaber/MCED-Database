@@ -3,12 +3,13 @@ body {
   padding-bottom: 40px;
 }
 
-.sidebar-nav {
-  padding: 9px 9px;
+/* eliminates white space above navbar on mobile */
+@media (max-width: 979px) {
+  body {
+    padding-top: 0;
+  }
 }
 
-.action-contact-ul
-{
-  list-style:none;
-  margin:0;
+.sidebar-nav {
+  padding: 9px 9px;
 }
