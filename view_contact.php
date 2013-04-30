@@ -51,7 +51,25 @@ include( "common.php" ); ?>
         </div>
         
         <!-- Sidebar -->
-        <div class="span3" id="sidebar"></div>
+        <div class="span3">
+          <div id="sidebar"></div>
+          <ul class="nav nav-list well">
+            <li class="nav-header">Contact Sheets</li>
+            <?php $mc = connect_to_database();
+              
+              $csqs = "SELECT contact_sheet.id,
+                              contact_sheet.cs_date
+                       FROM contact_sheet
+                       WHERE contact_sheet.cid = " . $_GET[ 'id' ] . "
+                       ORDER BY contact_sheet.cs_date DESC";
+
+              $csqr = execute_query( $csqs, $mc );
+              
+              while( $csinfo = mysql_fetch_array( $csqr ) ) { ?>
+                <li><a href="view_contact_sheet.php?csid=<?php echo( $csinfo[ 'id' ] ); ?>"><?php echo( $csinfo[ 'cs_date' ] ); ?></a></li>
+              <?php } ?>
+          </ul>
+        </div>
       </div>
 
       <!-- Footer -->
