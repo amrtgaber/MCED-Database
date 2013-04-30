@@ -9,8 +9,8 @@ body {
     padding-top: 0;
   }
   
-  .mobile-style{
-    margin-bottom: 20px;
+  .mobile-style {
+    margin-bottom: 20px !important;
   }
 }
 
