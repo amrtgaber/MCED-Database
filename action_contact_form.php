@@ -484,14 +484,12 @@ if( $_POST[ 'syear' ] ) {
 /* Return success */
 if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success">
-    <div class="row-fluid">
-  The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully added to the database.
-  <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();  $( 'form' ).each(function () { this.reset(); }); $( '.action-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } });">OK</button>
-    </div>
-    
-    <div class="row-fluid">
-      Add contact sheet <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-info">+</a>
-    </div>
+    The contact <?php echo( $firstname . ' ' . $lastname );?> was successfully added to the database.
+    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();  $( 'form' ).each(function () { this.reset(); }); $( '.action-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } });">OK</button>
+  </div>
+  
+  <div class="alert alert-info">
+    Add contact sheet <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-info">+</a>
   </div>
 <?php } else { ?>
   <div class="alert alert-success">
