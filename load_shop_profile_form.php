@@ -138,15 +138,15 @@ if( $_GET[ 'add' ] ) {
     <div class="span1">Add Worker</div>
 
     <div class="span3">
-        <input type="text" id="firstName" name="firstName" class="span12 search-query mobile-style" placeholder="First Name">
+        <input type="text" id="firstName" name="firstName" class="span12 search-query mobile-search" placeholder="First Name">
     </div>
     
     <div class="span3">
-        <input type="text" id="lastName" name="lastName" class="span12 search-query mobile-style" placeholder="Last Name">
+        <input type="text" id="lastName" name="lastName" class="span12 search-query mobile-search" placeholder="Last Name">
     </div>
     
-    <button type="button" class="btn btn-info span1 mobile-style" id="add-worker-search-button"><i class="icon-search"></i></button>
-    <button type="button" class="btn span1 mobile-style" id="add-worker-clear-button">Clear</button>
+    <button type="button" class="btn btn-info span1 mobile-search" id="add-worker-search-button"><i class="icon-search"></i></button>
+    <button type="button" class="btn span1 mobile-search" id="add-worker-clear-button">Clear</button>
   </div>
 </div>
   

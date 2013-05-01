@@ -48,15 +48,15 @@ if( !$_SESSION[ 'username' ] ) {
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
-                  <input type="text" id="firstName" name="firstName" class="span12 search-query mobile-style" placeholder="First Name">
+                  <input type="text" id="firstName" name="firstName" class="span12 search-query mobile-search" placeholder="First Name">
                 </div>
                 
                 <div class="span3">
-                  <input type="text" id="lastName" name="lastName" class="span12 search-query mobile-style" placeholder="Last Name">
+                  <input type="text" id="lastName" name="lastName" class="span12 search-query mobile-search" placeholder="Last Name">
                 </div>
                 
-                <button type="submit" class="btn btn-info span1 mobile-style" id="search-button"><i class="icon-search"></i></button>
-                <button type="button" class="btn span1 mobile-style" id="clear-button">Clear</button>
+                <button type="submit" class="btn btn-info span1 mobile-search" id="search-button"><i class="icon-search"></i></button>
+                <button type="button" class="btn span1 mobile-search" id="clear-button">Clear</button>
               </form>
             </div>
           </div>

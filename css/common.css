@@ -9,8 +9,12 @@ body {
     padding-top: 0;
   }
   
-  .mobile-style {
+  .mobile-search {
     margin-bottom: 20px !important;
+  }
+  
+  textarea:focus {
+    height: 300px;
   }
 }
 
