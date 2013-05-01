@@ -77,7 +77,7 @@ if( !$_SESSION[ 'username' ] ) {
                 <!-- Users -->
                 <h2>Users</h2>
                 <p>Search, add, edit, or delete users.</p>
-                <p><a href="manage_users.php" class="btn btn-large btn-primary">Users &raquo;</a></p>
+                <p><a href="search_user.php" class="btn btn-large btn-primary">Users &raquo;</a></p>
               </div>
             </div>
           <?php } ?>

@@ -1,10 +1,8 @@
 <?php
-/* File: search_contact.php
+/* File: search_user.php
  * Author: Amr Gaber
- * Created: 18/11/2012
- * Modified: 02/17/2013
- * Modified By: Bryan Dorsey
- * Description: Handles searching for a contact for KC99 database.
+ * Created: 2013/5/1
+ * Description: Handles searching for a user for KC99 database.
  */
 
 /* Must be logged in to access this page */
@@ -22,13 +20,13 @@ if( !$_SESSION[ 'username' ] ) {
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KC99 - Database Search for Contact</title>
+    <title>KC99 - Database Search for User</title>
 
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
-    <link href="css/search_contact.css" rel="stylesheet">
+    <link href="css/search_user.css" rel="stylesheet">
       
     <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
     <!--[if lt IE 9]>
@@ -43,24 +41,20 @@ if( !$_SESSION[ 'username' ] ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-          <legend>Search Contact</legend>
+          <legend>Search User</legend>
 
           <div class="well">
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
-                  <input type="text" id="firstName" name="firstName" class="span12 search-query mobile-search" placeholder="First Name">
-                </div>
-                
-                <div class="span3">
-                  <input type="text" id="lastName" name="lastName" class="span12 search-query mobile-search" placeholder="Last Name">
+                  <input type="text" id="username" name="username" class="span12 search-query mobile-search" placeholder="Username">
                 </div>
                 
                 <button type="submit" class="btn btn-info span1 mobile-search" id="search-button"><i class="icon-search"></i></button>
                 <button type="button" class="btn span1 mobile-search" id="clear-button">Clear</button>
                 
-                <div class="span4">
-                  <a href="add_contact.php" class="btn btn-primary span5 pull-right mobile-search">Add Contact</a>
+                <div class="span7">
+                  <a href="add_user.php" class="btn btn-primary span3 pull-right mobile-search">Add User</a>
                 </div>
               </form>
             </div>
@@ -82,8 +76,7 @@ if( !$_SESSION[ 'username' ] ) {
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.validate.min.js"></script>
     <script src="js/common.js"></script>
-    <script src="js/search_contact.js"></script>
+    <script src="js/search_user.js"></script>
   </body>
 
 </html>
-
