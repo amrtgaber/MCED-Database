@@ -53,7 +53,7 @@ include( "common.php" ); ?>
         <!-- Sidebar -->
         <div class="span3">
           <div id="sidebar"></div>
-          <ul class="nav nav-list well">
+          <ul class="well">
             <li class="nav-header">Contact Sheets</li>
             <?php $mc = connect_to_database();
               
@@ -68,6 +68,7 @@ include( "common.php" ); ?>
               while( $csinfo = mysql_fetch_array( $csqr ) ) { ?>
                 <li><a href="view_contact_sheet.php?csid=<?php echo( $csinfo[ 'id' ] ); ?>"><?php echo( $csinfo[ 'cs_date' ] ); ?></a></li>
               <?php } ?>
+              <li><a href="add_contact_sheet.php?csid=<?php echo( $_GET[ 'id' ] ); ?>" class="btn btn-info">+</a></li>
           </ul>
         </div>
       </div>
