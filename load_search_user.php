@@ -39,7 +39,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php
         while( $uinfo = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><a href="view_user.php?id=<?php echo( $uinfo[ 'id' ] ); ?>" class="user"><?php echo( $uinfo[ 'username' ] ); ?></a></td>
+            <td><a href="view_user.php?uid=<?php echo( $uinfo[ 'id' ] ); ?>" class="user"><?php echo( $uinfo[ 'username' ] ); ?></a></td>
           </tr>
         <?php } ?>
       </tbody>

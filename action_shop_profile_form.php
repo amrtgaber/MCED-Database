@@ -355,11 +355,11 @@ if( $_POST[ "addWorkers" ] ) {
 if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success">
     The workplace <?php echo( $wname );?> was successfully added to the database.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( 'form' ).each(function () { this.reset(); }); $( '.worker' ).each(function() { $( this ).remove(); }); $( '#add-worker-table' ).remove();">OK</button>
+    <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide(); $( '#shop-profile-form' ).each(function () { this.reset(); }); $( '.worker' ).each(function() { $( this ).remove(); }); $( '#add-worker-table' ).remove();">OK</button>
   </div>
 <?php } else { ?>
   <div class="alert alert-success">
     The workplace <?php echo( $wname );?> was successfully modified.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
+    <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide();">OK</button>
   </div>
 <?php } ?>

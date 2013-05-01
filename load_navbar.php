@@ -31,6 +31,9 @@ if( !$_SESSION[ 'username' ] ) {
           <li><a href="search_contact_sheet.php">Contact Sheets</a></li>
           <li><a href="search_shop_profile.php">Shop Profiles</a></li>
           <li><a href="search_action.php">Actions</a></li>
+          <?php if( $_SESSION[ 'privilege_level' ] > 3 ) { ?>
+            <li><a href="search_user.php">Users</a></li>
+          <?php } ?>
         </ul>
         
         <ul class="nav pull-right">

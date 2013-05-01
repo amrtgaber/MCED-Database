@@ -2,56 +2,6 @@ var v;
 
 /* set up form handlers */
 function user_form_handlers() {
-  /* change password submit handler */
-  $( "#change-password-submit-button" ).click(function() {
-    $( "#change-password-form-status" ).addClass( "alert" );
-    $( "#change-password-form-status" ).addClass( "alert-error" );
-    
-    if( $( "#newPassword" ).val() != $( "#changePassword" ).val() ) {
-      $( "#change-password-form-status" ).html( "Passwords must match." );
-      $( "#change-password-form-status" ).show();
-    } else if( $( "#newPassword" ).val().length == 0 ) {
-      $( "#change-password-form-status" ).html( "Both fields are required." );
-      $( "#change-password-form-status" ).show();
-    } else {
-      $( "#change-password-form-status" ).html( "" );
-      $( "#change-password-form-status" ).removeClass( "alert" );
-      $( "#change-password-form-status" ).removeClass( "alert-error" );
-      $( "#change-password-form-status" ).removeClass( "alert-success" );
-      
-      /* generate post request string */
-      var cpPostString = $( "#change-password-form" ).serialize()
-                         + "&uid=" + uid;
-      $.post(
-        "action_change_password.php",
-        cpPostString,
-        function( data, textStatus, jqXHR ) {
-          $( "#change-password-form-status" ).html( jqXHR.responseText );
-          $( "#change-password-form-status" ).show();
-        }
-        ).fail(function( data, textStatus, jqXHR ) {
-          $( "#change-password-form-status" ).addClass( "alert alert-error" );
-          $( "#change-password-form-status" ).html( "There was an unknown error in the server. "
-            + "If you get this error more than once, "
-            + "please try again later or contact jalhaj@mc-ed.org." );
-          $( "#change-password-form-status" ).show();
-        }
-        ).always(function( data, textStatus, jqXHR ) {
-          /* Debug */
-          console.log( "Sent     --> " + cpPostString );
-          console.log( "Received --> " + jqXHR.responseText );
-      });
-    }
-  });
-  
-  /* change password clear handler */
-  $( "#change-password-clear-button" ).click(function() {
-    $( "#newPassword" ).val( "" );
-    $( "#confirmPassword" ).val( "" );
-    $( "#change-password-form-status" ).hide();
-    $( "#change-password-form-status" ).html( "" );
-  });
-  
   /* action buttons */
   $( "#save-button" ).click( submit_user_form );
   $( "#cancel-button" ).click( load_user_form );
@@ -63,7 +13,7 @@ function user_form_handlers() {
 
 /* Validate form */
 function validate_user_form() {
-  var v = $( "#user-form" ).validate({
+  v = $( "#user-form" ).validate({
     rules: {
       username: {
         required: true,
@@ -112,7 +62,7 @@ function submit_user_form() {
                      + "&add=" + add;
 
   $.post(
-    "action_add_user.php",
+    "action_user_form.php",
     postString,
     function( data, textStatus, jqXHR ) {
       $( "#user-form-status" ).html( jqXHR.responseText );

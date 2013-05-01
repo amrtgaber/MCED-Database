@@ -25,7 +25,7 @@ if( $_GET[ 'add' ] ) {
   $uid = mysql_real_escape_string( $_GET[ 'uid' ] );
 
   /* Get contact information */
-  $qs = "SELECT username.*,
+  $qs = "SELECT users.*
          FROM users
          WHERE users.id = " . $uid;
   
@@ -33,6 +33,7 @@ if( $_GET[ 'add' ] ) {
 
   $uinfo = mysql_fetch_array( $qr );
 } ?>
+
 <div class="well">
   <div class="row-fluid">
     <div class="span1">Username</div>
@@ -42,27 +43,19 @@ if( $_GET[ 'add' ] ) {
              placeholder="Type username here">
     </div>
   </div>
-</div>
-
-<form id="change-password-form" class="well">
-  <h5>Change Password</h5>
-  <div class="row-fluid">
-    <div class="span4">
-      <input type="password" id="newPassword" name="newPassword" class="span12" placeholder="Type new password here">
-    </div>
-
-    <div class="span4">
-      <input type="password" id="confirmPassword" name="confirmPassword" class="span12" placeholder="Re-type new password here">
-    </div>
-    
-    <button type="button" class="btn btn-info span1 mobile-search" id="change-password-submit-button"><i class="icon-refresh"></i></button>
-    <button type="button" class="btn span1 mobile-search" id="change-pasword-clear-button">Clear</button>
-  </div>
   
   <div class="row-fluid">
-  <div id="change-password-form-status" class="hide"></div>
+    <div class="span1">New Password</div>
+    <div class="span5">
+      <input type="password" name="newPassword" class="span12" placeholder="Type new password here" <?php if( $_GET[ "add" ] ) { echo( "required" ); } ?>>
+    </div>
+    
+    <div class="span1">Confirm Password</div>
+    <div class="span5">
+      <input type="password" name="confirmPassword" class="span12" placeholder="Re-type new password here" <?php if( $_GET[ "add" ] ) { echo( "required" ); } ?>>
+    </div>
   </div>
-</form>
+</div>
 
 <div class="well">
   <div class="row-fluid">
@@ -98,6 +91,3 @@ if( $_GET[ 'add' ] ) {
     <button type="button" class="btn btn-inverse" data-dismiss="modal">Cancel</button>
   </div>
 </div>
-
-              
-
