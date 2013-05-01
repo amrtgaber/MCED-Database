@@ -28,6 +28,8 @@ function validate_user_form() {
     },
     errorPlacement: function( error, element ) {
       error.appendTo( $( "#user-form-status" ) );
+      $( "#user-form-status" ).addClass( "alert" );
+      $( "#user-form-status" ).addClass( "alert-error" );
       $( "#user-form-status" ).show();
     },
     success: function() {

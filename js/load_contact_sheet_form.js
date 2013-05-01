@@ -67,6 +67,8 @@ function validate_contact_sheet_form() {
     },
     errorPlacement: function( error, element ) {
       error.appendTo( $( "#contact-sheet-form-status" ) );
+      $( "#contact-sheet-form-status" ).addClass( "alert" );
+      $( "#contact-sheet-form-status" ).addClass( "alert-error" );
       $( "#contact-sheet-form-status" ).show();
     },
     success: function() {

@@ -106,6 +106,8 @@ function validate_shop_profile_form() {
     },
     errorPlacement: function( error, element ) {
       error.appendTo( $( "#shop-profile-form-status" ) );
+      $( "#shop-profile-form-status" ).addClass( "alert" );
+      $( "#shop-profile-form-status" ).addClass( "alert-error" );
       $( "#shop-profile-form-status" ).show();
     },
     success: function() {

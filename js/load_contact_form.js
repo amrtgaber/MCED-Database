@@ -64,6 +64,10 @@ function validate_contact_form() {
         minlength: 2,
         maxlength: 2,
         digits: true
+      },
+      date: {
+        required: true,
+        date: true
       }
     },
     messages: {
@@ -102,10 +106,16 @@ function validate_contact_form() {
         minlength: "School year must be exactly 2 digits long.",
         maxlength: "School year must be exactly 2 digits long.",
         digits: "School year can only contain digits."
+      },
+      date: {
+        required: "Date is a required field.",
+        date: "Date must be a valid date (yyyy-mm-dd)."
       }
     },
     errorPlacement: function( error, element ) {
       error.appendTo( $( "#contact-form-status" ) );
+      $( "#contact-form-status" ).addClass( "alert" );
+      $( "#contact-form-status" ).addClass( "alert-error" );
       $( "#contact-form-status" ).show();
     },
     success: function() {
