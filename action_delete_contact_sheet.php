@@ -16,11 +16,6 @@ if( !$_SESSION[ 'username' ] ) {
   alert_error( "You must be logged in to delete a contact shee." );
 }
 
-/* Must have privilege level of 3 or greater to access this page */
-if( $_SESSION[ 'privilege_level' ] < 3 ) {
-  alert_error( "You do not have the required privilege level to delete a contact sheet." );
-}
-
 /* get csid */
 $csid = mysql_real_escape_string( $_POST[ 'csid' ] );
 

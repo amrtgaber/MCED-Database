@@ -16,11 +16,6 @@ if( !$_SESSION[ 'username' ] ) {
   alert_error( "You must be logged in to delete a shop profile." );
 }
 
-/* Must have privilege level of 3 or greater to access this page */
-if( $_SESSION[ 'privilege_level' ] < 3 ) {
-  alert_error( "You do not have the required privilege level to delete an action." );
-}
-
 /* get aid */
 $aid = mysql_real_escape_string( $_POST[ 'aid' ] );
 
