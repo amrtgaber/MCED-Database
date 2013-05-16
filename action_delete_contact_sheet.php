@@ -8,12 +8,9 @@
 include( "db_credentials.php" );
 include( "common.php" );
 
-/* Start a new session or continue an existing one */
-session_start();
-
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
-  alert_error( "You must be logged in to delete a contact shee." );
+  alert_error( "You must be logged in to delete a contact sheet." );
 }
 
 /* get csid */

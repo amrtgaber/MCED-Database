@@ -5,9 +5,6 @@
  * Description: Handles logging in users for KC99 database.
  */
 
-/* Start a new session or continue an existing one */
-session_start();
-
 $username = mysql_real_escape_string( $_POST[ 'username' ] );
 $password = hash( "sha256", $_POST[ 'password' ] );
 

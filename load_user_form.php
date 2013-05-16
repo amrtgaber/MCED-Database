@@ -5,16 +5,14 @@
  * Description: Handles adding a user to KC99 database.
  */
 
-/* Must be logged in to access this page */
-session_start();
+include( "db_credentials.php" );
+include( "common.php" );
 
+/* Must be logged in to continue */
 if( !$_SESSION[ 'username' ] ) {
   header( 'Location: login.php' );
   exit;
 }
-
-include( "db_credentials.php" );
-include( "common.php" );
 
 /* Connect to database */
 $mc = connect_to_database();

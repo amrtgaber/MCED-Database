@@ -5,16 +5,13 @@
  * Description: Handles searching for actions and their corresponding contacts in the KC99 database.
  */
 
-/* Must be logged in to access this page */
-session_start();
+include( "db_credentials.php" );
+include( "common.php" );
 
 if( !$_SESSION[ 'username' ] ) {
   header( 'Location: login.php' );
   exit;
 }
-
-include( "db_credentials.php" );
-include( "common.php" );
 
 /* Connect to database */
 $mc = connect_to_database(); ?>

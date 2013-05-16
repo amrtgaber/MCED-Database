@@ -4,9 +4,8 @@
  * Created: 20/10/2012
  * Description: Loads the sidebar logo.
  */
-
-/* Start a new session or continue an existing one */
-session_start();
+ 
+include( 'common.php' );
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {

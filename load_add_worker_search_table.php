@@ -5,17 +5,14 @@
  * Description: Returns add worker search results table for modify shop profile.
  */
 
-/* Start a new session or continue an existing one */
-session_start();
+include( "db_credentials.php" );
+include( "common.php" );
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
   header( "Location: login.php" );
   exit;
 }
-
-include( "db_credentials.php" );
-include( "common.php" );
 
 /* First Name and Last Name */
 $firstname = mysql_real_escape_string( strtolower( $_GET[ 'firstName' ] ) );

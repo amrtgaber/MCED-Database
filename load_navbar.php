@@ -4,9 +4,8 @@
  * Created: 2012/10/20
  * Description: Loads the navbar.
  */
-
-/* Start a new session or continue an existing one */
-session_start();
+ 
+include( 'common.php' );
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {

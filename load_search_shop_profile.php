@@ -5,17 +5,14 @@
  * Description: Displays a table of shops selectable by a radio button.
  */
 
-/* Start a new session or continue an existing one */
-session_start();
+include( "db_credentials.php" );
+include( "common.php" );
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
   header( "Location: login.php" );
   exit;
 }
-
-include( "db_credentials.php" );
-include( "common.php" );
 
 /* Connect to database */
 $mc = connect_to_database();

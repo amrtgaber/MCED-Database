@@ -5,9 +5,6 @@
  * Description: Handles deleting a user from the KC99 database.
  */
 
-/* Start a new session or continue an existing one */
-session_start();
-
 include( "db_credentials.php" );
 include( "common.php" );
 

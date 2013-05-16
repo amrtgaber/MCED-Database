@@ -5,9 +5,6 @@
  * Description: Handles adding or updating users into KC99 database.
  */
 
-/* Start a new session or continue an existing one */
-session_start();
-
 include( "db_credentials.php" );
 include( "common.php" );
 

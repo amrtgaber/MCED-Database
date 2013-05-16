@@ -5,17 +5,14 @@
  * Description: Shows user for KC99 database.
  */
 
-/* Start a new session or continue an existing one */
-session_start();
+include( "db_credentials.php" );
+include( "common.php" );
 
 /* Must be logged in for this to work */
 if( !$_SESSION[ 'username' ] ) {
   header( "Location: login.php" );
   exit;
-}
-
-include( "db_credentials.php" );
-include( "common.php" ); ?>
+} ?>
 
 <!DOCTYPE html>
 

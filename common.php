@@ -4,6 +4,10 @@
  * Created: 20/10/2012
  * Description: Common functions and data for kc99 database.
  */
+ 
+/* Start a new session or continue an existing one */
+session_set_cookie_params( 3600 );
+session_start();
 
 /* execute_query */
 function execute_query( $query_string, $mysql_connection ) {
