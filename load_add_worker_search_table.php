@@ -78,4 +78,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php } ?>
     </tbody>
   </table>
-<?php } ?>
+<?php
+} else {
+  alert_error( "No results found." );
+}
