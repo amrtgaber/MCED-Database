@@ -306,77 +306,64 @@ if( $_POST[ 'email' ] ) {
   }
 }
 
-/* Worker information */
-$hasWorkerInfo = false;
+/* Workplace information */
+if( $_POST[ 'workplaces' ] ) {
+  $workplaces = explode( ",", $_POST[ "workplaces" ] );
+  $wages = explode( ",", $_POST[ "wages" ] );
 
-/* workplace */
-if( $_POST[ 'wid' ] ) {
-  $wid = mysql_real_escape_string( $_POST[ 'wid' ] );
-
-  if( $hasWorkerInfo || !is_null( $cinfo[ 'wid' ] ) ) {
-    $qs = "UPDATE workers
-           SET wid = " . $wid . "
-           WHERE cid = " . $id;
-  } else {
-    $qs = "INSERT INTO workers
-          ( cid, wid )
-          VALUES ( " . $id . ", " . $wid . " )";
-  }
-
-  $qr = execute_query( $qs, $mc );
+  for( $idx = 0, $sz = count( $workplaces ); $idx < $sz; $idx++ ) {
+    $wid = mysql_real_escape_string( $workplaces[ $idx ] );
+    $wage = mysql_real_escape_string( $wages[ $idx ]  );
     
-  $hasWorkerInfo = true;
-} else {
-  if( $cinfo[ 'wid' ] != 0 ) {
-    $qs = "UPDATE workers
-           SET wid = 0
-           WHERE cid = " . $id;
+    if( $wage == "" ) {
+      $wage = "NULL";
+    }
 
-    $qr = execute_query( $qs, $mc );
-  }
-}
-
-/* Wage */
-if( $_POST[ 'dollars' ] ) {
-  if( $_POST[ 'cents' ] ) {
-    /* dollars and cents */
-    $wage = mysql_real_escape_string( $_POST[ 'dollars' ] )
-            . "."
-            . mysql_real_escape_string( $_POST[ 'cents' ] );
-  } else {
-    /* dollars only */
-    $wage = mysql_real_escape_string( $_POST[ 'dollars' ] );
-  }
-
-  if( $hasWorkerInfo || !is_null( $cinfo[ 'wage' ] ) ) {
-    $qs = "UPDATE workers
-           SET wage = " . $wage . "
-           WHERE cid = " . $id;
-  } else {
-    $qs = "INSERT INTO workers
-          ( cid, wage )
-          VALUES ( " . $id . ", " . $wage . " )";
-  }
-
-  $qr = execute_query( $qs, $mc );
+    /* If wid exists don't insert just update wage */
+    $qs = "SELECT wid
+           FROM workers
+           WHERE wid = " . $wid . " AND cid = " . $id;
     
-  $hasWorkerInfo = true;
-} else {
-  if( !is_null( $cinfo[ 'wage' ] ) ) {
-    $qs = "UPDATE workers
-           SET wage = NULL
-           WHERE cid = " . $id;
+    $wqr = execute_query( $qs, $mc );
+    
+    if( mysql_num_rows( $wqr ) == 0 ) {
+      $qs = "INSERT INTO workers
+          ( cid, wid, wage )
+          VALUES
+          ( " . $id . ", " . $wid . ", " . $wage . " )";
 
-    $qr = execute_query( $qs, $mc );
+      execute_query( $qs, $mc );
+    } else {
+      $qs = "UPDATE workers
+             SET wage = " . $wage . "
+             WHERE wid = " . $wid . " AND cid = " . $id;
+      
+      execute_query( $qs, $mc );
+    }
   }
-}
+  
+  /* delete removed workplaces */
+  $qs = "SELECT wid
+         FROM workers
+         WHERE cid = " . $id;
+  
+  $wqr = execute_query( $qs, $mc );
+  
+  while( $winfo = mysql_fetch_array( $wqr ) ) {
+    if( !in_array( $winfo[ "wid" ], $workplaces ) ) {
+      $qs = "DELETE
+             FROM workers
+             WHERE wid = " . $winfo[ "wid" ] . " AND cid = " . $id;
 
-if( !$hasWorkerInfo ) {
+      execute_query( $qs, $mc );
+    }
+  }
+} else {
   $qs = "DELETE
          FROM workers
          WHERE cid = " . $id;
-
-  $qr = execute_query( $qs, $mc );
+  
+  execute_query( $qs, $mc );
 }
 
 /* Action */
@@ -402,7 +389,7 @@ if( $_POST[ 'actions' ] ) {
     }
   }
   
-  /* delete removed workers */
+  /* delete removed actions */
   $qs = "SELECT aid
          FROM contact_action
          WHERE cid = " . $id;
@@ -482,7 +469,7 @@ if( $_POST[ 'add' ] ) { ?>
   <div>
     <div class="alert alert-success">
       The contact <?php echo( $firstname . ' ' . $lastname ); ?> was successfully added to the database.
-      <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().parent().hide();  $( '#contact-form' ).each(function () { this.reset(); }); $( '.action-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } });">OK</button>
+      <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().parent().hide();  $( '#contact-form' ).each(function () { this.reset(); }); $( '.action-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } }); $( '.workplace-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } });">OK</button>
     </div>
     
     <div class="alert alert-info">

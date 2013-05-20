@@ -114,24 +114,76 @@ if( $_GET[ 'add' ] ) {
   </div>
   
   <div class="row-fluid">
-    <div class="span1">Workplace</div>
-    <div class="span5">
-      <select id="workplace" class="span12">
-        <option>&lt; select a workplace &gt;</option>
-        <?php
-          $qs = "SELECT wid,
-                        wname,
-                        street_no
-                 FROM workplaces
-                 ORDER BY wname";
-          $wqr = execute_query( $qs, $mc );
+    <h5>Workplaces</h5>
+  </div>
+  
+  <div class="row-fluid">
+    <?php if( $_GET[ "id" ] ) {
+      $qs = "SELECT workers.wid,
+                    workers.wage,
+                    workplaces.wname
+             FROM workers
+               LEFT JOIN workplaces ON workers.wid = workplaces.wid
+             WHERE workers.cid = " . $id . "
+             ORDER BY workplaces.wname";
+     
+       $cwqr = execute_query( $qs, $mc );
+       
+       while( $winfo = mysql_fetch_array( $cwqr ) ) { ?>
+        <div class="row-fluid">
+          <div class="span1"></div>
+          <div class="span5">
+            <select id="workplace" class="span12 workplace-select">
+              <option>&lt; select a workplace &gt;</option>
+              <?php
+                $qs = "SELECT wid,
+                              wname,
+                              street_no
+                       FROM workplaces
+                       ORDER BY wname";
+                $wqr = execute_query( $qs, $mc );
+                
+                while( $workplace = mysql_fetch_array( $wqr ) ) { ?>
+                  <option data-wid="<?php echo( $workplace[ 'wid' ] ); ?>" <?php if( $workplace[ "wid" ] == $winfo[ "wid" ] ) { echo( "selected" ); $wid = $winfo[ "wid" ]; $wage = $winfo[ "wage" ]; } ?>>
+                    <?php echo( $workplace[ "wname" ] . " " . $workplace[ "street_no" ] ); ?>
+                  </option>
+              <?php } ?>
+            </select>
+          </div>
           
-          while( $workplace = mysql_fetch_array( $wqr ) ) { ?>
-            <option data-wid="<?php echo( $workplace[ 'wid' ] ); ?>" <?php if( $workplace[ "wid" ] == $cinfo[ "wid" ] ) { echo( "selected" ); } ?>>
-              <?php echo( $workplace[ "wname" ] . " " . $workplace[ "street_no" ] ); ?>
-            </option>
-        <?php } ?>
-      </select>
+          <div class="span1">Wage</div>
+          <div class="span1 input-prepend">
+            <span class="add-on">$</span><input type="text" class="span12 wage" data-wid="<?php echo( $wid ); ?>" value="<?php echo( $wage ); ?>">
+          </div>
+        </div>
+      <?php } ?>
+    <?php } ?>
+    
+    <div class="row-fluid">
+      <div class="span1"></div>
+      <div class="span5">
+        <select id="workplace" class="span12 workplace-select" data-last="true">
+          <option>&lt; select a workplace &gt;</option>
+          <?php
+            $qs = "SELECT wid,
+                          wname,
+                          street_no
+                   FROM workplaces
+                   ORDER BY wname";
+            $wqr = execute_query( $qs, $mc );
+            
+            while( $workplace = mysql_fetch_array( $wqr ) ) { ?>
+              <option data-wid="<?php echo( $workplace[ 'wid' ] ); ?>">
+                <?php echo( $workplace[ "wname" ] . " " . $workplace[ "street_no" ] ); ?>
+              </option>
+          <?php } ?>
+        </select>
+      </div>
+      
+      <div class="span1">Wage</div>
+      <div class="span1 input-prepend">
+        <span class="add-on">$</span><input type="text" class="span12 wage" data-wid="">
+      </div>
     </div>
   </div>
 
@@ -192,28 +244,8 @@ if( $_GET[ 'add' ] ) {
   </div>
 </div>
 
-<?php
-  $wage = explode( '.', (string)$cinfo[ 'wage' ] );
-  $dollars = $wage[ 0 ];
-  $cents = $wage[ 1 ];
-?>
-
 <div class="well">
   <div class="row-fluid">
-    <div class="span1">Wage</div>
-    <div class="span1 input-prepend">
-      <span class="add-on">$</span><input type="text" name="dollars" class="span12"
-            value="<?php echo( $dollars ); ?>"
-            placeholder="dollars">
-    </div>
-    <div class="span1 input-prepend">
-      <span class="add-on">.</span><input type="text" name="cents" class="span12"
-            value="<?php echo( $cents ); ?>"
-            placeholder="cents">
-    </div>
-    
-    <div class="span1"></div>
-
     <div class="span1">School</div>
     <div class="span4">
       <input type="text" name="school" class="span12"

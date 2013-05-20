@@ -5,6 +5,19 @@ function contact_form_handlers() {
   /* activate datepicker */
   $( "#date" ).datepicker({ dateFormat: "yy-mm-dd" });
   
+  /* on workplace select */
+  $( "#main" ).on( "change", ".workplace-select", function() {
+    if( $( this ).find( "option:selected" ).attr( "data-wid" ) == undefined ) {
+      $( this ).parent().parent().remove();
+    } else if( $( this ).attr( "data-last" ) == "true" ) {
+      var clone = $( this ).parent().parent().clone();
+      clone.appendTo( $( this ).parent().parent().parent() );
+      $( this ).attr( "data-last", "" );
+      
+      $( this ).parent().parent().find( ".wage" ).attr( "data-wid", $( this ).find( "option:selected" ).attr( "data-wid" ) );
+    }
+  });
+  
   /* on action select */
   $( "#main" ).on( "change", ".action-select", function() {
     if( $( this ).find( "option:selected" ).attr( "data-aid" ) == undefined ) {
@@ -144,6 +157,32 @@ function submit_contact_form() {
   $( "#contact-form-status" ).removeClass( "alert-error" );
   $( "#contact-form-status" ).removeClass( "alert-success" );
   
+  /* generate workplace id list */
+  var workplaces = "";
+  $( ".workplace-select option:selected" ).each(function() {
+    if( $( this ).attr( "data-wid" ) != undefined ) {
+      workplaces += $( this ).attr( "data-wid" ) + ",";
+    }
+  });
+  
+  /* remove trailing comma */
+  if( workplaces.length > 0 ) {
+    workplaces = workplaces.substring( 0, workplaces.length - 1 );
+  }
+  
+  /* generate wages list */
+  var wages = "";
+  $( ".wage" ).each(function() {
+    if( $( this ).attr( "data-wid" ) != "" ) {
+      wages += $( this ).val() + ",";
+    }
+  });
+  
+  /* remove trailing comma */
+  if( wages.length > 0 ) {
+    wages = wages.substring( 0, wages.length - 1 );
+  }
+  
   /* generate action id list */
   var actions = "";
   $( ".action-select option:selected" ).each(function() {
@@ -157,16 +196,11 @@ function submit_contact_form() {
     actions = actions.substring( 0, actions.length - 1 );
   }
   
-  /* get valid wid */
-  var wid = "";
-  if( $( "#workplace option:selected" ).attr( "data-wid" ) != undefined ) {
-    wid = $( "#workplace option:selected" ).attr( "data-wid" );
-  }
-  
   /* construct post request string */
   var postString = $( "#contact-form" ).serialize()
                      + "&contactType=" + $( "#contactType option:selected" ).attr( "data-ctype" )
-                     + "&wid=" + wid
+                     + "&workplaces=" + workplaces
+                     + "&wages=" + wages
                      + "&actions=" + actions
                      + "&id=" + id
                      + "&add=" + add;
