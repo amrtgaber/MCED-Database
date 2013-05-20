@@ -58,16 +58,14 @@ if( $_POST[ 'email' ] ) {
   }
 }
 
-/* Check that wage is contains only digits and is correct length */
-if( $_POST[ 'dollars' ] ) {
-  if( !ctype_digit( $_POST[ 'dollars' ] ) ) {
-    alert_error( "Dollars field can only contain digits." );
-  }
-}
-
-if( $_POST[ 'cents' ] ) {
-  if( !ctype_digit( $_POST[ 'cents' ] ) || strlen( $_POST[ 'cents' ] ) != 2 ) {
-    alert_error( "Cents field must be exactly 2 digits." );
+/* Check that wages are numbers */
+if( $_POST[ 'wages' ] ) {
+  $wages = explode( ",", $_POST[ "wages" ] );
+  
+  foreach( $wages as $wage ) {
+    if( $wage != "" && !is_numeric( $wage ) ) {
+      alert_error( "Wage must be a number." );
+    }
   }
 }
 
