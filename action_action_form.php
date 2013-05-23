@@ -102,13 +102,16 @@ if( $_POST[ "addContacts" ] ) {
 
 /* Return success */
 if( $_POST[ 'add' ] ) { ?>
-  <div class="alert alert-success">
+  <div class="alert alert-success" style="display: inline-block;">
     The action <?php echo( $aname );?> was successfully added to the database.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( 'form' ).each(function () { this.reset(); }); $( '.contact' ).each(function() { $( this ).remove(); }); $( '#add-contact-table' ).remove();">OK</button>
   </div>
+  
+  <a href="view_action.php?aid=<?php echo( $aid ); ?>" class="btn btn-success" style="margin: 5px;">View</a>
+  <a href="add_action.php" class="btn btn-primary">Add Another</a>
 <?php } else { ?>
-  <div class="alert alert-success">
+  <div class="alert alert-success" style="display: inline-block;">
     The action <?php echo( $aname );?> was successfully modified.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
   </div>
+  
+  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
 <?php } ?>

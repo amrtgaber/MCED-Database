@@ -135,11 +135,11 @@ if( $_GET[ 'add' ] ) {
     <div class="span1">Add Worker</div>
 
     <div class="span3">
-        <input type="text" id="firstName" name="firstName" class="span12 search-query mobile-search" placeholder="First Name">
+        <input type="text" id="firstName" class="span12 search-query mobile-search" placeholder="First Name">
     </div>
     
     <div class="span3">
-        <input type="text" id="lastName" name="lastName" class="span12 search-query mobile-search" placeholder="Last Name">
+        <input type="text" id="lastName" class="span12 search-query mobile-search" placeholder="Last Name">
     </div>
     
     <button type="button" class="btn btn-info span1 mobile-search" id="add-worker-search-button"><i class="icon-search"></i></button>
@@ -222,9 +222,17 @@ if( $_GET[ 'add' ] ) {
 </div>
 
 <div class="row-fluid">
-  <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
+  <?php if( $_GET[ 'add' ] ) { ?>
+    <button type="submit" id="save-button" class="btn btn-primary btn-large">Add Shop</button>
+  <?php } else { ?>
+    <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
+  <?php } ?>
+  
   <button type="button" id="cancel-button" class="btn btn-inverse btn-large">Cancel</button>
-  <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
+  
+  <?php if( !$_GET[ 'add' ] ) { ?>
+    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
+  <?php } ?>
 </div>
 
 <div id="delete-modal" class="modal hide fade">

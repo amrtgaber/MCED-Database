@@ -464,19 +464,17 @@ if( $_POST[ 'syear' ] ) {
 
 /* Return success */
 if( $_POST[ 'add' ] ) { ?>
-  <div>
-    <div class="alert alert-success">
-      The contact <?php echo( $firstname . ' ' . $lastname ); ?> was successfully added to the database.
-      <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().parent().hide();  $( '#contact-form' ).each(function () { this.reset(); }); $( '.action-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } }); $( '.workplace-select' ).each(function() { if( $( this ).attr( 'data-last' ) != 'true' ) { $( this ).parent().parent().remove(); } });">OK</button>
-    </div>
-    
-    <div class="alert alert-info">
-      Add contact sheet <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-info">+</a>
-    </div>
+  <div class="alert alert-success" style="display: inline-block;">
+    The contact <?php echo( $firstname . ' ' . $lastname ); ?> was successfully added to the database.
   </div>
+  
+  <a href="view_contact.php?id=<?php echo( $id ); ?>" class="btn btn-info" style="margin: 5px;">View</a>
+  <a href="add_contact.php" class="btn btn-info" style="margin: 5px;">Add Another</a>
+  <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-info">Add Contact Sheet</a>
 <?php } else { ?>
-  <div class="alert alert-success">
+  <div class="alert alert-success" style="display: inline-block;">
     The contact <?php echo( $firstname . ' ' . $lastname ); ?> was successfully saved.
-    <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide();">OK</button>
   </div>
+  
+  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
 <?php } ?>

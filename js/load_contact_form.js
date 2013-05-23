@@ -152,6 +152,8 @@ function submit_contact_form() {
     return false;
   }
   
+  $( "#save-button" ).attr( "disabled", "disabled" );
+  
   $( "#contact-form-status" ).html( "" );
   $( "#contact-form-status" ).removeClass( "alert" );
   $( "#contact-form-status" ).removeClass( "alert-error" );
@@ -210,9 +212,15 @@ function submit_contact_form() {
     postString,
     function( data, textStatus, jqXHR ) {
       $( "#contact-form-status" ).html( jqXHR.responseText );
+      
+      if( $( "#contact-form-status" ).children().hasClass( "alert-error" ) ) {
+        $( "#save-button" ).removeAttr( 'disabled' );
+      }
+      
       $( "#contact-form-status" ).show();
     }
     ).fail(function( data, textStatus, jqXHR ) {
+      $( "#save-button" ).removeAttr( 'disabled' );
       $( "#contact-form-status" ).addClass( "alert alert-error" );
       $( "#contact-form-status" ).html( "There was an unknown error in the server. "
         + "If you get this error more than once, "

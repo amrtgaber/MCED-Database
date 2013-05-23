@@ -18,6 +18,10 @@ if( $_SESSION[ 'privilege_level' ] < 1 ) {
   alert_error( "You do not have the required privilege level to add a shop profile." );
 }
 
+if( $_POST[ 'add-worker-search-button' ] ) {
+  exit();
+}
+
 /* Check for required fields and validate form */
 
 /* Check that workplace name exists */
@@ -350,13 +354,17 @@ if( $_POST[ "addWorkers" ] ) {
 
 /* Return success */
 if( $_POST[ 'add' ] ) { ?>
-  <div class="alert alert-success">
+  <div class="alert alert-success" style="display: inline-block;">
     The workplace <?php echo( $wname );?> was successfully added to the database.
-    <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide(); $( '#shop-profile-form' ).each(function () { this.reset(); }); $( '.worker' ).each(function() { $( this ).remove(); }); $( '#add-worker-table' ).remove();">OK</button>
   </div>
+  
+  <a href="view_shop_profile.php?wid=<?php echo( $wid ); ?>" class="btn btn-success" style="margin: 5px;">View</a>
+  <a href="add_shop_profile.php" class="btn btn-primary">Add Another</a>
 <?php } else { ?>
-  <div class="alert alert-success">
+  <div class="alert alert-success" style="display: inline-block;">
     The workplace <?php echo( $wname );?> was successfully modified.
     <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide();">OK</button>
   </div>
+  
+  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
 <?php } ?>

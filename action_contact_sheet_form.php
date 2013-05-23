@@ -322,3 +322,19 @@ if( $_POST[ 'improvements' ] ) {
   <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide();">OK</button>
 </div>
 
+/* Return success */
+if( $_POST[ 'add' ] ) { ?>
+  <div class="alert alert-success" style="display: inline-block;">
+    The contact sheet was successfully added.
+  </div>
+  
+  <a href="view_contact_sheet.php?csid=<?php echo( $csid ); ?>" class="btn btn-success" style="margin: 5px;">View</a>
+  <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-primary">Add Another</a>
+<?php } else { ?>
+  <div class="alert alert-success" style="display: inline-block;">
+    The contact sheet was successfully saved.
+  </div>
+  
+  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
+<?php } ?>
+

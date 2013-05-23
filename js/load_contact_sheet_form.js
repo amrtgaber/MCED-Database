@@ -91,6 +91,8 @@ function submit_contact_sheet_form() {
   if( !v.form() ) {
     return false;
   }
+  
+  $( "#save-button" ).attr( "disabled", "disabled" );
 
   $( "#contact-sheet-form-status" ).html( "" );
   $( "#contact-sheet-form-status" ).removeClass( "alert" );
@@ -115,9 +117,15 @@ function submit_contact_sheet_form() {
     postString,
     function( data, textStatus, jqXHR ) {
       $( "#contact-sheet-form-status" ).html( jqXHR.responseText );
+      
+      if( $( "#contact-sheet-form-status" ).children().hasClass( "alert-error" ) ) {
+        $( "#save-button" ).removeAttr( 'disabled' );
+      }
+      
       $( "#contact-sheet-form-status" ).show();
     }
     ).fail(function( data, textStatus, jqXHR ) {
+      $( "#save-button" ).removeAttr( 'disabled' );
       $( "#contact-sheet-form-status" ).addClass( "alert alert-error" );
       $( "#contact-sheet-form-status" ).html( "There was an unknown error in the server. "
         + "If you get this error more than once, "

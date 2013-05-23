@@ -107,13 +107,16 @@ if( $_POST[ 'newPassword' ] ) {
 
 /* Return success */
 if( $_POST[ 'add' ] ) { ?>
-  <div class="alert alert-success">
+  <div class="alert alert-success" style="display: inline-block;">
     The user <?php echo( $username ); ?> has been successfully added and can login immediately.
-    <button type="button" class="btn btn-success" onclick="$( this ).parent().hide(); $( '#user-form' ).each(function () { this.reset(); });">OK</button>
   </div>
+  
+  <a href="view_user.php?uid=<?php echo( $uid ); ?>" class="btn btn-success" style="margin: 5px;">View</a>
+  <a href="add_user.php" class="btn btn-primary">Add Another</a>
 <?php } else { ?>
-  <div class="alert alert-success">
+  <div class="alert alert-success" style="display: inline-block;">
     The user <?php echo( $username ); ?> was successfully saved.
-    <button type="button" class="btn btn-small btn-success" data-dismiss="modal" onclick="$( this ).parent().hide();">OK</button>
   </div>
+  
+  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
 <?php } ?>

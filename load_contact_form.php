@@ -293,9 +293,17 @@ if( $_GET[ 'add' ] ) {
 </div>
 
 <div class="row-fluid">
-  <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
+  <?php if( $_GET[ 'add' ] ) { ?>
+    <button type="submit" id="save-button" class="btn btn-primary btn-large">Add Contact</button>
+  <?php } else { ?>
+    <button type="submit" id="save-button" class="btn btn-primary btn-large">Save Changes</button>
+  <?php } ?>
+  
   <button type="button" id="cancel-button" class="btn btn-inverse btn-large">Cancel</button>
-  <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
+  
+  <?php if( !$_GET[ 'add' ] ) { ?>
+    <button type="button" id="delete-button" class="btn btn-danger btn-large pull-right" data-toggle="modal" data-target="#delete-modal">Delete</button>
+  <?php } ?>
 </div>
 
 <div id="delete-modal" class="modal hide fade">

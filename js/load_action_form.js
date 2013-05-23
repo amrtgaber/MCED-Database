@@ -44,6 +44,8 @@ function load_action_form() {
 
 /* Submit form if valid */
 function submit_action_form() {
+  $( "#save-button" ).attr( "disabled", "disabled" );
+  
   $( "#action-form-status" ).html( "" );
   $( "#action-form-status" ).removeClass( "alert" );
   $( "#action-form-status" ).removeClass( "alert-error" );
@@ -71,9 +73,15 @@ function submit_action_form() {
     postString,
     function( data, textStatus, jqXHR ) {
       $( "#action-form-status" ).html( jqXHR.responseText );
+      
+      if( $( "#action-form-status" ).children().hasClass( "alert-error" ) ) {
+        $( "#save-button" ).removeAttr( 'disabled' );
+      }
+      
       $( "#action-form-status" ).show();
     }
     ).fail(function( data, textStatus, jqXHR ) {
+      $( "#save-button" ).removeAttr( 'disabled' );
       $( "#action-form-status" ).addClass( "alert alert-error" );
       $( "#action-form-status" ).html( "There was an unknown error in the server. "
         + "If you get this error more than once, "

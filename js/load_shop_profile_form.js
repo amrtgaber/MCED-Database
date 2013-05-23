@@ -130,6 +130,8 @@ function submit_shop_profile_form() {
   if( !v.form() ) {
     return false;
   }
+  
+  $( "#save-button" ).attr( "disabled", "disabled" );
 
   $( "#shop-profile-form-status" ).html( "" );
   $( "#shop-profile-form-status" ).removeClass( "alert" );
@@ -158,9 +160,15 @@ function submit_shop_profile_form() {
     postString,
     function( data, textStatus, jqXHR ) {
       $( "#shop-profile-form-status" ).html( jqXHR.responseText );
+      
+      if( $( "#shop-profile-form-status" ).children().hasClass( "alert-error" ) ) {
+        $( "#save-button" ).removeAttr( 'disabled' );
+      }
+      
       $( "#shop-profile-form-status" ).show();
     }
     ).fail(function( data, textStatus, jqXHR ) {
+      $( "#save-button" ).removeAttr( 'disabled' );
       $( "#shop-profile-form-status" ).addClass( "alert alert-error" );
       $( "#shop-profile-form-status" ).html( "There was an unknown error in the server. "
         + "If you get this error more than once, "
