@@ -29,27 +29,27 @@ if( !isset( $_POST[ "csid" ] ) || $_POST[ "csid" ] == "" ) {
 
 /* Issues */
 if( !isset( $_POST[ "issues" ] ) || $_POST[ "issues" ] == "" ) {
-  alert_Error( "Issues is a required field." );
+  alert_error( "Issues is a required field." );
 }
 
 /* Rating */
 if( !isset( $_POST[ "rating" ] ) || $_POST[ "rating" ] == "" ) {
-  alert_Error( "Rating is a required field." );
+  alert_error( "Rating is a required field." );
 }
 
 /* Organizer */
-if( !isset( $_POST[ "oid" ] ) || $_POST[ "oid" ] == "" ) {
-  alert_Error( "Organizer is a required field." );
+if( !isset( $_POST[ "oid" ] ) || $_POST[ "oid" ] == "" || $_POST[ "oid" ] == "undefined" ) {
+  alert_error( "Organizer is a required field." );
 }
 
 /* Contact Type */
 if( !isset( $_POST[ "contactType" ] ) || $_POST[ "contactType" ] == "" ) {
-  alert_Error( "Contact Type is a required field." );
+  alert_error( "Contact Type is a required field." );
 }
 
 /* Date */
 if( !isset( $_POST[ "date" ] ) || $_POST[ "date" ] == "" ) {
-  alert_Error( "Date is a required field." );
+  alert_error( "Date is a required field." );
 }
 
 /* connect to database */
