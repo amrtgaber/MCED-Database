@@ -316,12 +316,6 @@ if( $_POST[ 'improvements' ] ) {
   $qr = execute_query( $qs, $mc );
 }
 
-/* Return success */ ?>
-<div class="alert alert-success">
-  The contact sheet was successfully saved.
-  <button type="button" class="btn btn-small btn-success" onclick="$( this ).parent().hide();">OK</button>
-</div>
-
 /* Return success */
 if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success" style="display: inline-block;">
