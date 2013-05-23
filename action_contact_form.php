@@ -468,8 +468,8 @@ if( $_POST[ 'add' ] ) { ?>
     The contact <?php echo( $firstname . ' ' . $lastname ); ?> was successfully added to the database.
   </div>
   
-  <a href="view_contact.php?id=<?php echo( $id ); ?>" class="btn btn-info" style="margin: 5px;">View</a>
-  <a href="add_contact.php" class="btn btn-info" style="margin: 5px;">Add Another</a>
+  <a href="view_contact.php?id=<?php echo( $id ); ?>" class="btn btn-success" style="margin: 5px;">View</a>
+  <a href="add_contact.php" class="btn btn-primary" style="margin: 5px;">Add Another</a>
   <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-info">Add Contact Sheet</a>
 <?php } else { ?>
   <div class="alert alert-success" style="display: inline-block;">
