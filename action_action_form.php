@@ -104,14 +104,18 @@ if( $_POST[ "addContacts" ] ) {
 if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success" style="display: inline-block;">
     The action <?php echo( $aname );?> was successfully added to the database.
-  </div>
   
-  <a href="view_action.php?aid=<?php echo( $aid ); ?>" class="btn btn-success" style="margin: 5px;">View</a>
-  <a href="add_action.php" class="btn btn-primary">Add Another</a>
+    <div class="row-fluid">
+      <a href="view_action.php?aid=<?php echo( $aid ); ?>" class="btn btn-success mobile-margin span2">View</a>
+      <a href="add_action.php" class="btn btn-primary mobile-margin span4">Add Another</a>
+    </div>
+  </div>
 <?php } else { ?>
   <div class="alert alert-success" style="display: inline-block;">
     The action <?php echo( $aname );?> was successfully modified.
+
+    <div class="row-fluid">
+      <button type="button" class="btn btn-success mobile-margin span2" onclick="$( this ).parent().parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
+    </div>
   </div>
-  
-  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
 <?php } ?>

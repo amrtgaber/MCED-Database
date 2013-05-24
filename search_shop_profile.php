@@ -55,14 +55,14 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
-                  <input type="text" id="wname" name="wname" class="span12 search-query mobile-search" placeholder="Workplace">
+                  <input type="text" id="wname" name="wname" class="span12 search-query mobile-margin" placeholder="Workplace">
                 </div>
                 
-                <button type="submit" class="btn btn-info span1 mobile-search" id="search-button"><i class="icon-search"></i></button>
-                <button type="button" class="btn span1 mobile-search" id="clear-button">Clear</button>
+                <button type="submit" class="btn btn-info span1 mobile-margin" id="search-button"><i class="icon-search"></i></button>
+                <button type="button" class="btn span1 mobile-margin" id="clear-button">Clear</button>
                 
                 <div class="span7">
-                  <a href="add_shop_profile.php" class="btn btn-primary span3 pull-right mobile-search">Add Shop Profile</a>
+                  <a href="add_shop_profile.php" class="btn btn-primary span3 pull-right mobile-margin">Add Shop Profile</a>
                 </div>
               </form>
             </div>

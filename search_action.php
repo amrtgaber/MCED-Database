@@ -50,14 +50,14 @@ $mc = connect_to_database(); ?>
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
-                  <input type="text" id="aname" name="aname" class="span12 search-query mobile-search" placeholder="Action">
+                  <input type="text" id="aname" name="aname" class="span12 search-query mobile-margin" placeholder="Action">
                 </div>
                 
-                <button type="submit" class="btn btn-info span1 mobile-search" id="search-button"><i class="icon-search"></i></button>
-                <button type="button" class="btn span1 mobile-search" id="clear-button">Clear</button></p>
+                <button type="submit" class="btn btn-info span1 mobile-margin" id="search-button"><i class="icon-search"></i></button>
+                <button type="button" class="btn span1 mobile-margin" id="clear-button">Clear</button></p>
                 
                 <div class="span7">
-                  <a href="add_action.php" class="btn btn-primary span3 pull-right mobile-search">Add Action</a>
+                  <a href="add_action.php" class="btn btn-primary span3 pull-right mobile-margin">Add Action</a>
                 </div>
               </form>
             </div>
