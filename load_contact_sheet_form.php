@@ -42,10 +42,8 @@ if( $_GET[ 'add' ] ) {
   $csid = mysql_real_escape_string( $_GET[ 'csid' ] );
   
   $qs = "SELECT contact_sheet.*,
-                  contacts.*,
-                  contact_phone.*
+                  contacts.*
            FROM contact_sheet
-             LEFT JOIN contact_phone ON contact_sheet.cid = contact_phone.cid
              LEFT JOIN contact_email ON contact_sheet.cid = contact_email.cid
              LEFT JOIN contacts      ON contact_sheet.cid = contacts.id
            WHERE contact_sheet.id = " . $csid;
@@ -53,6 +51,7 @@ if( $_GET[ 'add' ] ) {
   $qr = execute_query( $qs, $mc );
   
   $cs_info = mysql_fetch_array( $qr );
+  $id = $cs_info[ 'cid' ];
 } ?>
 
 <div class="well">
@@ -97,17 +96,48 @@ if( $_GET[ 'add' ] ) {
         placeholder="Type shift here">
     </div>
     
+    <?php $qs = "SELECT contact_phone.*
+                 FROM contact_phone
+                 WHERE cid = " . $id . " AND main = 1";
+      
+      $pqr = execute_query( $qs, $mc );
+      $pinfo = mysql_fetch_array( $pqr );
+      
+      if( ord( $pinfo[ 'cell' ] ) == 1 ) {
+        $cell = $pinfo[ 'phone' ];
+        
+        $qs = "SELECT contact_phone.*
+               FROM contact_phone
+               WHERE cid = " . $id . " AND cell = 0";
+               
+        $pqr = execute_query( $qs, $mc );
+        $pinfo = mysql_fetch_array( $pqr );
+        
+        $phone = $pinfo[ 'phone' ];
+      } else {
+        $phone = $pinfo[ 'phone' ];
+        
+        $qs = "SELECT contact_phone.*
+               FROM contact_phone
+               WHERE cid = " . $id . " AND cell = 1";
+               
+        $pqr = execute_query( $qs, $mc );
+        $pinfo = mysql_fetch_array( $pqr );
+        
+        $cell = $pinfo[ 'phone' ];
+      } ?>
+    
     <div class="span1">Cell #</div>
     <div class="span2">
       <input type="text" name="cell" class="span12"
-        value="<?php if( $cs_info[ 'cell' ] != 0 ) { echo( $cs_info[ 'cell' ] ); } ?>"
+        value="<?php echo( $cell ); ?>"
         placeholder="Type cell # here">
     </div>
     
     <div class="span1">Home #</div>
     <div class="span2">
       <input type="text" name="phone" class="span12"
-        value="<?php if( $cs_info[ 'phone' ] != 0 ) { echo( $cs_info[ 'phone' ] ); } ?>"  
+        value="<?php echo( $phone ); ?>"
         placeholder="Type home # here">
     </div>
   </div>

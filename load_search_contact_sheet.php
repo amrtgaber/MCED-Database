@@ -26,7 +26,7 @@ $qs = "SELECT contacts.*,
               contact_phone.*,
               workplaces.wname
        FROM contacts
-         LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
+         LEFT JOIN contact_phone ON contacts.id = contact_phone.cid AND main = 1
          LEFT JOIN workers       ON contacts.id = workers.cid
          LEFT JOIN workplaces    ON workers.wid = workplaces.wid
        WHERE contacts.first_name LIKE '" . $firstname . "%'
@@ -85,7 +85,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
               
                 echo( $contact_info[ "street_no" ] . $apt_no . ", " . $contact_info[ "city" ] . ", " . $contact_info[ "state" ] . " " . $contact_info[ "zipcode" ] ); ?>
               </td>
-              <td><?php if( $contact_info[ 'phone' ] != 0 ) { echo( $contact_info[ 'phone' ] ); } ?></td>
+              <td><?php echo( $contact_info[ 'phone' ] ); ?></td>
               <td><?php echo( $contact_info[ 'wname' ] ); ?></td>
             </tr>
         <?php } ?>

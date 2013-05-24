@@ -44,9 +44,30 @@ if( $_POST[ 'zipcode' ] ) {
   }
 }
 
-/* Check that phone numbers is 10 digits */
-if( $_POST[ 'phone' ] ) {
-  if( !ctype_digit( $_POST[ 'phone' ] ) || strlen( $_POST[ 'phone' ] ) != 10 ) {
+/* Check that phone 1 numbers is 10 digits */
+if( $_POST[ 'phone1' ] ) {
+  if( !ctype_digit( $_POST[ 'phone1' ] ) || strlen( $_POST[ 'phone1' ] ) != 10 ) {
+    alert_error( "Phone number must be exactly 10 digits." );
+  }
+}
+
+/* Check that phone 2 numbers is 10 digits */
+if( $_POST[ 'phone2' ] ) {
+  if( !ctype_digit( $_POST[ 'phone2' ] ) || strlen( $_POST[ 'phone2' ] ) != 10 ) {
+    alert_error( "Phone number must be exactly 10 digits." );
+  }
+}
+
+/* Check that phone 3 numbers is 10 digits */
+if( $_POST[ 'phone3' ] ) {
+  if( !ctype_digit( $_POST[ 'phone3' ] ) || strlen( $_POST[ 'phone3' ] ) != 10 ) {
+    alert_error( "Phone number must be exactly 10 digits." );
+  }
+}
+
+/* Check that phone 4 numbers is 10 digits */
+if( $_POST[ 'phone4' ] ) {
+  if( !ctype_digit( $_POST[ 'phone4' ] ) || strlen( $_POST[ 'phone4' ] ) != 10 ) {
     alert_error( "Phone number must be exactly 10 digits." );
   }
 }
@@ -252,28 +273,154 @@ if( $_POST[ 'aptNo' ] ) {
   }
 }
 
-/* Phone Number */
-if( $_POST[ 'phone' ] ) {
-  $phone = mysql_real_escape_string( $_POST[ 'phone' ] );
+$phones = Array();
 
-  if( $cinfo[ 'phone' ] != 0 ) {
+/* Phone 1 Number */
+if( $_POST[ 'phone1' ] ) {
+  $phone = mysql_real_escape_string( $_POST[ 'phone1' ] );
+  $phones[] = $phone;
+  
+  if( $_POST[ 'cell1' ] ) {
+    $cell = 1;
+  } else {
+    $cell = 0;
+  }
+  
+  $qs = "SELECT contact_phone.*
+         FROM contact_phone
+         WHERE cid = " . $id . " AND phone = " . $phone;
+  
+  $pqr = execute_query( $qs, $mc );
+  $pinfo = mysql_fetch_array( $pqr );
+
+  if( mysql_num_rows( $pqr ) > 0 ) {
     $qs = "UPDATE contact_phone
-           SET phone = " . $phone . "
-           WHERE cid = " . $id;
+           SET cell = " . $cell . ",
+               main = 1
+           WHERE cid = " . $id . " AND phone = " . $phone;
   } else {
     $qs = "INSERT INTO contact_phone
-          ( cid, phone )
-          VALUES ( " . $id . ", " . $phone . " )";
+          ( cid, phone, cell, main )
+          VALUES
+          ( " . $id . ", " . $phone . ", " . $cell . ", 1 )";
   }
 
-  $qr = execute_query( $qs, $mc );
-} else {
-  if( $cinfo[ 'phone' ] != 0 ) {
+  execute_query( $qs, $mc );
+}
+
+/* Phone 2 Number */
+if( $_POST[ 'phone2' ] ) {
+  $phone = mysql_real_escape_string( $_POST[ 'phone2' ] );
+  $phones[] = $phone;
+  
+  if( $_POST[ 'cell2' ] ) {
+    $cell = 1;
+  } else {
+    $cell = 0;
+  }
+  
+  $qs = "SELECT contact_phone.*
+         FROM contact_phone
+         WHERE cid = " . $id . " AND phone = " . $phone;
+  
+  $pqr = execute_query( $qs, $mc );
+  $pinfo = mysql_fetch_array( $pqr );
+
+  if( mysql_num_rows( $pqr ) > 0 ) {
+    $qs = "UPDATE contact_phone
+           SET cell = " . $cell . ",
+               main = 0
+           WHERE cid = " . $id . " AND phone = " . $phone;
+  } else {
+    $qs = "INSERT INTO contact_phone
+          ( cid, phone, cell, main )
+          VALUES
+          ( " . $id . ", " . $phone . ", " . $cell . ", 0 )";
+  }
+
+  execute_query( $qs, $mc );
+}
+
+/* Phone 3 Number */
+if( $_POST[ 'phone3' ] ) {
+  $phone = mysql_real_escape_string( $_POST[ 'phone3' ] );
+  $phones[] = $phone;
+  
+  if( $_POST[ 'cell3' ] ) {
+    $cell = 1;
+  } else {
+    $cell = 0;
+  }
+  
+  $qs = "SELECT contact_phone.*
+         FROM contact_phone
+         WHERE cid = " . $id . " AND phone = " . $phone;
+  
+  $pqr = execute_query( $qs, $mc );
+  $pinfo = mysql_fetch_array( $pqr );
+
+  if( mysql_num_rows( $pqr ) > 0 ) {
+    $qs = "UPDATE contact_phone
+           SET cell = " . $cell . ",
+               main = 0
+           WHERE cid = " . $id . " AND phone = " . $phone;
+  } else {
+    $qs = "INSERT INTO contact_phone
+          ( cid, phone, cell, main )
+          VALUES
+          ( " . $id . ", " . $phone . ", " . $cell . ", 0 )";
+  }
+
+  execute_query( $qs, $mc );
+}
+
+/* Phone 4 Number */
+if( $_POST[ 'phone4' ] ) {
+  $phone = mysql_real_escape_string( $_POST[ 'phone4' ] );
+  $phones[] = $phone;
+  
+  if( $_POST[ 'cell4' ] ) {
+    $cell = 1;
+  } else {
+    $cell = 0;
+  }
+  
+  $qs = "SELECT contact_phone.*
+         FROM contact_phone
+         WHERE cid = " . $id . " AND phone = " . $phone;
+  
+  $pqr = execute_query( $qs, $mc );
+  $pinfo = mysql_fetch_array( $pqr );
+
+  if( mysql_num_rows( $pqr ) > 0 ) {
+    $qs = "UPDATE contact_phone
+           SET cell = " . $cell . ",
+               main = 0
+           WHERE cid = " . $id . " AND phone = " . $phone;
+  } else {
+    $qs = "INSERT INTO contact_phone
+          ( cid, phone, cell, main )
+          VALUES
+          ( " . $id . ", " . $phone . ", " . $cell . ", 0 )";
+  }
+
+  execute_query( $qs, $mc );
+}
+
+/* delete removed phone numbers */
+$qs = "SELECT contact_phone.phone
+       FROM contact_phone
+       WHERE cid = " . $id;
+
+$pqr = execute_query( $qs, $mc );
+
+while( $pinfo = mysql_fetch_array( $pqr ) ) {
+  if( !in_array( $pinfo[ "phone" ], $phones ) ) {
     $qs = "DELETE
            FROM contact_phone
-           WHERE cid = " . $id;
+           WHERE phone = " . $pinfo[ "phone" ] . " AND cid = " . $id;
 
-    $qr = execute_query( $qs, $mc );
+    execute_query( $qs, $mc );
   }
 }
 

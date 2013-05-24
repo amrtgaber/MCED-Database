@@ -24,13 +24,11 @@ if( $_GET[ 'add' ] ) {
 
   /* Get contact information */
   $qs = "SELECT contacts.*,
-                contact_phone.*,
                 contact_email.*,
                 workers.*,
                 students.*,
                 contact_action.*
          FROM contacts
-           LEFT JOIN contact_phone  ON contacts.id = contact_phone.cid
            LEFT JOIN contact_email  ON contacts.id = contact_email.cid
            LEFT JOIN workers        ON contacts.id = workers.cid
            LEFT JOIN students       ON contacts.id = students.cid
@@ -98,11 +96,29 @@ if( $_GET[ 'add' ] ) {
   </div>
 
   <div class="row-fluid">
+    <?php if( $_GET[ "id" ] ) {
+      $qs = "SELECT contact_phone.phone,
+                    contact_phone.cell
+             FROM contact_phone
+             WHERE cid = " . $cinfo[ 'id' ] . " AND main = 1";
+             
+      $pqr = execute_query( $qs, $mc );
+      
+      $pinfo1 = mysql_fetch_array( $pqr );
+    } else {
+      $pinfo1 = Array();
+    } ?>
+    
     <div class="span1">Phone</div>
-    <div class="span5">
-      <input type="text" name="phone" class="span12"
-             value="<?php if( $cinfo[ 'phone' ] != 0 ) { echo( $cinfo[ 'phone' ] ); } ?>"
+    <div class="span4">
+      <input type="text" name="phone1" class="span12"
+             value="<?php echo( $pinfo1[ 'phone' ] ); ?>"
              placeholder="Type phone number here">
+    </div>
+    
+    <div class="span1">
+      <label class="checkbox inline">Cell</label>
+      <input type="checkbox" name="cell1" value="true" <?php if( ord( $pinfo1[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
     </div>
     
     <div class="span1">Email</div>
@@ -245,6 +261,57 @@ if( $_GET[ 'add' ] ) {
 </div>
 
 <div class="well">
+  <div class="row-fluid">
+    <?php if( $_GET[ "id" ] ) {
+      $qs = "SELECT contact_phone.phone,
+                    contact_phone.cell
+             FROM contact_phone
+             WHERE cid = " . $cinfo[ 'id' ] . " AND main = 0";
+             
+      $pqr = execute_query( $qs, $mc );
+      
+      $pinfo2 = mysql_fetch_array( $pqr );
+      $pinfo3 = mysql_fetch_array( $pqr );
+      $pinfo4 = mysql_fetch_array( $pqr );
+    } ?>
+    
+    <div class="span1">Phone 2</div>
+    <div class="span2">
+      <input type="text" name="phone2" class="span12"
+             value="<?php echo( $pinfo2[ 'phone' ] ); ?>"
+             placeholder="Type phone number here">
+    </div>
+    
+    <div class="span1">
+      <label class="checkbox inline">Cell</label>
+      <input type="checkbox" name="cell2" value="true" <?php if( ord( $pinfo2[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
+    </div>
+    
+    <div class="span1">Phone 3</div>
+    <div class="span2">
+      <input type="text" name="phone3" class="span12"
+             value="<?php echo( $pinfo3[ 'phone' ] ); ?>"
+             placeholder="Type phone number here">
+    </div>
+    
+    <div class="span1">
+      <label class="checkbox inline">Cell</label>
+      <input type="checkbox" name="cell3" value="true" <?php if( ord( $pinfo3[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
+    </div>
+    
+    <div class="span1">Phone 4</div>
+    <div class="span2">
+      <input type="text" name="phone4" class="span12"
+             value="<?php echo( $pinfo4[ 'phone' ] ); ?>"
+             placeholder="Type phone number here">
+    </div>
+    
+    <div class="span1">
+      <label class="checkbox inline">Cell</label>
+      <input type="checkbox" name="cell4" value="true" <?php if( ord( $pinfo4[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
+    </div>
+  </div>
+  
   <div class="row-fluid">
     <div class="span1">School</div>
     <div class="span4">

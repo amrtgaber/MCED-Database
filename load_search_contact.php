@@ -27,7 +27,7 @@ $qs = "SELECT contacts.*,
               contact_email.email,
               workplaces.wname
        FROM contacts
-       LEFT JOIN contact_phone ON contacts.id = contact_phone.cid
+       LEFT JOIN contact_phone ON contacts.id = contact_phone.cid AND main = 1
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
        LEFT JOIN workers       ON contacts.id = workers.cid
        LEFT JOIN workplaces    ON workers.wid = workplaces.wid
@@ -65,7 +65,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
             
               echo( $cinfo[ "street_no" ] . $apt_no . ", " . $cinfo[ "city" ] . ", " . $cinfo[ "state" ] . " " . $cinfo[ "zipcode" ] ); ?>
             </td>
-            <td><?php if( $cinfo[ 'phone' ] != 0 ) { echo( $cinfo[ 'phone' ] ); } ?></td>
+            <td><?php echo( $cinfo[ 'phone' ] ); ?></td>
             <td><?php echo( $cinfo[ 'wname' ] ); ?></td>
           </tr>
         <?php } ?>

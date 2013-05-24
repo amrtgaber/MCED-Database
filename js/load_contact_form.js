@@ -51,7 +51,22 @@ function validate_contact_form() {
       email: {
         email: true
       },
-      phone: {
+      phone1: {
+        minlength: 10,
+        maxlength: 10,
+        digits: true
+      },
+      phone2: {
+        minlength: 10,
+        maxlength: 10,
+        digits: true
+      },
+      phone3: {
+        minlength: 10,
+        maxlength: 10,
+        digits: true
+      },
+      phone4: {
         minlength: 10,
         maxlength: 10,
         digits: true
@@ -93,10 +108,25 @@ function validate_contact_form() {
       email: {
         email: "Please enter a valid email."
       },
-      phone: {
-        minlength: "Phone number must be exactly 10 digits long.",
-        maxlength: "Phone number must be exactly 10 digits long.",
-        digits: "Phone number can only contain digits."
+      phone1: {
+        minlength: "Phone 1 number must be exactly 10 digits long.",
+        maxlength: "Phone 1 number must be exactly 10 digits long.",
+        digits: "Phone 1 number can only contain digits."
+      },
+      phone2: {
+        minlength: "Phone 2 number must be exactly 10 digits long.",
+        maxlength: "Phone 2 number must be exactly 10 digits long.",
+        digits: "Phone 2 number can only contain digits."
+      },
+      phone3: {
+        minlength: "Phone 3 number must be exactly 10 digits long.",
+        maxlength: "Phone 3 number must be exactly 10 digits long.",
+        digits: "Phone 3 number can only contain digits."
+      },
+      phone4: {
+        minlength: "Phone 4 number must be exactly 10 digits long.",
+        maxlength: "Phone 4 number must be exactly 10 digits long.",
+        digits: "Phone 4 number can only contain digits."
       },
       state: {
         minlength: "State must be 2 letter abbreviation.",
