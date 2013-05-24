@@ -466,15 +466,19 @@ if( $_POST[ 'syear' ] ) {
 if( $_POST[ 'add' ] ) { ?>
   <div class="alert alert-success" style="display: inline-block;">
     The contact <?php echo( $firstname . ' ' . $lastname ); ?> was successfully added to the database.
-  </div>
   
-  <a href="view_contact.php?id=<?php echo( $id ); ?>" class="btn btn-success" style="margin: 5px;">View</a>
-  <a href="add_contact.php" class="btn btn-primary" style="margin: 5px;">Add Another</a>
-  <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-info">Add Contact Sheet</a>
+    <div class="row-fluid">
+      <a href="view_contact.php?id=<?php echo( $id ); ?>" class="btn btn-success mobile-margin span2">View</a>
+      <a href="add_contact.php" class="btn btn-primary mobile-margin span4">Add Another</a>
+      <a href="add_contact_sheet.php?csid=<?php echo( $id ); ?>" class="btn btn-info mobile-margin span5">Add Contact Sheet</a>
+    </div>
+  </div>
 <?php } else { ?>
   <div class="alert alert-success" style="display: inline-block;">
     The contact <?php echo( $firstname . ' ' . $lastname ); ?> was successfully saved.
-  </div>
   
-  <button type="button" class="btn btn-success" data-dismiss="modal" onclick="$( this ).parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
+    <div class="row-fluid">
+      <button type="button" class="btn btn-success mobile-margin span2" onclick="$( this ).parent().parent().hide(); $( '#save-button' ).removeAttr( 'disabled' );">OK</button>
+    </div>
+  </div>
 <?php } ?>
