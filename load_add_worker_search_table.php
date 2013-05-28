@@ -39,7 +39,7 @@ $qs = "SELECT contacts.id,
        WHERE contacts.first_name LIKE '%" . $firstname . "%'
          AND contacts.last_name  LIKE '%" . $lastname . "%'
        GROUP BY contacts.id
-       ORDER BY contacts.last_name";
+       ORDER BY contacts.last_name, contacts.first_name";
 
 $qr = execute_query( $qs, $mc );
 
