@@ -32,8 +32,8 @@ $qs = "SELECT contacts.id,
               contacts.zipcode,
               curdate() AS date
        FROM contacts
-       WHERE contacts.first_name LIKE '" . $firstname . "%'
-         AND contacts.last_name  LIKE '" . $lastname . "%'
+       WHERE contacts.first_name LIKE '%" . $firstname . "%'
+         AND contacts.last_name  LIKE '%" . $lastname . "%'
        ORDER BY contacts.last_name";
 
 $qr = execute_query( $qs, $mc );

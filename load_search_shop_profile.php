@@ -22,7 +22,7 @@ $wname = mysql_real_escape_string( $_GET[ 'wname' ] );
 
 $qs = "SELECT workplaces.*
        FROM workplaces
-       WHERE wname LIKE '" . $wname . "%'
+       WHERE wname LIKE '%" . $wname . "%'
        ORDER BY workplaces.wname";
        
 $qr = execute_query( $qs, $mc );

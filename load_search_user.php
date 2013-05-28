@@ -16,10 +16,13 @@ if( !$_SESSION[ 'username' ] ) {
 /* Connect to database */
 $mc = connect_to_database();
 
+$username = mysql_real_escape_string( $_GET[ 'username' ] );
+
 /* Get users */
 $qs = "SELECT id,
               username
        FROM users
+       WHERE username LIKE '%" . $username . "%' 
        ORDER BY username";
 
 $qr = execute_query( $qs, $mc );

@@ -36,8 +36,8 @@ $qs = "SELECT contacts.id,
        FROM contacts
          LEFT JOIN contact_sheet  ON contacts.id = contact_sheet.cid
          LEFT JOIN contact_action ON contacts.id = contact_action.cid
-       WHERE contacts.first_name LIKE '" . $firstname . "%'
-         AND contacts.last_name  LIKE '" . $lastname . "%'
+       WHERE contacts.first_name LIKE '%" . $firstname . "%'
+         AND contacts.last_name  LIKE '%" . $lastname . "%'
        GROUP BY contacts.id
        ORDER BY contacts.last_name";
 

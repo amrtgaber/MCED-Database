@@ -31,8 +31,8 @@ $qs = "SELECT contacts.*,
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
        LEFT JOIN workers       ON contacts.id = workers.cid
        LEFT JOIN workplaces    ON workers.wid = workplaces.wid
-       WHERE contacts.first_name LIKE '" . $firstname . "%'
-         AND contacts.last_name  LIKE '" . $lastname . "%'
+       WHERE contacts.first_name LIKE '%" . $firstname . "%'
+         AND contacts.last_name  LIKE '%" . $lastname . "%'
        GROUP BY contacts.id
        ORDER BY contacts.last_name";
 

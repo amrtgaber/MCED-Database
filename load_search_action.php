@@ -22,7 +22,7 @@ $aname = mysql_real_escape_string( $_GET[ 'aname' ] );
 
 $qs = "SELECT actions.*
        FROM actions
-       WHERE aname LIKE '" . $aname . "%'
+       WHERE aname LIKE '%" . $aname . "%'
        ORDER BY actions.aname";
 
 $qr = execute_query( $qs, $mc );
