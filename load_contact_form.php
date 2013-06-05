@@ -97,8 +97,7 @@ if( $_GET[ 'add' ] ) {
 
   <div class="row-fluid">
     <?php if( $_GET[ "id" ] ) {
-      $qs = "SELECT contact_phone.phone,
-                    contact_phone.cell
+      $qs = "SELECT contact_phone.*
              FROM contact_phone
              WHERE cid = " . $cinfo[ 'id' ] . " AND main = 1";
              
@@ -110,17 +109,24 @@ if( $_GET[ 'add' ] ) {
     } ?>
     
     <div class="span1">Phone</div>
-    <div class="span4">
+    <div class="span3">
       <input type="text" name="phone1" class="span12"
              value="<?php echo( $pinfo1[ 'phone' ] ); ?>"
              placeholder="Type phone number here">
     </div>
     
-    <div class="span1">
+    <div class="span2">
       <label class="checkbox inline">Cell</label>
       <input type="checkbox" name="cell1" value="true" <?php if( ord( $pinfo1[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
     </div>
     
+    <div class="span2">
+      <label class="checkbox inline">Text</label>
+      <input type="checkbox" name="text1" value="true" <?php if( ord( $pinfo1[ 'text_updates' ] ) == 1 ) { echo( "checked" ); } ?>>
+    </div>
+  </div>
+  
+  <div class="row-fluid">
     <div class="span1">Email</div>
     <div class="span5">
       <input type="text" name="email" class="span12"
@@ -261,54 +267,72 @@ if( $_GET[ 'add' ] ) {
 </div>
 
 <div class="well">
-  <div class="row-fluid">
-    <?php if( $_GET[ "id" ] ) {
-      $qs = "SELECT contact_phone.phone,
-                    contact_phone.cell
-             FROM contact_phone
-             WHERE cid = " . $cinfo[ 'id' ] . " AND main = 0";
-             
-      $pqr = execute_query( $qs, $mc );
-      
-      $pinfo2 = mysql_fetch_array( $pqr );
-      $pinfo3 = mysql_fetch_array( $pqr );
-      $pinfo4 = mysql_fetch_array( $pqr );
-    } ?>
+  <?php if( $_GET[ "id" ] ) {
+    $qs = "SELECT contact_phone.*
+           FROM contact_phone
+           WHERE cid = " . $cinfo[ 'id' ] . " AND main = 0";
+           
+    $pqr = execute_query( $qs, $mc );
     
+    $pinfo2 = mysql_fetch_array( $pqr );
+    $pinfo3 = mysql_fetch_array( $pqr );
+    $pinfo4 = mysql_fetch_array( $pqr );
+  } ?>
+  
+  <div class="row-fluid">
     <div class="span1">Phone 2</div>
-    <div class="span2">
+    <div class="span3">
       <input type="text" name="phone2" class="span12"
              value="<?php echo( $pinfo2[ 'phone' ] ); ?>"
              placeholder="Type phone number here">
     </div>
     
-    <div class="span1">
+    <div class="span2">
       <label class="checkbox inline">Cell</label>
       <input type="checkbox" name="cell2" value="true" <?php if( ord( $pinfo2[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
     </div>
     
-    <div class="span1">Phone 3</div>
     <div class="span2">
+      <label class="checkbox inline">Text</label>
+      <input type="checkbox" name="text2" value="true" <?php if( ord( $pinfo2[ 'text_updates' ] ) == 1 ) { echo( "checked" ); } ?>>
+    </div>
+  </div>
+    
+  <div class="row-fluid">
+    <div class="span1">Phone 3</div>
+    <div class="span3">
       <input type="text" name="phone3" class="span12"
              value="<?php echo( $pinfo3[ 'phone' ] ); ?>"
              placeholder="Type phone number here">
     </div>
     
-    <div class="span1">
+    <div class="span2">
       <label class="checkbox inline">Cell</label>
       <input type="checkbox" name="cell3" value="true" <?php if( ord( $pinfo3[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
     </div>
     
-    <div class="span1">Phone 4</div>
     <div class="span2">
+      <label class="checkbox inline">Text</label>
+      <input type="checkbox" name="text3" value="true" <?php if( ord( $pinfo3[ 'text_updates' ] ) == 1 ) { echo( "checked" ); } ?>>
+    </div>
+  </div>
+  
+  <div class="row-fluid">
+    <div class="span1">Phone 4</div>
+    <div class="span3">
       <input type="text" name="phone4" class="span12"
              value="<?php echo( $pinfo4[ 'phone' ] ); ?>"
              placeholder="Type phone number here">
     </div>
     
-    <div class="span1">
+    <div class="span2">
       <label class="checkbox inline">Cell</label>
       <input type="checkbox" name="cell4" value="true" <?php if( ord( $pinfo4[ 'cell' ] ) == 1 ) { echo( "checked" ); } ?>>
+    </div>
+    
+    <div class="span2">
+      <label class="checkbox inline">Text</label>
+      <input type="checkbox" name="text4" value="true" <?php if( ord( $pinfo4[ 'text_updates' ] ) == 1 ) { echo( "checked" ); } ?>>
     </div>
   </div>
   

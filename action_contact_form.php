@@ -286,6 +286,12 @@ if( $_POST[ 'phone1' ] ) {
     $cell = 0;
   }
   
+  if( $_POST[ 'text1' ] && $cell == 1 ) {
+    $text = 1;
+  } else {
+    $text = 0;
+  }
+  
   $qs = "SELECT contact_phone.*
          FROM contact_phone
          WHERE cid = " . $id . " AND phone = " . $phone;
@@ -296,13 +302,14 @@ if( $_POST[ 'phone1' ] ) {
   if( mysql_num_rows( $pqr ) > 0 ) {
     $qs = "UPDATE contact_phone
            SET cell = " . $cell . ",
-               main = 1
+               main = 1,
+               text_updates = " . $text . "
            WHERE cid = " . $id . " AND phone = " . $phone;
   } else {
     $qs = "INSERT INTO contact_phone
-          ( cid, phone, cell, main )
+          ( cid, phone, cell, main, text_updates )
           VALUES
-          ( " . $id . ", " . $phone . ", " . $cell . ", 1 )";
+          ( " . $id . ", " . $phone . ", " . $cell . ", 1, " . $text . " )";
   }
 
   execute_query( $qs, $mc );
@@ -319,6 +326,12 @@ if( $_POST[ 'phone2' ] ) {
     $cell = 0;
   }
   
+  if( $_POST[ 'text2' ] && $cell == 1 ) {
+    $text = 1;
+  } else {
+    $text = 0;
+  }
+  
   $qs = "SELECT contact_phone.*
          FROM contact_phone
          WHERE cid = " . $id . " AND phone = " . $phone;
@@ -329,13 +342,14 @@ if( $_POST[ 'phone2' ] ) {
   if( mysql_num_rows( $pqr ) > 0 ) {
     $qs = "UPDATE contact_phone
            SET cell = " . $cell . ",
-               main = 0
+               main = 0,
+               text_updates = " . $text . "
            WHERE cid = " . $id . " AND phone = " . $phone;
   } else {
     $qs = "INSERT INTO contact_phone
-          ( cid, phone, cell, main )
+          ( cid, phone, cell, main, text_updates )
           VALUES
-          ( " . $id . ", " . $phone . ", " . $cell . ", 0 )";
+          ( " . $id . ", " . $phone . ", " . $cell . ", 0, " . $text . " )";
   }
 
   execute_query( $qs, $mc );
@@ -352,6 +366,12 @@ if( $_POST[ 'phone3' ] ) {
     $cell = 0;
   }
   
+  if( $_POST[ 'text3' ] && $cell == 1 ) {
+    $text = 1;
+  } else {
+    $text = 0;
+  }
+  
   $qs = "SELECT contact_phone.*
          FROM contact_phone
          WHERE cid = " . $id . " AND phone = " . $phone;
@@ -362,13 +382,14 @@ if( $_POST[ 'phone3' ] ) {
   if( mysql_num_rows( $pqr ) > 0 ) {
     $qs = "UPDATE contact_phone
            SET cell = " . $cell . ",
-               main = 0
+               main = 0,
+               text_updates = " . $text . "
            WHERE cid = " . $id . " AND phone = " . $phone;
   } else {
     $qs = "INSERT INTO contact_phone
-          ( cid, phone, cell, main )
+          ( cid, phone, cell, main, text_updates )
           VALUES
-          ( " . $id . ", " . $phone . ", " . $cell . ", 0 )";
+          ( " . $id . ", " . $phone . ", " . $cell . ", 0, " . $text . " )";
   }
 
   execute_query( $qs, $mc );
@@ -385,6 +406,12 @@ if( $_POST[ 'phone4' ] ) {
     $cell = 0;
   }
   
+  if( $_POST[ 'text4' ] && $cell == 1 ) {
+    $text = 1;
+  } else {
+    $text = 0;
+  }
+  
   $qs = "SELECT contact_phone.*
          FROM contact_phone
          WHERE cid = " . $id . " AND phone = " . $phone;
@@ -395,13 +422,14 @@ if( $_POST[ 'phone4' ] ) {
   if( mysql_num_rows( $pqr ) > 0 ) {
     $qs = "UPDATE contact_phone
            SET cell = " . $cell . ",
-               main = 0
+               main = 0,
+               text_updates = " . $text . "
            WHERE cid = " . $id . " AND phone = " . $phone;
   } else {
     $qs = "INSERT INTO contact_phone
-          ( cid, phone, cell, main )
+          ( cid, phone, cell, main, text_updates )
           VALUES
-          ( " . $id . ", " . $phone . ", " . $cell . ", 0 )";
+          ( " . $id . ", " . $phone . ", " . $cell . ", 0, " . $text . " )";
   }
 
   execute_query( $qs, $mc );
