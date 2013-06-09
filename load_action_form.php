@@ -140,8 +140,12 @@ if( $_GET[ 'add' ] ) {
               } else {
                 $apt_no = "";
               }
-            
-              echo( $contacts[ "street_no" ] . $apt_no . ", " . $contacts[ "city" ] . ", " . $contacts[ "state" ] . " " . $contacts[ "zipcode" ] ); ?>
+              
+              $addr = $contacts[ "street_no" ] . $apt_no . ", " . $contacts[ "city" ] . ", " . $contacts[ "state" ] . " " . $contacts[ "zipcode" ]; ?>
+
+              <a href="https://maps.google.com/maps?q=<?php echo( $addr ); ?>" target="_blank">
+                <?php echo( $addr ); ?>
+              </a>
             </td>
             <td><a href="view_shop_profile.php?wid=<?php echo( $contacts[ 'wid' ] ); ?>" target="_blank"><?php echo( $winfo[ "wname" ] . " " . $winfo[ "street_no" ] ); ?></a></td>
             <td><?php echo( $contacts[ 'date' ] ); ?></td>

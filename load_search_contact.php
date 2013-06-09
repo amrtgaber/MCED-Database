@@ -25,7 +25,9 @@ $mc = connect_to_database();
 $qs = "SELECT contacts.*,
               contact_phone.*,
               contact_email.email,
-              workplaces.wname
+              workplaces.wid,
+              workplaces.wname,
+              workplaces.street_no AS wstreet_no
        FROM contacts
        LEFT JOIN contact_phone ON contacts.id = contact_phone.cid AND main = 1
        LEFT JOIN contact_email ON contacts.id = contact_email.cid
@@ -62,11 +64,15 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
               } else {
                 $apt_no = "";
               }
-            
-              echo( $cinfo[ "street_no" ] . $apt_no . ", " . $cinfo[ "city" ] . ", " . $cinfo[ "state" ] . " " . $cinfo[ "zipcode" ] ); ?>
+              
+              $addr = $cinfo[ 'street_no' ] . $apt_no . ', ' . $cinfo[ 'city' ] . ', ' . $cinfo[ 'state' ] . ' ' . $cinfo[ 'zipcode' ]; ?>
+              
+              <a href="https://maps.google.com/maps?q=<?php echo( $addr ); ?>" target="_blank">
+                <?php echo( $addr ); ?>
+              </a>
             </td>
-            <td><?php echo( $cinfo[ 'phone' ] ); ?></td>
-            <td><?php echo( $cinfo[ 'wname' ] ); ?></td>
+            <td><a href="tel:<?php echo( $cinfo[ 'phone' ] ); ?>"><?php echo( $cinfo[ 'phone' ] ); ?></a></td>
+            <td><a href="view_shop_profile.php?wid=<?php echo( $cinfo[ 'wid' ] ); ?>"><?php echo( $cinfo[ 'wname' ] . " " . $cinfo[ 'wstreet_no' ] ); ?></a></td>
           </tr>
         <?php } ?>
       </tbody>

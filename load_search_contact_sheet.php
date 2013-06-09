@@ -24,7 +24,9 @@ $mc = connect_to_database();
 /* Get contact info */
 $qs = "SELECT contacts.*,
               contact_phone.*,
-              workplaces.wname
+              workplaces.wid,
+              workplaces.wname,
+              workplaces.street_no AS wstreet_no
        FROM contacts
          LEFT JOIN contact_phone ON contacts.id = contact_phone.cid AND main = 1
          LEFT JOIN workers       ON contacts.id = workers.cid
@@ -50,17 +52,17 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
     
     <tbody>
       <?php
-        while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
+        while( $cinfo = mysql_fetch_array( $qr ) ) { ?>
             <tr>
               <td>
-                  <a href="#<?php echo( $contact_info[ 'id' ] ); ?>" class="contact" data-toggle="collapse" data-parent="#search-results"><?php echo( $contact_info[ 'first_name' ] ); ?></a>
+                  <a href="#<?php echo( $cinfo[ 'id' ] ); ?>" class="contact" data-toggle="collapse" data-parent="#search-results"><?php echo( $cinfo[ 'first_name' ] ); ?></a>
                   
-                  <div id="<?php echo( $contact_info[ 'id' ] ); ?>" class="collapse">
+                  <div id="<?php echo( $cinfo[ 'id' ] ); ?>" class="collapse">
                     <ul>
                       <?php $qs = "SELECT id,
                                           cs_date
                              FROM contact_sheet
-                             WHERE contact_sheet.cid = " . $contact_info[ 'id' ] . "
+                             WHERE contact_sheet.cid = " . $cinfo[ 'id' ] . "
                              ORDER BY cs_date DESC";
                              
                       $csqr = execute_query( $qs, $mc );
@@ -71,22 +73,26 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
                         <?php } ?>
                       <?php } ?>
                       
-                      <li><a href="add_contact_sheet.php?csid=<?php echo( $contact_info[ 'id' ] ); ?>" class="btn btn-mini btn-info">+</a></li>
+                      <li><a href="add_contact_sheet.php?csid=<?php echo( $cinfo[ 'id' ] ); ?>" class="btn btn-mini btn-info">+</a></li>
                     </ul>
                   </div>
               </td>
-              <td><a href="#<?php echo( $contact_info[ 'id' ] ); ?>" class="contact accordion-toggle" data-toggle="collapse" data-parent="#search-results"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
+              <td><a href="#<?php echo( $cinfo[ 'id' ] ); ?>" class="contact accordion-toggle" data-toggle="collapse" data-parent="#search-results"><?php echo( $cinfo[ 'last_name' ] ); ?></a></td>
               <td>
-                <?php if( $contact_info[ "apt_no" ] != "" && !is_null( $contact_info[ "apt_no" ] ) ) {
-                  $apt_no = " #" . $contact_info[ "apt_no" ];
+                <?php if( $cinfo[ "apt_no" ] != "" && !is_null( $cinfo[ "apt_no" ] ) ) {
+                  $apt_no = " #" . $cinfo[ "apt_no" ];
                 } else {
                   $apt_no = "";
                 }
-              
-                echo( $contact_info[ "street_no" ] . $apt_no . ", " . $contact_info[ "city" ] . ", " . $contact_info[ "state" ] . " " . $contact_info[ "zipcode" ] ); ?>
+                
+                $addr = $cinfo[ 'street_no' ] . $apt_no . ', ' . $cinfo[ 'city' ] . ', ' . $cinfo[ 'state' ] . ' ' . $cinfo[ 'zipcode' ]; ?>
+                
+                <a href="https://maps.google.com/maps?q=<?php echo( $addr ); ?>" target="_blank">
+                  <?php echo( $addr ); ?>
+                </a>
               </td>
-              <td><?php echo( $contact_info[ 'phone' ] ); ?></td>
-              <td><?php echo( $contact_info[ 'wname' ] ); ?></td>
+              <td><a href="tel:<?php echo( $cinfo[ 'phone' ] ); ?>"><?php echo( $cinfo[ 'phone' ] ); ?></a></td>
+            <td><a href="view_shop_profile.php?wid=<?php echo( $cinfo[ 'wid' ] ); ?>"><?php echo( $cinfo[ 'wname' ] . " " . $cinfo[ 'wstreet_no' ] ); ?></a></td>
             </tr>
         <?php } ?>
       </tbody>

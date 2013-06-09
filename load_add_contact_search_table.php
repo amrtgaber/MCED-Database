@@ -79,7 +79,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
           
             echo( $contacts[ "street_no" ] . $apt_no . ", " . $contacts[ "city" ] . ", " . $contacts[ "state" ] . " " . $contacts[ "zipcode" ] ); ?>
           </td>
-          <td><a href="view_shop_profile.php?wid=<?php echo( $contacts[ 'wid' ] ); ?>" target="_blank"><?php echo( $winfo[ "wname" ] . " " . $winfo[ "street_no" ] ); ?></a></td>
+          <td><?php echo( $winfo[ "wname" ] . " " . $winfo[ "street_no" ] ); ?></td>
           <td><?php echo( $contacts[ 'date' ] ); ?></td>
           <td style="text-align: center;"><button type="button" class="btn btn-small btn-success add-contact-button" data-id="<?php echo( $contacts[ 'id' ] ); ?>"><i class="icon-plus"></i></button></td>
         </tr>

@@ -235,8 +235,12 @@ if( $_GET[ 'add' ] ) {
               } else {
                 $apt_no = "";
               }
+              
+              $addr = $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ]; ?>
             
-              echo( $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ] ); ?>
+              <a href="https://maps.google.com/maps?q=<?php echo( $addr ); ?>" target="_blank">
+                <?php echo( $addr ); ?>
+              </a>
             </td>
             <td><?php echo( $csinfo[ "job" ] ); ?></td>
             <td style="text-align: center;"><?php echo( $csinfo[ "rating" ] ); ?></td>

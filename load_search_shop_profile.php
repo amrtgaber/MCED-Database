@@ -54,11 +54,13 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
                           . ", "
                           . $sinfo[ 'state' ]
                           . " "
-                          . $sinfo[ 'zipcode' ];
+                          . $sinfo[ 'zipcode' ]; ?>
 
-              echo( $address ); ?>
+              <a href="https://maps.google.com/maps?q=<?php echo( $address ); ?>" target="_blank">
+                <?php echo( $address ); ?>
+              </a>
             </td>
-            <td><?php echo( $sinfo[ 'phone' ] ); ?></td>
+            <td><a href="tel:<?php echo( $sinfo[ 'phone' ] ); ?>"><?php echo( $sinfo[ 'phone' ] ); ?></a></td>
             <td><?php echo( $sinfo[ 'num_workers' ] ); ?></td>
             <td><?php $qs = "SELECT workers.cid
                              FROM workers
