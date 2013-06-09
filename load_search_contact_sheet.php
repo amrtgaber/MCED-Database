@@ -32,7 +32,7 @@ $qs = "SELECT contacts.*,
        WHERE contacts.first_name LIKE '%" . $firstname . "%'
          AND contacts.last_name  LIKE '%" . $lastname . "%'
        GROUP BY contacts.id
-       ORDER BY contacts.last_name, contacts.first_name";
+       ORDER BY contacts.first_name, contacts.last_name";
 
 $qr = execute_query( $qs, $mc );
 
@@ -40,8 +40,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
   <table class="table table-bordered table-striped">
     <thead>
       <tr>
-        <th>Last Name</th>
         <th>First Name</th>
+        <th>Last Name</th>
         <th>Address</th>
         <th>Phone</th>
         <th>Employer</th>
@@ -53,7 +53,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         while( $contact_info = mysql_fetch_array( $qr ) ) { ?>
             <tr>
               <td>
-                  <a href="#<?php echo( $contact_info[ 'id' ] ); ?>" class="contact" data-toggle="collapse" data-parent="#search-results"><?php echo( $contact_info[ 'last_name' ] ); ?></a>
+                  <a href="#<?php echo( $contact_info[ 'id' ] ); ?>" class="contact" data-toggle="collapse" data-parent="#search-results"><?php echo( $contact_info[ 'first_name' ] ); ?></a>
                   
                   <div id="<?php echo( $contact_info[ 'id' ] ); ?>" class="collapse">
                     <ul>
@@ -75,7 +75,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
                     </ul>
                   </div>
               </td>
-              <td><a href="#<?php echo( $contact_info[ 'id' ] ); ?>" class="contact accordion-toggle" data-toggle="collapse" data-parent="#search-results"><?php echo( $contact_info[ 'first_name' ] ); ?></a></td>
+              <td><a href="#<?php echo( $contact_info[ 'id' ] ); ?>" class="contact accordion-toggle" data-toggle="collapse" data-parent="#search-results"><?php echo( $contact_info[ 'last_name' ] ); ?></a></td>
               <td>
                 <?php if( $contact_info[ "apt_no" ] != "" && !is_null( $contact_info[ "apt_no" ] ) ) {
                   $apt_no = " #" . $contact_info[ "apt_no" ];

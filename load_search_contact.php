@@ -34,7 +34,7 @@ $qs = "SELECT contacts.*,
        WHERE contacts.first_name LIKE '%" . $firstname . "%'
          AND contacts.last_name  LIKE '%" . $lastname . "%'
        GROUP BY contacts.id
-       ORDER BY contacts.last_name, contacts.first_name";
+       ORDER BY contacts.first_name, contacts.last_name";
 
 $qr = execute_query( $qs, $mc );
 
@@ -42,8 +42,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
   <table class="table table-bordered table-striped table-condensed">
     <thead>
       <tr>
-        <th>Last Name</th>
         <th>First Name</th>
+        <th>Last Name</th>
         <th>Address</th>
         <th>Phone</th>
         <th>Employer</th>
@@ -54,8 +54,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
       <?php
         while( $cinfo = mysql_fetch_array( $qr ) ) { ?>
           <tr>
-            <td><a href="view_contact.php?id=<?php echo( $cinfo[ 'id' ] ); ?>" class="contact"><?php echo( $cinfo[ 'last_name' ] ); ?></a></td>
             <td><a href="view_contact.php?id=<?php echo( $cinfo[ 'id' ] ); ?>" class="contact"><?php echo( $cinfo[ 'first_name' ] ); ?></a></td>
+            <td><a href="view_contact.php?id=<?php echo( $cinfo[ 'id' ] ); ?>" class="contact"><?php echo( $cinfo[ 'last_name' ] ); ?></a></td>
             <td>
               <?php if( $cinfo[ "apt_no" ] != "" && !is_null( $cinfo[ "apt_no" ] ) ) {
                 $apt_no = " #" . $cinfo[ "apt_no" ];

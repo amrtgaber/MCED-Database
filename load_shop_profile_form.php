@@ -165,7 +165,7 @@ if( $_GET[ 'add' ] ) {
              LEFT JOIN contacts       ON workers.cid = contacts.id
            WHERE workers.wid = " . $wid . "
            GROUP BY workers.cid
-           ORDER BY contacts.last_name";
+           ORDER BY contacts.first_name, contacts.last_name";
     
     $wqr = execute_query( $qs, $mc );
   } ?>
@@ -176,8 +176,8 @@ if( $_GET[ 'add' ] ) {
   <table class="table table-bordered table-striped table-condensed" id="worker-table">
     <thead>
       <tr>
-        <th>Last Name</th>
         <th>First Name</th>
+        <th>Last Name</th>
         <th>Address</th>
         <th>Job</th>
         <th style="text-align: center;">Rating</th>
@@ -228,8 +228,8 @@ if( $_GET[ 'add' ] ) {
           } ?>
         
           <tr class="worker" data-id="<?php echo( $workers[ 'cid' ] ); ?>">
-            <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
             <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
+            <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
             <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
                 $apt_no = " #" . $workers[ "apt_no" ];
               } else {

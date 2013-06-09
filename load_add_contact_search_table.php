@@ -36,7 +36,7 @@ $qs = "SELECT contacts.id,
         LEFT JOIN workers ON contacts.id = workers.cid
        WHERE contacts.first_name LIKE '%" . $firstname . "%'
          AND contacts.last_name  LIKE '%" . $lastname . "%'
-       ORDER BY contacts.last_name, contacts.first_name";
+       ORDER BY contacts.first_name, contacts.last_name";
 
 $qr = execute_query( $qs, $mc );
 
@@ -44,8 +44,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
   <table class="table table-bordered table-striped table-condensed" id="add-contact-table">
     <thead>
       <tr>
-        <th>Last Name</th>
         <th>First Name</th>
+        <th>Last Name</th>
         <th>Address</th>
         <th>Shop</th>
         <th>Date Added</th>
@@ -69,8 +69,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         } ?>
           
         <tr data-id="<?php echo( $contacts[ 'id' ] ); ?>">
-          <td><a href="view_contact.php?id=<?php echo( $contacts[ 'id' ] ); ?>" target="_blank"><?php echo( $contacts[ "last_name" ] ); ?></a></td>
           <td><a href="view_contact.php?id=<?php echo( $contacts[ 'id' ] ); ?>" target="_blank"><?php echo( $contacts[ "first_name" ] ); ?></a></td>
+          <td><a href="view_contact.php?id=<?php echo( $contacts[ 'id' ] ); ?>" target="_blank"><?php echo( $contacts[ "last_name" ] ); ?></a></td>
           <td><?php if( $contacts[ "apt_no" ] != "" && !is_null( $contacts[ "apt_no" ] ) ) {
               $apt_no = "#" . $contacts[ "apt_no" ];
             } else {

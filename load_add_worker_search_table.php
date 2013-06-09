@@ -34,7 +34,7 @@ $qs = "SELECT contacts.id,
        WHERE contacts.first_name LIKE '%" . $firstname . "%'
          AND contacts.last_name  LIKE '%" . $lastname . "%'
        GROUP BY contacts.id
-       ORDER BY contacts.last_name, contacts.first_name";
+       ORDER BY contacts.first_name, contacts.last_name";
 
 $qr = execute_query( $qs, $mc );
 
@@ -42,8 +42,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
   <table class="table table-bordered table-striped table-condensed" id="add-worker-table">
     <thead>
       <tr>
-        <th>Last Name</th>
         <th>First Name</th>
+        <th>Last Name</th>
         <th>Address</th>
         <th>Job</th>
         <th style="text-align: center;">Rating</th>
@@ -93,8 +93,8 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         } ?>
           
         <tr data-id="<?php echo( $workers[ 'id' ] ); ?>">
-          <td><a href="view_contact.php?id=<?php echo( $workers[ 'id' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
           <td><a href="view_contact.php?id=<?php echo( $workers[ 'id' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
+          <td><a href="view_contact.php?id=<?php echo( $workers[ 'id' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
           <td><?php if( $workers[ "apt_no" ] != "" && !is_null( $workers[ "apt_no" ] ) ) {
               $apt_no = "#" . $workers[ "apt_no" ];
             } else {

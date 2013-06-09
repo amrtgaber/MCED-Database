@@ -96,7 +96,7 @@ if( $_GET[ 'add' ] ) {
              LEFT JOIN contacts ON contact_action.cid = contacts.id
              LEFT JOIN workers ON contact_action.cid = workers.cid
            WHERE contact_action.aid = " . $aid . "
-           ORDER BY contacts.last_name";
+           ORDER BY contacts.first_name, contacts.last_name";
     
     $aqr = execute_query( $qs, $mc );
   } ?>
@@ -107,8 +107,8 @@ if( $_GET[ 'add' ] ) {
   <table class="table table-bordered table-striped table-condensed" id="worker-table">
     <thead>
       <tr>
-        <th>Last Name</th>
         <th>First Name</th>
+        <th>Last Name</th>
         <th>Address</th>
         <th>Shop</th>
         <th>Date Added</th>
@@ -133,8 +133,8 @@ if( $_GET[ 'add' ] ) {
           } ?>
           
           <tr class="contact" data-id="<?php echo( $contacts[ 'cid' ] ); ?>">
-            <td><a href="view_contact.php?id=<?php echo( $contacts[ 'cid' ] ); ?>" target="_blank"><?php echo( $contacts[ "last_name" ] ); ?></a></td>
             <td><a href="view_contact.php?id=<?php echo( $contacts[ 'cid' ] ); ?>" target="_blank"><?php echo( $contacts[ "first_name" ] ); ?></a></td>
+            <td><a href="view_contact.php?id=<?php echo( $contacts[ 'cid' ] ); ?>" target="_blank"><?php echo( $contacts[ "last_name" ] ); ?></a></td>
             <td><?php if( $contacts[ "apt_no" ] != "" && !is_null( $contacts[ "apt_no" ] ) ) {
                 $apt_no = " #" . $contacts[ "apt_no" ];
               } else {
