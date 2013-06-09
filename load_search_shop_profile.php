@@ -37,6 +37,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         <th>Total Workers</th>
         <th>Contacted Workers</th>
         <th>L&As</th>
+        <th>WITs</th>
       </tr>
     </thead>
     
@@ -71,6 +72,15 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
                              FROM contact_action
                                RIGHT JOIN workers ON contact_action.cid = workers.cid AND workers.wid = " . $sinfo[ 'wid' ] . "
                              WHERE contact_action.aid = 1003";
+                
+                $nqr = execute_query( $qs, $mc );
+                
+                echo( mysql_num_rows( $nqr ) ); ?>
+            </td>
+            <td><?php $qs = "SELECT contact_action.cid
+                             FROM contact_action
+                               RIGHT JOIN workers ON contact_action.cid = workers.cid AND workers.wid = " . $sinfo[ 'wid' ] . "
+                             WHERE contact_action.aid = 1005";
                 
                 $nqr = execute_query( $qs, $mc );
                 

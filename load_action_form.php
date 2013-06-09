@@ -90,9 +90,11 @@ if( $_GET[ 'add' ] ) {
                   contacts.apt_no,
                   contacts.city,
                   contacts.state,
-                  contacts.zipcode
+                  contacts.zipcode,
+                  workers.wid
            FROM contact_action 
              LEFT JOIN contacts ON contact_action.cid = contacts.id
+             LEFT JOIN workers ON contact_action.cid = workers.cid
            WHERE contact_action.aid = " . $aid . "
            ORDER BY contacts.last_name";
     
@@ -108,6 +110,7 @@ if( $_GET[ 'add' ] ) {
         <th>Last Name</th>
         <th>First Name</th>
         <th>Address</th>
+        <th>Shop</th>
         <th>Date Added</th>
         <th style="text-align: center;">Remove</th>
       </tr>
@@ -115,7 +118,20 @@ if( $_GET[ 'add' ] ) {
     
     <tbody id="contact-table-body">
       <?php if( mysql_num_rows( $aqr ) > 0 ) {
-        while( $contacts = mysql_fetch_array( $aqr ) ) { ?>
+        while( $contacts = mysql_fetch_array( $aqr ) ) {
+          /* get workplace information */
+          if( strlen( $contacts[ 'wid' ] ) > 0 ) {
+            $qs = "SELECT workplaces.wname,
+                          workplaces.street_no
+                   FROM workplaces
+                   WHERE workplaces.wid = " . $contacts[ 'wid' ];
+
+            $wqr = execute_query( $qs, $mc );
+            $winfo = mysql_fetch_array( $wqr );
+          } else {
+            $winfo = Array();
+          } ?>
+          
           <tr class="contact" data-id="<?php echo( $contacts[ 'cid' ] ); ?>">
             <td><a href="view_contact.php?id=<?php echo( $contacts[ 'cid' ] ); ?>" target="_blank"><?php echo( $contacts[ "last_name" ] ); ?></a></td>
             <td><a href="view_contact.php?id=<?php echo( $contacts[ 'cid' ] ); ?>" target="_blank"><?php echo( $contacts[ "first_name" ] ); ?></a></td>
@@ -127,6 +143,7 @@ if( $_GET[ 'add' ] ) {
             
               echo( $contacts[ "street_no" ] . $apt_no . ", " . $contacts[ "city" ] . ", " . $contacts[ "state" ] . " " . $contacts[ "zipcode" ] ); ?>
             </td>
+            <td><a href="view_shop_profile.php?wid=<?php echo( $contacts[ 'wid' ] ); ?>" target="_blank"><?php echo( $winfo[ "wname" ] . " " . $winfo[ "street_no" ] ); ?></a></td>
             <td><?php echo( $contacts[ 'date' ] ); ?></td>
             <td style="text-align: center;"><button type="button" class="btn btn-small btn-danger" onclick="$( this ).parent().parent().remove();"><i class="icon-minus"></i></button></td>
           </tr>

@@ -30,8 +30,10 @@ $qs = "SELECT contacts.id,
               contacts.city,
               contacts.state,
               contacts.zipcode,
-              curdate() AS date
+              curdate() AS date,
+              workers.wid
        FROM contacts
+        LEFT JOIN workers ON contacts.id = workers.cid
        WHERE contacts.first_name LIKE '%" . $firstname . "%'
          AND contacts.last_name  LIKE '%" . $lastname . "%'
        ORDER BY contacts.last_name, contacts.first_name";
@@ -45,13 +47,27 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
         <th>Last Name</th>
         <th>First Name</th>
         <th>Address</th>
+        <th>Shop</th>
         <th>Date Added</th>
         <th style="text-align: center;">Add</th>
       </tr>
     </thead>
     
     <tbody>
-      <?php while( $contacts = mysql_fetch_array( $qr ) ) { ?>
+      <?php while( $contacts = mysql_fetch_array( $qr ) ) {
+        /* get workplace information */
+        if( strlen( $contacts[ 'wid' ] ) > 0 ) {
+          $qs = "SELECT workplaces.wname,
+                        workplaces.street_no
+                 FROM workplaces
+                 WHERE workplaces.wid = " . $contacts[ 'wid' ];
+
+          $wqr = execute_query( $qs, $mc );
+          $winfo = mysql_fetch_array( $wqr );
+        } else {
+          $winfo = Array();
+        } ?>
+          
         <tr data-id="<?php echo( $contacts[ 'id' ] ); ?>">
           <td><a href="view_contact.php?id=<?php echo( $contacts[ 'id' ] ); ?>" target="_blank"><?php echo( $contacts[ "last_name" ] ); ?></a></td>
           <td><a href="view_contact.php?id=<?php echo( $contacts[ 'id' ] ); ?>" target="_blank"><?php echo( $contacts[ "first_name" ] ); ?></a></td>
@@ -63,6 +79,7 @@ if( mysql_num_rows( $qr ) > 0 ) { ?>
           
             echo( $contacts[ "street_no" ] . $apt_no . ", " . $contacts[ "city" ] . ", " . $contacts[ "state" ] . " " . $contacts[ "zipcode" ] ); ?>
           </td>
+          <td><a href="view_shop_profile.php?wid=<?php echo( $contacts[ 'wid' ] ); ?>" target="_blank"><?php echo( $winfo[ "wname" ] . " " . $winfo[ "street_no" ] ); ?></a></td>
           <td><?php echo( $contacts[ 'date' ] ); ?></td>
           <td style="text-align: center;"><button type="button" class="btn btn-small btn-success add-contact-button" data-id="<?php echo( $contacts[ 'id' ] ); ?>"><i class="icon-plus"></i></button></td>
         </tr>

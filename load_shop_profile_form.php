@@ -160,14 +160,9 @@ if( $_GET[ 'add' ] ) {
                   contacts.apt_no,
                   contacts.city,
                   contacts.state,
-                  contacts.zipcode,
-                  contact_sheet.job,
-                  contact_sheet.rating,
-                  MAX( contact_action.aid ) AS aid
+                  contacts.zipcode
            FROM workers 
              LEFT JOIN contacts       ON workers.cid = contacts.id
-             LEFT JOIN contact_sheet  ON workers.cid = contact_sheet.cid
-             LEFT JOIN contact_action ON workers.cid = contact_action.cid
            WHERE workers.wid = " . $wid . "
            GROUP BY workers.cid
            ORDER BY contacts.last_name";
@@ -187,13 +182,51 @@ if( $_GET[ 'add' ] ) {
         <th>Job</th>
         <th style="text-align: center;">Rating</th>
         <th style="text-align: center;">L&A</th>
+        <th style="text-align: center;">WIT</th>
         <th style="text-align: center;">Remove</th>
       </tr>
     </thead>
     
     <tbody id="worker-table-body">
       <?php if( mysql_num_rows( $wqr ) > 0 ) {
-        while( $workers = mysql_fetch_array( $wqr ) ) { ?>
+        while( $workers = mysql_fetch_array( $wqr ) ) {
+          /* get job and rating information */
+          $qs = "SELECT contact_sheet.job,
+                        contact_sheet.rating
+                 FROM contact_sheet
+                 WHERE contact_sheet.cid = " . $workers[ 'cid' ] . "
+                 ORDER BY contact_sheet.cs_date DESC
+                 LIMIT 1";
+
+          $csqr = execute_query( $qs, $mc );
+          $csinfo = mysql_fetch_array( $csqr );
+          
+          /* get L&A information */
+          $qs = "SELECT contact_action.aid
+                 FROM contact_action
+                 WHERE contact_action.cid = " . $workers[ 'cid' ] . " AND aid = 1003";
+
+          $aqr = execute_query( $qs, $mc );
+          
+          if( mysql_num_rows( $aqr ) > 0 ) {
+            $la = true;
+          } else {
+            $la = false;
+          }
+          
+          /* get WIT information */
+          $qs = "SELECT contact_action.aid
+                 FROM contact_action
+                 WHERE contact_action.cid = " . $workers[ 'cid' ] . " AND aid = 1005";
+
+          $aqr = execute_query( $qs, $mc );
+          
+          if( mysql_num_rows( $aqr ) > 0 ) {
+            $wit = true;
+          } else {
+            $wit = false;
+          } ?>
+        
           <tr class="worker" data-id="<?php echo( $workers[ 'cid' ] ); ?>">
             <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "last_name" ] ); ?></a></td>
             <td><a href="view_contact.php?id=<?php echo( $workers[ 'cid' ] ); ?>" target="_blank"><?php echo( $workers[ "first_name" ] ); ?></a></td>
@@ -205,9 +238,10 @@ if( $_GET[ 'add' ] ) {
             
               echo( $workers[ "street_no" ] . $apt_no . ", " . $workers[ "city" ] . ", " . $workers[ "state" ] . " " . $workers[ "zipcode" ] ); ?>
             </td>
-            <td><?php echo( $workers[ "job" ] ); ?></td>
-            <td style="text-align: center;"><?php echo( $workers[ "rating" ] ); ?></td>
-            <td style="text-align: center;"><i class="<?php if( $workers[ 'aid' ] == 1003 ) { echo( 'icon-star' ); } ?>"></i></td>
+            <td><?php echo( $csinfo[ "job" ] ); ?></td>
+            <td style="text-align: center;"><?php echo( $csinfo[ "rating" ] ); ?></td>
+            <td style="text-align: center;"><i class="<?php if( $la ) { echo( 'icon-star' ); } ?>"></i></td>
+            <td style="text-align: center;"><i class="<?php if( $wit ) { echo( 'icon-star' ); } ?>"></i></td>
             <td style="text-align: center;"><button type="button" class="btn btn-small btn-danger" onclick="$( this ).parent().parent().remove();"><i class="icon-minus"></i></button></td>
           </tr>
         <?php } ?>
