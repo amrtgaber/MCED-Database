@@ -192,51 +192,6 @@ if( $_POST[ 'rating' ] ) {
   $qr = execute_query( $qs, $mc );
 }
 
-/* story */
-if( $_POST[ 'story' ] ) {
-  $qs = "UPDATE contacts
-         SET story = 1
-         WHERE id = " . $id;
-
-  $qr = execute_query( $qs, $mc );
-}
-
-/* video */
-if( $_POST[ 'video' ] ) {
-  $qs = "UPDATE contacts
-         SET video = 1
-         WHERE id = " . $id;
-
-  $qr = execute_query( $qs, $mc );
-}
-
-/* survey */
-if( $_POST[ 'survey' ] ) {
-  $qs = "UPDATE contacts
-         SET survey = 1
-         WHERE id = " . $id;
-
-  $qr = execute_query( $qs, $mc );
-}
-
-/* dues authorization card */
-if( $_POST[ 'dac' ] ) {
-  $qs = "UPDATE contacts
-         SET dues_auth_card = 1
-         WHERE id = " . $id;
-
-  $qr = execute_query( $qs, $mc );
-}
-
-/* placard photo */
-if( $_POST[ 'placard' ] ) {
-  $qs = "UPDATE contacts
-         SET placard_photo = 1
-         WHERE id = " . $id;
-
-  $qr = execute_query( $qs, $mc );
-}
-
 /* potential legal issues */
 if( $_POST[ 'pliCheck' ] ) {
   $qs = "UPDATE contact_sheet

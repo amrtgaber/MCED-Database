@@ -238,24 +238,6 @@ if( $_GET[ 'add' ] ) {
       <label class="radio inline">3</label><input type="radio" name="rating" value="3" <?php if( $rating != 1 && $rating != 2 && $rating != 4 ) { echo( "checked" ); } ?>>
       <label class="radio inline">4</label><input type="radio" name="rating" value="4" <?php if( $rating == 4 ) { echo( "checked" ); } ?>>
     </div>
-
-    <div class="span2">
-    </div>
-    
-    <div class="span2">
-      <label class="checkbox inline">Placard Photo</label>
-      <input type="checkbox" name="placard" value="true" <?php if( isset( $cs_info[ "placard_photo" ] ) ) { echo( "checked" ); } ?>>
-    </div>
-    
-    <div class="span2">
-      <label class="checkbox inline">Survey</label>
-      <input type="checkbox" name="survey" value="true" <?php if( isset( $cs_info[ "survey" ] ) ) { echo( "checked" ); } ?>>
-    </div>
-    
-    <div class="span2">
-      <label title="Dues Authorization Card" class="checkbox inline">DAC</label>
-      <input type="checkbox" name="dac" value="true" <?php if( isset( $cs_info[ "dues_auth_card" ] ) ) { echo( "checked" ); } ?>>
-    </div>
   </div>
   
   <div class="row-fluid">
