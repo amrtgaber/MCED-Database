@@ -27,6 +27,7 @@ if( !$_SESSION[ 'username' ] ) {
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/jquery.dataTables.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/search_contact.css" rel="stylesheet">
       
@@ -45,7 +46,7 @@ if( !$_SESSION[ 'username' ] ) {
         <div class="span9">
           <legend>Search Contact</legend>
 
-          <div class="well">
+          <div class="well hide">
             <div class="row-fluid">
               <form id="search">
                 <div class="span3">
@@ -81,6 +82,7 @@ if( !$_SESSION[ 'username' ] ) {
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.validate.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/search_contact.js"></script>
   </body>

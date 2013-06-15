@@ -41,7 +41,7 @@ $qs = "SELECT contacts.*,
 $qr = execute_query( $qs, $mc );
 
 if( mysql_num_rows( $qr ) > 0 ) { ?>
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-striped table-condensed" id="contact-table">
     <thead>
       <tr>
         <th>First Name</th>
