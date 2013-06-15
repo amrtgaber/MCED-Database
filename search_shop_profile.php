@@ -33,6 +33,7 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/jquery.dataTables.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/search_shop_profile.css" rel="stylesheet">
       
@@ -49,26 +50,12 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-          <legend>Search Shop Profile</legend>
-
-          <div class="well">
-            <div class="row-fluid">
-              <form id="search">
-                <div class="span3">
-                  <input type="text" id="wname" name="wname" class="span12 search-query mobile-margin" placeholder="Workplace">
-                </div>
-                
-                <button type="submit" class="btn btn-info span1 mobile-margin" id="search-button"><i class="icon-search"></i></button>
-                <button type="button" class="btn span1 mobile-margin" id="clear-button">Clear</button>
-                
-                <div class="span7">
-                  <a href="add_shop_profile.php" class="btn btn-primary span3 pull-right mobile-margin">Add Shop Profile</a>
-                </div>
-              </form>
-            </div>
-          </div>
+          <legend>
+            Search Shop Profile
+            <a href="add_shop_profile.php" class="btn btn-primary pull-right mobile-margin">Add Shop Profile</a>
+          </legend>
           
-          <div id="search-results"></div>
+          <div id="records"></div>
         </div>
         
         <!-- Sidebar -->
@@ -83,6 +70,7 @@ if( $_SESSION[ 'privilege_level' ] < 2 ) {
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.validate.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/search_shop_profile.js"></script>
   </body>
