@@ -360,6 +360,26 @@ if( $_GET[ 'add' ] ) {
   </div>
   
   <div class="row-fluid">
+    <div class="span1">WIT Organizer</div>
+    <div class="span3">
+      <select id="wit-organizer" class="span12">
+        <option>&lt; select an organizer &gt;</option>
+        <?php
+          $qs = "SELECT id, username
+                 FROM users
+                 ORDER BY username";
+          $oqr = execute_query( $qs, $mc );
+          
+          while( $organizer = mysql_fetch_array( $oqr ) ) { ?>
+            <option data-oid="<?php echo( $organizer[ 'id' ] ); ?>" <?php if( $organizer[ 'id' ] == $cinfo[ 'wit_oid' ] ) { echo( "selected" ); } ?>>
+              <?php echo( $organizer[ "username" ] ); ?>
+            </option>
+        <?php } ?>
+      </select>
+    </div>
+  </div>
+  
+  <div class="row-fluid">
     <div class="span1">Contact Type</div>    
     <div class="span2">
       <select id="contactType" class="span12">

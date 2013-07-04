@@ -230,6 +230,7 @@ function submit_contact_form() {
   
   /* construct post request string */
   var postString = $( "#contact-form" ).serialize()
+                     + "&woid=" + $( "#wit-organizer option:selected" ).attr( "data-oid" )
                      + "&contactType=" + $( "#contactType option:selected" ).attr( "data-ctype" )
                      + "&workplaces=" + workplaces
                      + "&wages=" + wages

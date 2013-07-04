@@ -150,6 +150,26 @@ if( $_POST[ 'add' ] ) {
   $cinfo = mysql_fetch_array( $qr );
 }
 
+/* organizer */
+if( $_POST[ 'woid' ] ) {
+  $oid = mysql_real_escape_string( $_POST[ "woid" ] );
+  
+  /* insert into contacts */
+  $qs = "UPDATE contacts
+         SET wit_oid = " . $oid . "
+         WHERE id = " . $id;
+  
+  $qr = execute_query( $qs, $mc );
+} else {
+  if( !is_null( $cinfo[ 'wit_oid' ] ) ) {
+    $qs = "UPDATE contacts
+           SET wit_oid = NULL
+           WHERE id = " . $id;
+
+    $qr = execute_query( $qs, $mc );
+  }
+}
+
 /* Contact type */
 $contactType = mysql_real_escape_string( $_POST[ 'contactType' ] );
 
