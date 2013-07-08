@@ -28,6 +28,7 @@ $mc = connect_to_database(); ?>
     <!-- CSS -->
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="css/jquery.dataTables.css" rel="stylesheet">
     <link href="css/common.css" rel="stylesheet">
     <link href="css/search_action.css" rel="stylesheet">
       
@@ -44,26 +45,12 @@ $mc = connect_to_database(); ?>
       <div class="row-fluid">
         <!-- Body -->
         <div class="span9">
-          <legend>Search Action</legend>
-
-          <div class="well">
-            <div class="row-fluid">
-              <form id="search">
-                <div class="span3">
-                  <input type="text" id="aname" name="aname" class="span12 search-query mobile-margin" placeholder="Action">
-                </div>
-                
-                <button type="submit" class="btn btn-info span1 mobile-margin" id="search-button"><i class="icon-search"></i></button>
-                <button type="button" class="btn span1 mobile-margin" id="clear-button">Clear</button></p>
-                
-                <div class="span7">
-                  <a href="add_action.php" class="btn btn-primary span3 pull-right mobile-margin">Add Action</a>
-                </div>
-              </form>
-            </div>
-          </div>
+          <legend>
+            Search Action
+            <a href="add_action.php" class="btn btn-primary span3 pull-right mobile-margin">Add Action</a>
+          </legend>
           
-          <div id="search-results"></div>
+          <div id="records"></div>
         </div>
         
         <!-- Sidebar -->
@@ -78,6 +65,7 @@ $mc = connect_to_database(); ?>
 		<script src="js/jquery-1.8.2.min.js"></script>
     <script src="js/bootstrap.js"></script>
     <script src="js/jquery.validate.min.js"></script>
+    <script src="js/jquery.dataTables.min.js"></script>
     <script src="js/common.js"></script>
     <script src="js/search_action.js"></script>
   </body>

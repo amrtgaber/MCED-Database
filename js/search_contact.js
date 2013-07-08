@@ -1,14 +1,9 @@
 $( document ).ready(function() {
-  /* Search button */
-  $( "#search" ).submit(function() {
-    $( "#search-results" ).load( "load_search_contact.php?" + $( "#search" ).serialize() );
-    return false;
-  });
-  
-  /* Clear button */
-  $( "#clear-button" ).click(function() {
-    $( "#firstName" ).val( "" );
-    $( "#lastName" ).val( "" );
-    $( "#search-results" ).html( "" );
+  $( "#records" ).html( "Loading..." );
+  $( "#records" ).load( "load_search_contact.php", function() {
+    $( "#contact-table" ).dataTable({
+      "iDisplayLength": 25,
+      "sPaginationType": "full_numbers"
+    });
   });
 });
