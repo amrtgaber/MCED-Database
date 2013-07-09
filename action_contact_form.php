@@ -151,7 +151,7 @@ if( $_POST[ 'add' ] ) {
 }
 
 /* organizer */
-if( $_POST[ 'woid' ] ) {
+if( $_POST[ 'woid' ] && $_POST[ 'woid' ] != "undefined" ) {
   $oid = mysql_real_escape_string( $_POST[ "woid" ] );
   
   /* insert into contacts */
