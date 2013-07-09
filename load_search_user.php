@@ -16,30 +16,35 @@ if( !$_SESSION[ 'username' ] ) {
 /* Connect to database */
 $mc = connect_to_database();
 
+$username = mysql_real_escape_string( $_GET[ 'username' ] );
+
 /* Get users */
 $qs = "SELECT id,
               username
        FROM users
+       WHERE username LIKE '%" . $username . "%' 
        ORDER BY username";
 
-$qr = execute_query( $qs, $mc ); ?>
+$qr = execute_query( $qs, $mc );
 
-<table class="table table-bordered table-striped table-condensed" id="user-table">
-  <thead>
-    <tr>
-      <th>Username</th>
-      <th>Turf</th>
-      <th>WITs</th>
-    </tr>
-  </thead>
-  
-  <tbody>
-    <?php while( $uinfo = mysql_fetch_array( $qr ) ) { ?>
+if( mysql_num_rows( $qr ) > 0 ) { ?>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
       <tr>
-        <td><a href="view_user.php?uid=<?php echo( $uinfo[ 'id' ] ); ?>" class="user"><?php echo( $uinfo[ 'username' ] ); ?></a></td>
-        <td></td>
-        <td></td>
+        <th>Username</th>
       </tr>
-    <?php } ?>
-  </tbody>
-</table>
+    </thead>
+    
+    <tbody>
+      <?php
+        while( $uinfo = mysql_fetch_array( $qr ) ) { ?>
+          <tr>
+            <td><a href="view_user.php?uid=<?php echo( $uinfo[ 'id' ] ); ?>" class="user"><?php echo( $uinfo[ 'username' ] ); ?></a></td>
+          </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+<?php
+} else {
+  alert_error( "No results found." );
+}

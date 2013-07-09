@@ -1,9 +1,13 @@
 $( document ).ready(function() {
-  $( "#records" ).html( "Loading..." );
-  $( "#records" ).load( "load_search_user.php", function() {
-    $( "#user-table" ).dataTable({
-      "iDisplayLength": 25,
-      "sPaginationType": "full_numbers"
-    });
+  /* Search button */
+  $( "#search" ).submit(function() {
+    $( "#search-results" ).load( "load_search_user.php?" + $( "#search" ).serialize() );
+    return false;
+  });
+  
+  /* Clear button */
+  $( "#clear-button" ).click(function() {
+    $( "#username" ).val( "" );
+    $( "#search-results" ).html( "" );
   });
 });
