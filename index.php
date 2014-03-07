@@ -79,6 +79,13 @@ if( !$_SESSION[ 'username' ] ) {
                 <p>Search, add, edit, or delete users.</p>
                 <p><a href="search_user.php" class="btn btn-large btn-primary">Users &raquo;</a></p>
               </div>
+              
+              <div class="span3">
+                <!-- Export -->
+                <h2>Export</h2>
+                <p>Export as CSV</p>
+                <p><a id="export-button" class="btn btn-large btn-warning">Export</a></p>
+              </div>
             </div>
           <?php } ?>
         </div><!--Main Menu-->
